@@ -4,20 +4,26 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+    sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
-  cupertino_icons: ^0.1.2
+    flutter:
+        sdk: flutter
+    cupertino_icons: ^0.1.2
+    geolocator:
+    google_maps_flutter:
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
+    flutter_test:
+        sdk: flutter
 
 flutter:
-  uses-material-design: true
-  assets:
-    - assets/
-    - assets/icon/
+    uses-material-design: true
+    assets:
+        - assets/
+        - assets/icon/
+
+    fonts:
+        - family: GoogleSans
+          fonts:
+              - asset: assets/fonts/GoogleSans-Regular.ttf
