@@ -33,24 +33,23 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        unselectedItemColor: Colors.grey[900],
-        selectedItemColor: Colors.black,
+        selectedItemColor: Color(0xff31AC53),
         type: BottomNavigationBarType.fixed,
         backgroundColor: Color.fromRGBO(249, 249, 249, 1),
         items: <BottomNavigationBarItem>[
           _buildBottomNavigationBarItem(
-              activeIconPath: "assets/home_selected.png",
-              iconPath: "assets/home.png"),
+              activeIconPath: "assets/icon/bottomNavigation/homeSelected.png",
+              iconPath: "assets/icon/bottomNavigation/home.png"),
           _buildBottomNavigationBarItem(
-              activeIconPath: "assets/search_selected.png",
-              iconPath: "assets/search.png"),
+              iconPath: "assets/icon/bottomNavigation/worldMap.png"),
           _buildBottomNavigationBarItem(iconPath: "assets/add.png"),
           _buildBottomNavigationBarItem(
-              activeIconPath: "assets/heart_selected.png",
-              iconPath: "assets/heart.png"),
+              activeIconPath:
+                  "assets/icon/bottomNavigation/articleSelected.png",
+              iconPath: "assets/icon/bottomNavigation/article.png"),
           _buildBottomNavigationBarItem(
               activeIconPath: "assets/profile_selected.png",
-              iconPath: "assets/profile.png"),
+              iconPath: "assets/icon/bottomNavigation/profile.png"),
         ],
         currentIndex: _selectedIndex,
         onTap: (index) => _onItemTapped(index),

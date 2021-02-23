@@ -22,6 +22,8 @@ flutter:
     assets:
         - assets/
         - assets/icon/
+        - assets/icon/bottomNavigation/
+        - assets/icon/map/
 
     fonts:
         - family: GoogleSans
