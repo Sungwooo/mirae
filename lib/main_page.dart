@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/feed_page.dart';
-import 'package:flutter_app/follow.dart';
-import 'package:flutter_app/profile.dart';
-import 'package:flutter_app/camera.dart';
-import 'package:flutter_app/map.dart';
+
+import 'camera.dart';
+import 'feed_page.dart';
+import 'follow.dart';
+import 'map.dart';
+import 'profile.dart';
 
 class MainPage extends StatefulWidget {
   @override

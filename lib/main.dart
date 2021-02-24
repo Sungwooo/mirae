@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/main_page.dart';
-import 'package:flutter_app/constants/material_color.dart';
+import 'constants/material_color.dart';
+
+import 'main_page.dart';
 
 void main() => runApp(MyApp());
 

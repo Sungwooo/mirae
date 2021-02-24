@@ -1,4 +1,4 @@
-name: flutter_app
+name: mirae
 description: A new Flutter application.
 
 version: 1.0.0+1
@@ -10,8 +10,9 @@ dependencies:
     flutter:
         sdk: flutter
     cupertino_icons: ^0.1.2
+    location: ^3.0.0
+    google_maps_flutter: ^1.2.0
     geolocator:
-    google_maps_flutter:
 
 dev_dependencies:
     flutter_test:
