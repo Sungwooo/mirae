@@ -12,7 +12,10 @@ dependencies:
     cupertino_icons: ^0.1.2
     location: ^3.0.0
     google_maps_flutter: ^1.2.0
-    geolocator:
+    flutter_svg:
+    http:
+    get:
+    flutter_conditional_rendering:
 
 dev_dependencies:
     flutter_test:

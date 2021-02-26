@@ -81,7 +81,7 @@ class _MainPageState extends State<MainPage> {
   void openCamera(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Camera()),
+      MaterialPageRoute(builder: (context) => MapPage()),
     );
   }
 }
