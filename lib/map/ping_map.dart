@@ -34,6 +34,8 @@ class PingMapState extends State<PingMap> {
 
   bool isPingWidget;
   String navigateMsg = "";
+
+  LatLng destination = LatLng(37.33186, -122.03045);
 /* ------------------------------------ */
   final Set<Polyline> _polyLines = {};
   GoogleMapsServices _googleMapsServices = GoogleMapsServices();
@@ -51,7 +53,6 @@ class PingMapState extends State<PingMap> {
   }
 
   void sendRequest() async {
-    LatLng destination = LatLng(37.33186, -122.03045);
     String route = await _googleMapsServices.getRouteCoordinates(
         LatLng(location.latitude, location.longitude), destination);
     String msg = await _googleMapsServices.getNavigateSteps(
@@ -60,8 +61,17 @@ class PingMapState extends State<PingMap> {
     createRoute(route);
   }
 
+  void sendAutoRequest(myLocation) async {
+    String route = await _googleMapsServices.getRouteCoordinates(
+        LatLng(myLocation.latitude, myLocation.longitude), destination);
+    String msg = await _googleMapsServices.getNavigateSteps(
+        LatLng(myLocation.latitude, myLocation.longitude), destination);
+    _polyLines.clear();
+    setNavigateMessage(msg);
+    createRoute(route);
+  }
+
   void sendNavigateRequest() async {
-    LatLng destination = LatLng(37.33186, -122.03045);
     String msg = await _googleMapsServices.getNavigateSteps(
         LatLng(location.latitude, location.longitude), destination);
     setNavigateMessage(msg);
@@ -81,7 +91,7 @@ class PingMapState extends State<PingMap> {
       color: Color(0xff36AC56),
       endCap: Cap.squareCap,
       geodesic: false,
-      patterns: [PatternItem.dot, PatternItem.gap(30)],
+      patterns: [PatternItem.dot, PatternItem.gap(10)],
     ));
   }
 
@@ -217,7 +227,6 @@ class PingMapState extends State<PingMap> {
             backgroundColor: Colors.white,
             onPressed: () {
               getCurrentLocation();
-              sendNavigateRequest();
               toggleBtn = !toggleBtn;
             }),
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop);
@@ -273,6 +282,7 @@ class PingMapState extends State<PingMap> {
                     tilt: 0,
                     zoom: 18.00)));
             updateMarkerAndCircle(newLocalData, imageData);
+            sendAutoRequest(newLocalData);
           }
         });
       } else {

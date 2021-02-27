@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mirae/map/ping_map.dart';
+import 'package:latlong/latlong.dart';
 
 class MenuWidget extends StatefulWidget {
   MenuWidget({this.pingMapState});
@@ -15,8 +16,22 @@ class _MenuWidgetState extends State<MenuWidget> {
   int distance = 100;
   bool showBottomMenu = false;
 
+  final Distance calDistance = Distance();
+
+  getTrashDistance() {
+    double meter = calDistance(
+        LatLng(widget.pingMapState.location.latitude,
+            widget.pingMapState.location.longitude),
+        LatLng(widget.pingMapState.destination.latitude,
+            widget.pingMapState.destination.longitude));
+    setState(() {
+      distance = meter.floor();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    getTrashDistance();
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return AnimatedPositioned(

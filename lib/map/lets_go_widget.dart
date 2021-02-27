@@ -13,7 +13,7 @@ class LetsGoWidget extends StatefulWidget {
 }
 
 class _LetsGoWidgetState extends State<LetsGoWidget> {
-  bool showBottomMenu = false;
+  bool showBottomMenu = true;
   int markerNum = 3;
   int trashNum = 5;
   String turnIcon = "";
@@ -46,12 +46,12 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
       curve: Curves.easeInOut,
       duration: Duration(milliseconds: 200),
       left: 0,
-      bottom: (showBottomMenu) ? -60 : -(height * 2 / 5) + 30,
+      bottom: (showBottomMenu) ? -60 : -(height * 3 / 7) + 30,
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(20)),
         child: Container(
           width: width,
-          height: (height * 2 / 5),
+          height: (height * 3 / 7),
           color: Colors.white.withOpacity(0.7),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
@@ -113,41 +113,51 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                           ],
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ConditionalSwitch.single<String>(
-                                context: context,
-                                valueBuilder: (BuildContext context) =>
-                                    turnIcon,
-                                caseBuilders: {
-                                  'left': (BuildContext context) => Icon(
-                                        Icons.arrow_back,
-                                        size: 45,
-                                        color: Color(0xff36AE57),
-                                      ),
-                                  'right': (BuildContext context) => Icon(
-                                        Icons.arrow_forward,
-                                        size: 45,
-                                        color: Color(0xff36AE57),
-                                      ),
-                                },
-                                fallbackBuilder: (BuildContext context) => Icon(
-                                  Icons.arrow_upward,
-                                  size: 45,
-                                  color: Color(0xff36AE57),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ConditionalSwitch.single<String>(
+                                  context: context,
+                                  valueBuilder: (BuildContext context) =>
+                                      turnIcon,
+                                  caseBuilders: {
+                                    'left': (BuildContext context) =>
+                                        Image.asset(
+                                          "assets/icon/map/cornerLeft.png",
+                                          width: 40,
+                                          height: 40,
+                                        ),
+                                    'right': (BuildContext context) =>
+                                        Image.asset(
+                                          "assets/icon/map/cornerRight.png",
+                                          width: 40,
+                                          height: 40,
+                                        ),
+                                  },
+                                  fallbackBuilder: (BuildContext context) =>
+                                      Image.asset(
+                                    "assets/icon/map/straight.png",
+                                    width: 40,
+                                    height: 40,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                "${widget.pingMapState.navigateMsg}",
-                                style: TextStyle(
-                                    fontSize: 22,
-                                    fontFamily: "GoogleSans",
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ]),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Text(
+                                    "${widget.pingMapState.navigateMsg}",
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontFamily: "GoogleSans",
+                                        fontWeight: FontWeight.w700),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ]),
+                        ),
                       ),
                     ],
                   ),

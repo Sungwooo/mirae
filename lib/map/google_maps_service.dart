@@ -20,9 +20,14 @@ class GoogleMapsServices {
     http.Response response = await http.get(url);
 
     Map values = jsonDecode(response.body);
-    return values["routes"][0]["legs"][0]["steps"][0]["html_instructions"]
-        .toString()
-        .replaceAll('<b>', '')
-        .replaceAll('</b>', '');
+    return values["routes"][0]["legs"][0]["steps"][1] != null
+        ? values["routes"][0]["legs"][0]["steps"][1]["html_instructions"]
+            .toString()
+            .replaceAll('<b>', '')
+            .replaceAll('</b>', '')
+        : values["routes"][0]["legs"][0]["steps"][0]["html_instructions"]
+            .toString()
+            .replaceAll('<b>', '')
+            .replaceAll('</b>', '');
   }
 }

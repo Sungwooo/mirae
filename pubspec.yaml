@@ -16,6 +16,7 @@ dependencies:
     http:
     get:
     flutter_conditional_rendering:
+    latlong:
 
 dev_dependencies:
     flutter_test:
