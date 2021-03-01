@@ -8,8 +8,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:mirae/map/google_maps_service.dart';
-import 'package:mirae/map/menu_widget.dart';
+import 'package:mirae/map/components/google_maps_service.dart';
+import 'package:mirae/map/components/menu_widget.dart';
 
 import 'lets_go_widget.dart';
 

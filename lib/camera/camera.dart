@@ -2,29 +2,29 @@ import 'dart:async';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mirae/trash_info.dart';
+import 'package:mirae/camera/trash_info.dart';
 
-class Camera extends StatefulWidget {
-  final CameraDescription camera;
-
-  const Camera({
+class CameraPage extends StatefulWidget {
+  /* const Camera({
     Key key,
     @required this.camera,
-  }) : super(key: key);
+  }) : super(key: key); */
 
   @override
-  _CameraState createState() => _CameraState();
+  _CameraPageState createState() => _CameraPageState();
 }
 
-class _CameraState extends State<Camera> {
+class _CameraPageState extends State<CameraPage> {
+  CameraDescription camera;
   CameraController _controller;
   Future<void> _initializeControllerFuture;
 
   @override
   void initState() {
     super.initState();
+    getCameras();
     _controller = CameraController(
-      widget.camera,
+      camera,
       ResolutionPreset.medium,
     );
 
@@ -35,6 +35,14 @@ class _CameraState extends State<Camera> {
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  Future<void> getCameras() async {
+    final cameras = await availableCameras();
+    final firstCamera = cameras.first;
+    setState(() {
+      camera = firstCamera;
+    });
   }
 
   Widget _renderTypeList(BuildContext context) {

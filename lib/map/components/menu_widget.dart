@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mirae/lets_go_map.dart';
-import 'package:mirae/map/ping_map.dart';
+import 'package:mirae/map/components/lets_go_map.dart';
+import 'package:mirae/map/components/ping_map.dart';
 import 'package:latlong/latlong.dart';
 
 class MenuWidget extends StatefulWidget {

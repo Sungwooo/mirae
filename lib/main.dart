@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'constants/material_color.dart';
-
-import 'main_page.dart';
+import 'mainPage/mainPage.dart';
 
 /* void main() => runApp(MyApp()); */
 
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
           color: Colors.transparent,
           elevation: 0.0,
         ),
-        splashColor: Colors.green[300],
+        splashColor: Colors.grey[700],
       ),
       home: MainPage(),
     );

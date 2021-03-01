@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mirae/map/ping_map.dart';
 
-class LetsGoMapPage extends StatelessWidget {
+import 'components/ping_map.dart';
+
+class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +24,7 @@ class LetsGoMapPage extends StatelessWidget {
         ),
       ),
       body: PingMap(
-        isPingWidget: false,
+        isPingWidget: true,
       ),
     );
   }

@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
-import 'package:mirae/map/ping_map.dart';
+import 'package:mirae/map/components/ping_map.dart';
 
 class LetsGoWidget extends StatefulWidget {
   LetsGoWidget({this.pingMapState});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FollowPage extends StatelessWidget {
+class ArticlePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
