@@ -1,7 +1,10 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mirae/trash_info.dart';
 
 import 'camera.dart';
-import 'feed_page.dart';
+import 'home_page.dart';
 import 'follow.dart';
 import 'map.dart';
 import 'profile.dart';
@@ -14,8 +17,15 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
 
+  CameraDescription firstCamera;
+
+  Future<void> getCameras() async {
+    final cameras = await availableCameras();
+    firstCamera = cameras.first;
+  }
+
   static List<Widget> _widgetOptions = <Widget>[
-    FeedPage(),
+    HomePage(),
     MapPage(),
     Container(
       color: Colors.primaries[2],
@@ -23,6 +33,12 @@ class _MainPageState extends State<MainPage> {
     FollowPage(),
     Profile(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    getCameras();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +50,7 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
+        unselectedItemColor: Color(0xff8F8F8F),
         selectedItemColor: Color(0xff31AC53),
         type: BottomNavigationBarType.fixed,
         backgroundColor: Color.fromRGBO(249, 249, 249, 1),
@@ -49,7 +66,6 @@ class _MainPageState extends State<MainPage> {
                   "assets/icon/bottomNavigation/articleSelected.png",
               iconPath: "assets/icon/bottomNavigation/article.png"),
           _buildBottomNavigationBarItem(
-              activeIconPath: "assets/profile_selected.png",
               iconPath: "assets/icon/bottomNavigation/profile.png"),
         ],
         currentIndex: _selectedIndex,
@@ -59,29 +75,22 @@ class _MainPageState extends State<MainPage> {
   }
 
   BottomNavigationBarItem _buildBottomNavigationBarItem(
-      {String activeIconPath, String iconPath}) {
+      {String activeIconPath, String iconPath, String label}) {
     return BottomNavigationBarItem(
       activeIcon:
           activeIconPath == null ? null : ImageIcon(AssetImage(activeIconPath)),
       icon: ImageIcon(AssetImage(iconPath)),
-      title: Text(''),
+      label: label,
     );
   }
 
   void _onItemTapped(int index) {
     if (index == 2) {
-      openCamera(context);
+      Get.to(() => TrashInfo());
     } else {
       setState(() {
         _selectedIndex = index;
       });
     }
-  }
-
-  void openCamera(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => MapPage()),
-    );
   }
 }
