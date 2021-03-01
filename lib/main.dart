@@ -1,7 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/camera.dart';
+// import 'package:flutter_app/camera.dart';
 import 'package:flutter_app/constants/material_color.dart';
+import 'package:flutter_app/trash-info-page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: white,
       ),
-      home: Camera(camera: firstCamera),
+      home: TrashInfo(),
+      // home: Camera(camera: firstCamera),
     );
   }
 }
