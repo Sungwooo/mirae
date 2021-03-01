@@ -1,11 +1,25 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ArticlePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text('NEWS', textAlign: TextAlign.center),
+        appBar: CupertinoNavigationBar(
+          middle: Text(
+            "NEWS",
+            style:
+                TextStyle(color: Color(0xff31AC53), fontFamily: 'GoogleSans'),
+          ),
+          leading: GestureDetector(
+            child: Icon(
+              CupertinoIcons.back,
+              color: Color(0xff31AC53),
+            ),
+            onTap: () {
+              Get.back();
+            },
+          ),
         ),
         body: Column(children: <Widget>[
           Container(

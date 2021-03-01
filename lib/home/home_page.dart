@@ -90,15 +90,6 @@ class _HomePageState extends State<HomePage> {
           "HOME",
           style: TextStyle(color: Color(0xff31AC53), fontFamily: 'GoogleSans'),
         ),
-        leading: GestureDetector(
-          child: Icon(
-            CupertinoIcons.back,
-            color: Color(0xff31AC53),
-          ),
-          onTap: () {
-            Get.back();
-          },
-        ),
       ),
       body: ListView(
         //shrinkWrap: true,
