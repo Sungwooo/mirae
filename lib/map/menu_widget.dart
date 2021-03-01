@@ -141,7 +141,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                           ),
                           onPressed: () {
                             widget.pingMapState.sendRequest();
-                            Get.to(LetsGoMapPage());
+                            Get.to(() => LetsGoMapPage());
                           }),
                     ],
                   )

@@ -298,6 +298,7 @@ class PingMapState extends State<PingMap> {
               ])
             : Center(child: Text("Loading...")),
         floatingActionButton: FloatingActionButton.extended(
+            heroTag: 'one',
             label: toggleBtn
                 ? Icon(Icons.location_disabled)
                 : Icon(Icons.location_searching),

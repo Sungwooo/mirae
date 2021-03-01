@@ -4,7 +4,12 @@ import 'constants/material_color.dart';
 
 import 'main_page.dart';
 
-void main() => runApp(MyApp());
+/* void main() => runApp(MyApp()); */
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  return runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
