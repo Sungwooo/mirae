@@ -10,6 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
+  camera: ^0.7.0+2
+  path: ^1.7.0
+  path_provider: ^1.6.27
 
 dev_dependencies:
   flutter_test:

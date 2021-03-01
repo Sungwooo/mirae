@@ -1,11 +1,24 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/main_page.dart';
+import 'package:flutter_app/camera.dart';
 import 'package:flutter_app/constants/material_color.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
+
+  runApp(MyApp(firstCamera: firstCamera));
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  final CameraDescription firstCamera;
+
+  const MyApp({
+    Key key,
+    @required this.firstCamera,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: white,
       ),
-      home: MainPage(),
+      home: Camera(camera: firstCamera),
     );
   }
 }
