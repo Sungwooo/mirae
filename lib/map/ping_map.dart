@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -13,14 +14,20 @@ import 'package:mirae/map/menu_widget.dart';
 import 'lets_go_widget.dart';
 
 class PingMap extends StatefulWidget {
+  final bool isPingWidget;
+  PingMap({this.isPingWidget, Key key}) : super(key: key);
   @override
   PingMapState createState() => PingMapState();
 }
 
 class PingMapState extends State<PingMap> {
+  FToast fToast;
+
   LocationData location;
   bool loading;
   bool toggleBtn;
+
+  bool isPingWidget;
 
   StreamSubscription _locationSubscription;
   Location _locationTracker = Location();
@@ -32,7 +39,6 @@ class PingMapState extends State<PingMap> {
 
   Set<Marker> _markers = Set.from([]);
 
-  bool isPingWidget;
   String navigateMsg = "";
 
   LatLng destination = LatLng(37.33186, -122.03045);
@@ -55,20 +61,29 @@ class PingMapState extends State<PingMap> {
   void sendRequest() async {
     String route = await _googleMapsServices.getRouteCoordinates(
         LatLng(location.latitude, location.longitude), destination);
-    String msg = await _googleMapsServices.getNavigateSteps(
-        LatLng(location.latitude, location.longitude), destination);
-    setNavigateMessage(msg);
-    createRoute(route);
+    if (route == "Not Supported this location.") {
+      setNavigateMessage("Not Supported this location.");
+    } else {
+      String msg = await _googleMapsServices.getNavigateSteps(
+          LatLng(location.latitude, location.longitude), destination);
+      setNavigateMessage(msg);
+      createRoute(route);
+    }
   }
 
   void sendAutoRequest(myLocation) async {
     String route = await _googleMapsServices.getRouteCoordinates(
         LatLng(myLocation.latitude, myLocation.longitude), destination);
-    String msg = await _googleMapsServices.getNavigateSteps(
-        LatLng(myLocation.latitude, myLocation.longitude), destination);
-    _polyLines.clear();
-    setNavigateMessage(msg);
-    createRoute(route);
+
+    if (route == "Not Supported this location.") {
+      setNavigateMessage("Not Supported this location.");
+    } else {
+      String msg = await _googleMapsServices.getNavigateSteps(
+          LatLng(myLocation.latitude, myLocation.longitude), destination);
+      setNavigateMessage(msg);
+      _polyLines.clear();
+      createRoute(route);
+    }
   }
 
   void sendNavigateRequest() async {
@@ -120,12 +135,73 @@ class PingMapState extends State<PingMap> {
 
     for (var i = 2; i < lList.length; i++) lList[i] += lList[i - 2];
 
-    print(lList.toString());
-
+/*     print(lList.toString());
+ */
     return lList;
   }
 
 /* ------------------------------------ */
+
+/* ------------------------------------ */
+
+  _showToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: Color(0xff36AC56),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            "assets/icon/map/checkIcon.png",
+            width: 26,
+            height: 26,
+          ),
+          SizedBox(
+            width: 10.0,
+          ),
+          Text(
+            "PING added",
+            style: TextStyle(
+                fontFamily: "GoogleSans",
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                color: Colors.white),
+          ),
+        ],
+      ),
+    );
+
+    /* fToast.showToast(
+        child: toast,
+        gravity: ToastGravity.CENTER,
+        toastDuration: Duration(seconds: 1),
+    ); */
+
+    // Custom Toast Position
+    fToast.showToast(
+        child: toast,
+        toastDuration: Duration(seconds: 1),
+        positionedToastBuilder: (context, child) {
+          return Align(
+            alignment: Alignment.center,
+            child: Container(
+                margin: EdgeInsets.only(
+                    top: (MediaQuery.of(context).size.height * 1 / 9)),
+                child: child),
+          );
+        });
+  }
+/* ------------------------------------ */
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   @override
   void dispose() {
@@ -140,7 +216,8 @@ class PingMapState extends State<PingMap> {
     super.initState();
     loading = true;
     toggleBtn = true;
-    isPingWidget = true;
+    fToast = FToast();
+    fToast.init(context);
 
     getCurrentLocation();
     _markers = Set.from([]);
@@ -149,10 +226,11 @@ class PingMapState extends State<PingMap> {
 
   @override
   Widget build(BuildContext context) {
+    isPingWidget = widget.isPingWidget;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    LatLng pinPostion = LatLng(35.149310, 129.063990);
+    LatLng pinPosition = LatLng(35.149310, 129.063990);
     LatLng myPosition = location != null
         ? LatLng(location.latitude, location.longitude)
         : LatLng(35.149310, 129.063990);
@@ -180,7 +258,7 @@ class PingMapState extends State<PingMap> {
                       setState(() {
                         _markers.add(Marker(
                             markerId: MarkerId('<MARKER_1>'),
-                            position: pinPostion,
+                            position: pinPosition,
                             icon: pinLocationIcon));
                         _markers.add(Marker(
                             markerId: MarkerId('<MARKER_2>'),
@@ -218,18 +296,19 @@ class PingMapState extends State<PingMap> {
                       LetsGoWidget(pingMapState: this),
                 ),
               ])
-            : Text("Loading..."),
+            : Center(child: Text("Loading...")),
         floatingActionButton: FloatingActionButton.extended(
-            icon: toggleBtn
+            label: toggleBtn
                 ? Icon(Icons.location_disabled)
                 : Icon(Icons.location_searching),
-            label: Text(''),
             backgroundColor: Colors.white,
             onPressed: () {
               getCurrentLocation();
+              _showToast();
+
               toggleBtn = !toggleBtn;
             }),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop);
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop);
   }
 
   Future<Uint8List> getMarker() async {
@@ -263,6 +342,10 @@ class PingMapState extends State<PingMap> {
     try {
       Uint8List imageData = await getMarker();
       location = await _locationTracker.getLocation();
+      setState(() {
+        location = location;
+        loading = false;
+      });
 
       updateMarkerAndCircle(location, imageData);
 
@@ -302,23 +385,22 @@ class PingMapState extends State<PingMap> {
           updateMarkerAndCircle(location, imageData);
         }
       }
-      loading = false;
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {
         debugPrint("Permission Denied");
       }
+      print("error!");
     }
   }
 
-  void setCustomMapPin() async {
-    pinLocationIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5),
-        "assets/icon/map/trashMarker.png");
+  Future<Uint8List> getTrashMarker() async {
+    ByteData byteData = await DefaultAssetBundle.of(context)
+        .load("assets/icon/map/trashMarker.png");
+    return byteData.buffer.asUint8List();
   }
 
-  togglePingWidget() {
-    setState(() {
-      isPingWidget = !isPingWidget;
-    });
+  void setCustomMapPin() async {
+    Uint8List trashIconData = await getTrashMarker();
+    pinLocationIcon = BitmapDescriptor.fromBytes(trashIconData);
   }
 }

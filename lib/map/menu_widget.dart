@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mirae/lets_go_map.dart';
 import 'package:mirae/map/ping_map.dart';
 import 'package:latlong/latlong.dart';
 
@@ -14,7 +16,7 @@ class MenuWidget extends StatefulWidget {
 
 class _MenuWidgetState extends State<MenuWidget> {
   int distance = 100;
-  bool showBottomMenu = false;
+  bool showBottomMenu = true;
 
   final Distance calDistance = Distance();
 
@@ -38,7 +40,7 @@ class _MenuWidgetState extends State<MenuWidget> {
       curve: Curves.easeInOut,
       duration: Duration(milliseconds: 200),
       left: 0,
-      bottom: (showBottomMenu) ? -60 : -(height * 4 / 9) + 30,
+      bottom: (showBottomMenu) ? -60 : -(height * 4 / 9) + 35,
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(20)),
         child: Container(
@@ -46,7 +48,7 @@ class _MenuWidgetState extends State<MenuWidget> {
           height: (height * 4 / 9) + 25,
           color: Colors.white.withOpacity(0.7),
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
               child: Column(
@@ -139,7 +141,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                           ),
                           onPressed: () {
                             widget.pingMapState.sendRequest();
-                            widget.pingMapState.togglePingWidget();
+                            Get.to(LetsGoMapPage());
                           }),
                     ],
                   )

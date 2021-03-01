@@ -11,6 +11,9 @@ class GoogleMapsServices {
     http.Response response = await http.get(url);
 
     Map values = jsonDecode(response.body);
+    if (values["status"] == "ZERO_RESULTS") {
+      return "Not Supported this location.";
+    }
     return values["routes"][0]["overview_polyline"]["points"];
   }
 
@@ -20,14 +23,19 @@ class GoogleMapsServices {
     http.Response response = await http.get(url);
 
     Map values = jsonDecode(response.body);
+    if (values["status"] == "ZERO_RESULTS") {
+      return "Not Supported this location.";
+    }
     return values["routes"][0]["legs"][0]["steps"][1] != null
         ? values["routes"][0]["legs"][0]["steps"][1]["html_instructions"]
             .toString()
             .replaceAll('<b>', '')
             .replaceAll('</b>', '')
+            .split('<div')[0]
         : values["routes"][0]["legs"][0]["steps"][0]["html_instructions"]
             .toString()
             .replaceAll('<b>', '')
-            .replaceAll('</b>', '');
+            .replaceAll('</b>', '')
+            .split('<div')[0];
   }
 }

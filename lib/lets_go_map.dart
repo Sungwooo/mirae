@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mirae/map/ping_map.dart';
 
-class MapPage extends StatelessWidget {
+class LetsGoMapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +23,7 @@ class MapPage extends StatelessWidget {
         ),
       ),
       body: PingMap(
-        isPingWidget: true,
+        isPingWidget: false,
       ),
     );
   }
