@@ -58,7 +58,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                     child: FlatButton(
                       child: Image.asset(
                         "assets/icon/map/downButton.png",
-                        width: 40,
+                        width: width * 0.1,
                         height: 5,
                       ),
                       onPressed: () {
@@ -111,7 +111,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                   Padding(
                       padding: EdgeInsets.only(top: 10, bottom: 0),
                       child: Container(
-                        width: 230,
+                        width: width * 0.6,
                         child: Text(
                           "Picking up trash can save the environment and save 30 calories",
                           style: TextStyle(
@@ -129,15 +129,15 @@ class _MenuWidgetState extends State<MenuWidget> {
                       FlatButton(
                           child: Image.asset(
                             "assets/icon/map/nextTimeBt.png",
-                            width: 110,
-                            height: 110,
+                            width: width * 0.3,
+                            height: width * 0.3,
                           ),
                           onPressed: null),
                       FlatButton(
                           child: Image.asset(
                             "assets/icon/map/letsGoBt.png",
-                            width: 110,
-                            height: 110,
+                            width: width * 0.3,
+                            height: width * 0.3,
                           ),
                           onPressed: () {
                             widget.pingMapState.sendRequest();
@@ -156,13 +156,15 @@ class _MenuWidgetState extends State<MenuWidget> {
 
   Widget getEffect(
       Color backgroundColor, String imagePath, String value, Color fontColor) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 7),
+      padding: EdgeInsets.symmetric(horizontal: width * 0.02, vertical: 7),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         child: Container(
-            width: 105,
-            height: 80,
+            width: width * 0.27,
+            height: height * 0.1,
             color: backgroundColor,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -172,8 +174,8 @@ class _MenuWidgetState extends State<MenuWidget> {
                     padding: const EdgeInsets.only(bottom: 12),
                     child: Image.asset(
                       imagePath,
-                      width: 26,
-                      height: 26,
+                      width: width * 0.07,
+                      height: width * 0.07,
                     ),
                   ),
                   Text(

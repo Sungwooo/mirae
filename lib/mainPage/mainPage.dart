@@ -1,13 +1,12 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:mirae/article/article.dart';
-import 'package:mirae/camera/camera.dart';
 import 'package:mirae/camera/trash_info.dart';
 import 'package:mirae/home/home_page.dart';
 import 'package:mirae/map/map.dart';
 import 'package:mirae/profile/profile.dart';
+
 import 'controller/nav_controller.dart';
 
 class MainPage extends StatelessWidget {
@@ -18,7 +17,7 @@ class MainPage extends StatelessWidget {
     MapPage(),
     Text("Camera.."),
     ArticlePage(),
-    Profile(),
+    MyPage(),
   ];
 
   @override
@@ -75,7 +74,7 @@ class MainPage extends StatelessWidget {
             BottomNavigationBarItem(
               icon: ImageIcon(
                   AssetImage("assets/icon/bottomNavigation/profile.png")),
-              label: "Profile",
+              label: "My",
             ),
           ],
           currentIndex: navController.selectedIndex,

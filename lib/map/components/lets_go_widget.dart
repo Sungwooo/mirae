@@ -64,7 +64,7 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                     child: FlatButton(
                       child: Image.asset(
                         "assets/icon/map/downButton.png",
-                        width: 40,
+                        width: width * 0.1,
                         height: 5,
                       ),
                       onPressed: () {
@@ -81,7 +81,7 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 15),
+                              padding: EdgeInsets.only(left: width * 0.04),
                               child: Row(
                                 children: [
                                   Text(
@@ -98,8 +98,8 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                               children: [
                                 Image.asset(
                                   "assets/icon/map/myMarker.png",
-                                  width: 40,
-                                  height: 40,
+                                  width: width * 0.1,
+                                  height: width * 0.1,
                                 ),
                                 Text(
                                   "$markerNum",
@@ -128,21 +128,21 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                                     'left': (BuildContext context) =>
                                         Image.asset(
                                           "assets/icon/map/cornerLeft.png",
-                                          width: 40,
-                                          height: 40,
+                                          width: width * 0.1,
+                                          height: width * 0.1,
                                         ),
                                     'right': (BuildContext context) =>
                                         Image.asset(
                                           "assets/icon/map/cornerRight.png",
-                                          width: 40,
-                                          height: 40,
+                                          width: width * 0.1,
+                                          height: width * 0.1,
                                         ),
                                   },
                                   fallbackBuilder: (BuildContext context) =>
                                       Image.asset(
                                     "assets/icon/map/straight.png",
-                                    width: 40,
-                                    height: 40,
+                                    width: width * 0.1,
+                                    height: width * 0.1,
                                   ),
                                 ),
                                 Padding(
@@ -198,8 +198,8 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                       children: [
                         Image.asset(
                           "assets/icon/map/trashMarker.png",
-                          width: 26,
-                          height: 26,
+                          width: width * 0.07,
+                          height: width * 0.07,
                         ),
                         Text(
                           "There are $trashNum trashes nearby",
@@ -222,13 +222,15 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
 
   Widget getEffect(
       Color backgroundColor, String imagePath, String value, Color fontColor) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 7),
+      padding: EdgeInsets.symmetric(horizontal: width * 0.02, vertical: 7),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         child: Container(
-            width: 105,
-            height: 80,
+            width: width * 0.27,
+            height: height * 0.1,
             color: backgroundColor,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -238,8 +240,8 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                     padding: const EdgeInsets.only(bottom: 12),
                     child: Image.asset(
                       imagePath,
-                      width: 26,
-                      height: 26,
+                      width: width * 0.07,
+                      height: width * 0.07,
                     ),
                   ),
                   Text(
