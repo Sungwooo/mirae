@@ -1,12 +1,15 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'constants/material_color.dart';
 import 'mainPage/mainPage.dart';
 
-/* void main() => runApp(MyApp()); */
+List<CameraDescription> cameras;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
+
   return runApp(MyApp());
 }
 
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
         splashColor: Colors.grey[700],
       ),
-      home: MainPage(),
+      home: MainPage(cameras),
     );
   }
 }

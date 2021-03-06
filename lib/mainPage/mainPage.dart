@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
@@ -6,10 +7,22 @@ import 'package:mirae/camera/trash_info.dart';
 import 'package:mirae/home/home_page.dart';
 import 'package:mirae/map/map.dart';
 import 'package:mirae/profile/profile.dart';
+import 'package:mirae/ranking/ranking-page.dart';
 
+import '../camera/camera.dart';
+import '../camera/camera.dart';
+import '../camera/trash_info.dart';
 import 'controller/nav_controller.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
+  final List<CameraDescription> cameras;
+  MainPage(this.cameras);
+
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   final NavController navController = Get.put(NavController());
 
   final List<Widget> bodyContent = [
@@ -79,7 +92,7 @@ class MainPage extends StatelessWidget {
           ],
           currentIndex: navController.selectedIndex,
           onTap: (index) => index == 2
-              ? Get.to(() => TrashInfo())
+              ? Get.to(() => RankingPage()) // CameraPage(widget.cameras))
               : navController.selectedIndex = index,
         ),
       ),
