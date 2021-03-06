@@ -46,12 +46,18 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
       curve: Curves.easeInOut,
       duration: Duration(milliseconds: 200),
       left: 0,
-      bottom: (showBottomMenu) ? -60 : -(height * 3 / 7) + 30,
+      bottom: (showBottomMenu
+          ? (widget.pingMapState.isArrived
+              ? -(height / 9) + 30
+              : -(height * 5 / 21) + 30)
+          : ((widget.pingMapState.isArrived)
+              ? -(height * 5 / 9) + 30
+              : -(height * 3 / 7) + 30)),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(20)),
         child: Container(
           width: width,
-          height: (height * 3 / 7),
+          height: height * 5 / 9,
           color: Colors.white.withOpacity(0.7),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
@@ -81,7 +87,7 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(left: width * 0.04),
+                              padding: EdgeInsets.only(left: width * 0.025),
                               child: Row(
                                 children: [
                                   Text(
@@ -90,6 +96,7 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                                         fontSize: 8,
                                         fontFamily: "GoogleSans",
                                         fontWeight: FontWeight.w700),
+                                    textAlign: TextAlign.left,
                                   ),
                                 ],
                               ),
@@ -114,49 +121,71 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 10),
+                        padding: const EdgeInsets.only(top: 0),
                         child: Align(
                           alignment: Alignment.center,
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ConditionalSwitch.single<String>(
-                                  context: context,
-                                  valueBuilder: (BuildContext context) =>
-                                      turnIcon,
-                                  caseBuilders: {
-                                    'left': (BuildContext context) =>
-                                        Image.asset(
-                                          "assets/icon/map/cornerLeft.png",
-                                          width: width * 0.1,
-                                          height: width * 0.1,
-                                        ),
-                                    'right': (BuildContext context) =>
-                                        Image.asset(
-                                          "assets/icon/map/cornerRight.png",
-                                          width: width * 0.1,
-                                          height: width * 0.1,
-                                        ),
-                                  },
-                                  fallbackBuilder: (BuildContext context) =>
+                          child: widget.pingMapState.isArrived
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
                                       Image.asset(
-                                    "assets/icon/map/straight.png",
-                                    width: width * 0.1,
-                                    height: width * 0.1,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Text(
-                                    "${widget.pingMapState.navigateMsg}",
-                                    style: TextStyle(
-                                        fontSize: 22,
-                                        fontFamily: "GoogleSans",
-                                        fontWeight: FontWeight.w700),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ]),
+                                        "assets/icon/map/arrivedIcon.png",
+                                        width: width * 0.15,
+                                        height: width * 0.15,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 0),
+                                        child: Text(
+                                          "Arrived",
+                                          style: TextStyle(
+                                              fontSize: 22,
+                                              fontFamily: "GoogleSans",
+                                              fontWeight: FontWeight.w700),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ])
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                      ConditionalSwitch.single<String>(
+                                        context: context,
+                                        valueBuilder: (BuildContext context) =>
+                                            turnIcon,
+                                        caseBuilders: {
+                                          'left': (BuildContext context) =>
+                                              Image.asset(
+                                                "assets/icon/map/cornerLeft.png",
+                                                width: width * 0.1,
+                                                height: width * 0.1,
+                                              ),
+                                          'right': (BuildContext context) =>
+                                              Image.asset(
+                                                "assets/icon/map/cornerRight.png",
+                                                width: width * 0.1,
+                                                height: width * 0.1,
+                                              ),
+                                        },
+                                        fallbackBuilder:
+                                            (BuildContext context) =>
+                                                Image.asset(
+                                          "assets/icon/map/straight.png",
+                                          width: width * 0.1,
+                                          height: width * 0.1,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: Text(
+                                          "${widget.pingMapState.navigateMsg}",
+                                          style: TextStyle(
+                                              fontSize: 22,
+                                              fontFamily: "GoogleSans",
+                                              fontWeight: FontWeight.w700),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ]),
                         ),
                       ),
                     ],
@@ -175,17 +204,17 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       getEffect(
-                          Color(0xffCCF795),
+                          Color(0xffCCF795).withOpacity(0.7),
                           "assets/icon/map/worldIcon.png",
                           'save world',
                           Color(0xff31AC53)),
                       getEffect(
-                          Color(0xffFFDF6D),
+                          Color(0xffFFDF6D).withOpacity(0.7),
                           "assets/icon/map/runIcon.png",
                           '-30kcal',
                           Color(0xffFF8A00)),
                       getEffect(
-                          Color(0xff96F2FF),
+                          Color(0xff96F2FF).withOpacity(0.7),
                           "assets/icon/map/pointIcon.png",
                           '+ 40 points',
                           Color(0xff1B91FF)),
@@ -210,7 +239,41 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                         )
                       ],
                     ),
-                  )
+                  ),
+                  widget.pingMapState.isArrived
+                      ? Padding(
+                          padding: EdgeInsets.only(top: height * 0.006),
+                          child: Stack(children: [
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 0.03 * height),
+                                child: FlatButton(
+                                  onPressed: null,
+                                  child: Image.asset(
+                                    "assets/icon/map/arrivedCamera.png",
+                                    width: 0.27 * width,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: FlatButton(
+                                onPressed: null,
+                                child: Text("Next time",
+                                    style: TextStyle(
+                                        color: Color(0xffF3A932),
+                                        fontFamily: "GoogleSans",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700)),
+                              ),
+                            ),
+                          ]),
+                        )
+                      : Container(),
                 ],
               ),
             ),

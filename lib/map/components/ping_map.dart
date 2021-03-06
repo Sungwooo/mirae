@@ -28,6 +28,7 @@ class PingMapState extends State<PingMap> {
   bool toggleBtn;
 
   bool isPingWidget;
+  bool isArrived;
 
   StreamSubscription _locationSubscription;
   Location _locationTracker = Location();
@@ -64,7 +65,7 @@ class PingMapState extends State<PingMap> {
     if (route == "Not Supported this location.") {
       setNavigateMessage("Not Supported this location.");
     } else {
-      String msg = await _googleMapsServices.getNavigateSteps(
+      String msg = await _googleMapsServices?.getNavigateSteps(
           LatLng(location.latitude, location.longitude), destination);
       setNavigateMessage(msg);
       createRoute(route);
@@ -216,6 +217,7 @@ class PingMapState extends State<PingMap> {
     super.initState();
     loading = true;
     toggleBtn = true;
+    isArrived = false;
     fToast = FToast();
     fToast.init(context);
 
@@ -249,6 +251,7 @@ class PingMapState extends State<PingMap> {
                       target: myPosition,
                       zoom: 18,
                     ),
+                    compassEnabled: false,
                     myLocationButtonEnabled: false,
                     markers: (marker != null)
                         ? _markers.union(Set.of([marker]))
@@ -297,19 +300,27 @@ class PingMapState extends State<PingMap> {
                 ),
               ])
             : Center(child: Text("Loading...")),
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: FloatingActionButton(
             heroTag: 'one',
-            label: toggleBtn
-                ? Icon(Icons.location_disabled)
-                : Icon(Icons.location_searching),
-            backgroundColor: Colors.white,
+            mini: true,
+            foregroundColor: Color(0xff31AC53),
+            child: toggleBtn
+                ? ImageIcon(
+                    AssetImage("assets/icon/map/locationOffBtn.png"),
+                    size: width * 0.05,
+                  )
+                : ImageIcon(
+                    AssetImage("assets/icon/map/locationOnBtn.png"),
+                    size: width * 0.05,
+                  ),
+            backgroundColor: Colors.white.withOpacity(0.7),
             onPressed: () {
               getCurrentLocation();
               _showToast();
 
               toggleBtn = !toggleBtn;
             }),
-        floatingActionButtonLocation: FloatingActionButtonLocation.startTop);
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop);
   }
 
   Future<Uint8List> getMarker() async {
@@ -360,9 +371,8 @@ class PingMapState extends State<PingMap> {
           if (_controller != null) {
             _controller.animateCamera(CameraUpdate.newCameraPosition(
                 new CameraPosition(
-                    bearing: 192.8334901395799,
-                    target:
-                        LatLng(newLocalData.latitude, newLocalData.longitude),
+                    target: LatLng(
+                        newLocalData.latitude - 0.0005, newLocalData.longitude),
                     tilt: 0,
                     zoom: 18.00)));
             updateMarkerAndCircle(newLocalData, imageData);

@@ -14,7 +14,7 @@ class MainPage extends StatelessWidget {
 
   final List<Widget> bodyContent = [
     HomePage(),
-    MapPage(),
+    Text("Map..."),
     Text("Camera.."),
     ArticlePage(),
     MyPage(),
@@ -80,7 +80,9 @@ class MainPage extends StatelessWidget {
           currentIndex: navController.selectedIndex,
           onTap: (index) => index == 2
               ? Get.to(() => TrashInfo())
-              : navController.selectedIndex = index,
+              : index == 1
+                  ? Get.to(() => MapPage())
+                  : navController.selectedIndex = index,
         ),
       ),
     );
