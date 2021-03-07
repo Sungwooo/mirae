@@ -3,77 +3,107 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mirae/camera/trash_info.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../map/map.dart';
+
+class TrashType {
+  String title;
+
+  TrashType({this.title});
+}
 
 class CameraPage extends StatefulWidget {
-  /* const Camera({
-    Key key,
-    @required this.camera,
-  }) : super(key: key); */
+  final List<CameraDescription> cameras;
+  CameraPage(this.cameras);
 
   @override
   _CameraPageState createState() => _CameraPageState();
 }
 
 class _CameraPageState extends State<CameraPage> {
-  CameraDescription camera;
+  int selectedTypeIndex = 0;
+  List<TrashType> typeList = new List();
   CameraController _controller;
   Future<void> _initializeControllerFuture;
 
   @override
   void initState() {
     super.initState();
-    getCameras();
-    _controller = CameraController(
-      camera,
-      ResolutionPreset.medium,
-    );
 
-    _initializeControllerFuture = _controller.initialize();
+    _cameraInitialize();
+
+    typeList.add(TrashType(title: "Auto"));
+    typeList.add(TrashType(title: "Paper"));
+    typeList.add(TrashType(title: "Can"));
+
+    Future.delayed(Duration(seconds: 3), () {
+      // _captureImage();
+    });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
-  Future<void> getCameras() async {
-    final cameras = await availableCameras();
-    final firstCamera = cameras.first;
-    setState(() {
-      camera = firstCamera;
-    });
+  Future<void> _cameraInitialize() async {
+    _controller = CameraController(widget.cameras[0], ResolutionPreset.medium);
+    _initializeControllerFuture = _controller.initialize();
+  }
+
+  _captureImage() async {
+    if (!_controller.value.isInitialized) {
+      return;
+    }
+
+    try {
+      await _initializeControllerFuture;
+
+      final image = await _controller.takePicture();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MapPage()),
+      );
+    } on CameraException catch (e) {
+    }
+  }
+
+  _launchHelpURL() async {
+    const url = 'https://flutter.dev';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  Widget _renderTypeItem(BuildContext context, index) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 4.0),
+      child: GestureDetector(onTap: () => setState(() {
+        selectedTypeIndex = index;
+      }), child: Column(
+        children: [
+          Text(typeList[index].title, style: TextStyle(fontSize: 14, color: index == selectedTypeIndex ? Color.fromRGBO(54, 174, 87, 1) : Colors.white, fontFamily: 'GoogleSans', fontWeight: FontWeight.w500)),
+          Image.asset(
+            index == selectedTypeIndex ? 'assets/ic_type_selected.png' : 'assets/ic_type_unselected.png',
+            width: 55.0,
+            height: 70.0,
+          ),
+        ],
+      )
+    ));
   }
 
   Widget _renderTypeList(BuildContext context) {
-    return ListView(
+    return ListView.builder(
       scrollDirection: Axis.horizontal,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 4.0),
-          child: Image.asset(
-            'assets/ic_type_auto.png',
-            width: 55.0,
-            height: 110.0,
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 4.0),
-          child: Image.asset(
-            'assets/ic_type_paper.png',
-            width: 55.0,
-            height: 110.0,
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 4.0),
-          child: Image.asset(
-            'assets/ic_type_can.png',
-            width: 55.0,
-            height: 110.0,
-          ),
-        ),
-      ],
+      itemCount: typeList.length,
+      itemBuilder: (context, index) {
+        return _renderTypeItem(context, index);
+      },
     );
   }
 
@@ -86,12 +116,15 @@ class _CameraPageState extends State<CameraPage> {
             color: Colors.transparent,
             child: InkWell(
               borderRadius: BorderRadius.all(Radius.circular(50.0)),
-              child: FlatButton(
-                onPressed: () => Get.to(() => TrashInfo()),
-                child: Container(
-                  padding: EdgeInsets.all(4.0),
+              child: Padding(
+                padding: EdgeInsets.all(4.0),
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MapPage()),
+                  ),
                   child: Image.asset(
-                    'assets/ic_discard.png',
+                    'assets/ic_ping.png',
                     width: 100.0,
                     height: 100.0,
                   ),
@@ -123,12 +156,18 @@ class _CameraPageState extends State<CameraPage> {
             color: Colors.transparent,
             child: InkWell(
               borderRadius: BorderRadius.all(Radius.circular(50.0)),
-              child: Container(
-                padding: EdgeInsets.all(4.0),
-                child: Image.asset(
-                  'assets/ic_ping.png',
-                  width: 100.0,
-                  height: 100.0,
+              child: FlatButton(
+                onPressed: () => Get.to(() => TrashInfo(widget.cameras)),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 4.0),
+                  child: GestureDetector(
+                    onTap: () => {},
+                    child: Image.asset(
+                      'assets/ic_discard.png',
+                      width: 100.0,
+                      height: 100.0,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -144,8 +183,8 @@ class _CameraPageState extends State<CameraPage> {
       child: FlatButton(
         color: Color.fromRGBO(54, 174, 87, 0.8),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Text("Trash Type: Paper", style: TextStyle(color: Colors.white)),
-        onPressed: () => printData(),
+        child: Text("Trash Type: ${typeList[selectedTypeIndex].title}", style: TextStyle(color: Colors.white)),
+        onPressed: () => {},
       ),
     );
   }
@@ -159,12 +198,18 @@ class _CameraPageState extends State<CameraPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('?', style: TextStyle(color: Colors.white, fontSize: 24)),
-            Image.asset(
-              'assets/ic_cancel.png',
-              width: 14.0,
-              height: 14.0,
-            )
+            GestureDetector(
+              onTap: () => _launchHelpURL(),
+              child: Text('?', style: TextStyle(color: Colors.white, fontSize: 24)),
+            ),
+            GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Image.asset(
+                'assets/ic_cancel.png',
+                width: 14.0,
+                height: 14.0,
+              )
+            ),
           ],
         ));
   }
@@ -210,8 +255,11 @@ class _CameraPageState extends State<CameraPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('PING',
-              style: TextStyle(color: Color.fromRGBO(49, 172, 131, 1))),
+          title: Text('Camera',
+              style: TextStyle(
+                  color: Color.fromRGBO(49, 172, 131, 1),
+                  fontFamily: 'GoogleSans',
+                  fontWeight: FontWeight.w600)),
           centerTitle: true),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
@@ -225,8 +273,4 @@ class _CameraPageState extends State<CameraPage> {
       ),
     );
   }
-}
-
-void printData() {
-  print('Hello');
 }
