@@ -35,6 +35,8 @@ class GradientText extends StatelessWidget {
 
 class ArticlePage extends StatelessWidget {
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: CupertinoNavigationBar(
           border: Border(
@@ -52,9 +54,10 @@ class ArticlePage extends StatelessWidget {
         ),
         body: ListView(children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 16),
+            padding: EdgeInsets.symmetric(
+                horizontal: 0.034 * width, vertical: 0.02 * height),
             child: Container(
-                height: 65,
+                height: 0.08 * height,
                 decoration: BoxDecoration(
                   color: Color(0xff36AE57).withOpacity(0.8),
                   borderRadius: BorderRadius.circular(10),
@@ -68,7 +71,7 @@ class ArticlePage extends StatelessWidget {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 0.04 * width),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -77,10 +80,10 @@ class ArticlePage extends StatelessWidget {
                           children: [
                             Image.asset(
                               'assets/world.png',
-                              width: 38,
+                              width: 0.1 * width,
                             ),
                             SizedBox(
-                              width: 16,
+                              width: 0.04 * width,
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,11 +105,11 @@ class ArticlePage extends StatelessWidget {
                                       children: [
                                         Image.asset(
                                           'assets/check.png',
-                                          width: 14,
+                                          width: 0.037 * width,
                                         ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 5),
+                                          padding: EdgeInsets.only(
+                                              left: 0.013 * width),
                                           child: Text('2',
                                               style: TextStyle(
                                                   color: Colors.white,
@@ -132,8 +135,8 @@ class ArticlePage extends StatelessWidget {
                                       fontFamily: 'GoogleSans')),
                               Image.asset(
                                 "assets/underline.png",
-                                width: 69,
-                                height: 6,
+                                width: 0.184 * width,
+                                height: 0.007 * height,
                                 fit: BoxFit.fill,
                               ),
                             ]),
@@ -141,7 +144,10 @@ class ArticlePage extends StatelessWidget {
                 )),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 12, right: 15, bottom: 6),
+            padding: EdgeInsets.only(
+                left: 0.032 * width,
+                right: 0.04 * width,
+                bottom: 0.007 * height),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -163,7 +169,7 @@ class ArticlePage extends StatelessWidget {
                 ]),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 12, right: 13),
+            padding: EdgeInsets.symmetric(horizontal: 0.032 * width),
             child: GestureDetector(
               onTap: () {
                 Get.to(() => ArticleDetailPage());
@@ -173,8 +179,8 @@ class ArticlePage extends StatelessWidget {
                 child: Stack(
                   children: [
                     Container(
-                      width: 350,
-                      height: 240,
+                      width: 0.934 * width,
+                      height: 0.295 * height,
                       decoration: BoxDecoration(
                         image: new DecorationImage(
                           image: new NetworkImage(
@@ -188,8 +194,8 @@ class ArticlePage extends StatelessWidget {
                     BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
                       child: Container(
-                        width: 350,
-                        height: 240,
+                        width: 0.934 * width,
+                        height: 0.295 * height,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             gradient: LinearGradient(
@@ -207,10 +213,10 @@ class ArticlePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 15, bottom: 8),
+                                padding: EdgeInsets.only(
+                                    left: 0.04 * width, bottom: 0.01 * height),
                                 child: Container(
-                                    width: 320,
+                                    width: 0.853 * width,
                                     child: Text(
                                       'FROM THE FIELD: Poor and vulnerable bear brunt of climate change',
                                       style: TextStyle(
@@ -229,13 +235,13 @@ class ArticlePage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20, left: 12),
+            padding: EdgeInsets.only(top: 0.024 * height, left: 0.032 * width),
             child: Container(
               child: Row(
                 children: [
                   Container(
-                    width: 153,
-                    height: 103,
+                    width: 0.408 * width,
+                    height: 0.127 * height,
                     decoration: new BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       image: new DecorationImage(
@@ -247,14 +253,14 @@ class ArticlePage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 13),
+                    padding: EdgeInsets.only(left: 0.034 * width),
                     child: Container(
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(children: [
                               Container(
-                                width: 184,
+                                width: 0.49 * width,
                                 child: Text(
                                     'FROM THE FIELD: Adapting to survive and thrive in Ghana',
                                     style: TextStyle(
@@ -265,13 +271,13 @@ class ArticlePage extends StatelessWidget {
                               )
                             ]),
                             Padding(
-                              padding: const EdgeInsets.only(top: 4),
+                              padding: EdgeInsets.only(top: 0.005 * height),
                               child: Row(children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(right: 4),
+                                  padding: EdgeInsets.only(right: 0.01 * width),
                                   child: Container(
-                                    width: 3,
-                                    height: 14,
+                                    width: 0.008 * width,
+                                    height: 0.017 * height,
                                     color: Color(0xffF4BB27),
                                   ),
                                 ),
@@ -292,13 +298,13 @@ class ArticlePage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20, left: 12),
+            padding: EdgeInsets.only(top: 0.024 * height, left: 0.032 * width),
             child: Container(
               child: Row(
                 children: [
                   Container(
-                    width: 153,
-                    height: 103,
+                    width: 0.408 * width,
+                    height: 0.127 * height,
                     decoration: new BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       image: new DecorationImage(
@@ -310,14 +316,14 @@ class ArticlePage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 13),
+                    padding: EdgeInsets.only(left: 0.034 * width),
                     child: Container(
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(children: [
                               Container(
-                                width: 184,
+                                width: 0.49 * width,
                                 child: Text(
                                     'UN climate report a ‘red alert’ for the planet: Guterres',
                                     style: TextStyle(
@@ -328,13 +334,13 @@ class ArticlePage extends StatelessWidget {
                               )
                             ]),
                             Padding(
-                              padding: const EdgeInsets.only(top: 4),
+                              padding: EdgeInsets.only(top: 0.005 * height),
                               child: Row(children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(right: 4),
+                                  padding: EdgeInsets.only(right: 0.01 * width),
                                   child: Container(
-                                    width: 3,
-                                    height: 14,
+                                    width: 0.008 * width,
+                                    height: 0.017 * height,
                                     color: Color(0xffF4BB27),
                                   ),
                                 ),

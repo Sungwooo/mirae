@@ -82,8 +82,6 @@ class _HomePageState extends State<HomePage> {
     '1',
     '2',
     '3',
-    '4',
-    '5'
   ]; //rest api < 뉴스 5개 크롤링?
 
   @override
@@ -141,7 +139,7 @@ class _HomePageState extends State<HomePage> {
 
             //SizedBox(height:20),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 13),
+              padding: EdgeInsets.symmetric(horizontal: width * 0.03),
               child: GestureDetector(
                 onTap: () {
                   Get.to(() => Challenge());
@@ -165,16 +163,16 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        padding: EdgeInsets.symmetric(vertical: 0.018 * height),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Image.asset(
                                 'assets/world.png',
-                                width: 30,
+                                width: 0.08 * width,
                               ),
                               SizedBox(
-                                width: 15,
+                                width: 0.04 * width,
                               ),
                               Text('E - Challenge',
                                   textAlign: TextAlign.center,
@@ -190,14 +188,15 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Image.asset(
                                   'assets/circle1.png',
-                                  width: 25,
+                                  width: 0.07 * width,
                                 ),
                                 Container(
-                                    width: 221,
+                                    width: 0.65 * width,
                                     child: TextUnderline(
                                       message: "Using a tumbler",
                                     )),
@@ -208,13 +207,13 @@ class _HomePageState extends State<HomePage> {
                                     }),
                                     child: _isCheck1
                                         ? Container(
-                                            width: 42,
-                                            height: 39,
+                                            width: 0.15 * width,
+                                            height: 0.05 * height,
                                             child: Column(
                                               children: [
                                                 Image.asset(
                                                   "assets/homeChecked.png",
-                                                  width: 26,
+                                                  width: 0.07 * width,
                                                 ),
                                                 SizedBox(
                                                   height: 3,
@@ -232,13 +231,17 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           )
                                         : Container(
-                                            width: 42,
-                                            height: 39,
-                                            child: Center(
-                                              child: Image.asset(
-                                                "assets/homeUnChecked.png",
-                                                width: 26,
-                                              ),
+                                            width: 0.15 * width,
+                                            height: 0.05 * height,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Image.asset(
+                                                  "assets/homeUnChecked.png",
+                                                  width: 0.07 * width,
+                                                ),
+                                              ],
                                             ),
                                           ),
                                   ),
@@ -246,14 +249,15 @@ class _HomePageState extends State<HomePage> {
                               ],
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Image.asset(
                                   'assets/circle2.png',
-                                  width: 25,
+                                  width: 0.07 * width,
                                 ),
                                 Container(
-                                    width: 221,
+                                    width: 0.65 * width,
                                     child: TextUnderline(
                                       message: "Donate items you don\'t use",
                                     )),
@@ -264,13 +268,13 @@ class _HomePageState extends State<HomePage> {
                                     }),
                                     child: _isCheck2
                                         ? Container(
-                                            width: 42,
-                                            height: 39,
+                                            width: 0.15 * width,
+                                            height: 0.05 * height,
                                             child: Column(
                                               children: [
                                                 Image.asset(
                                                   "assets/homeChecked.png",
-                                                  width: 26,
+                                                  width: 0.07 * width,
                                                 ),
                                                 SizedBox(
                                                   height: 3,
@@ -288,13 +292,17 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           )
                                         : Container(
-                                            width: 42,
-                                            height: 39,
-                                            child: Center(
-                                              child: Image.asset(
-                                                "assets/homeUnChecked.png",
-                                                width: 26,
-                                              ),
+                                            width: 0.15 * width,
+                                            height: 0.05 * height,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Image.asset(
+                                                  "assets/homeUnChecked.png",
+                                                  width: 0.07 * width,
+                                                ),
+                                              ],
                                             ),
                                           ),
                                   ),
@@ -302,14 +310,15 @@ class _HomePageState extends State<HomePage> {
                               ],
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Image.asset(
                                   'assets/circle3.png',
-                                  width: 25,
+                                  width: 0.07 * width,
                                 ),
                                 Container(
-                                  width: 221,
+                                  width: 0.65 * width,
                                   child: TextUnderline(
                                       message: 'Using public transportation'),
                                 ),
@@ -320,13 +329,13 @@ class _HomePageState extends State<HomePage> {
                                     }),
                                     child: _isCheck3
                                         ? Container(
-                                            width: 42,
-                                            height: 39,
+                                            width: 0.15 * width,
+                                            height: 0.05 * height,
                                             child: Column(
                                               children: [
                                                 Image.asset(
                                                   "assets/homeChecked.png",
-                                                  width: 26,
+                                                  width: 0.07 * width,
                                                 ),
                                                 SizedBox(
                                                   height: 3,
@@ -344,13 +353,17 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           )
                                         : Container(
-                                            width: 42,
-                                            height: 39,
-                                            child: Center(
-                                              child: Image.asset(
-                                                "assets/homeUnChecked.png",
-                                                width: 26,
-                                              ),
+                                            width: 0.15 * width,
+                                            height: 0.05 * height,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Image.asset(
+                                                  "assets/homeUnChecked.png",
+                                                  width: 0.07 * width,
+                                                ),
+                                              ],
                                             ),
                                           ),
                                   ),
@@ -388,7 +401,8 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Column(children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 12.0, left: 16.0),
+                          padding: EdgeInsets.only(
+                              top: 0.014 * height, left: 0.043 * width),
                           child: Text(
                             'There are 5 pings nearby',
                             style: TextStyle(
@@ -399,10 +413,11 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 1.0, left: 16.0),
+                          padding:
+                              EdgeInsets.only(top: 1.0, left: 0.043 * width),
                           child: Container(
-                            width: 231,
-                            height: 7,
+                            width: 0.616 * width,
+                            height: 0.009 * height,
                             decoration: new BoxDecoration(
                               image: new DecorationImage(
                                 image: new AssetImage('assets/underline.png'),
@@ -412,7 +427,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 5.0, left: 20.0),
+                          padding: EdgeInsets.only(
+                              top: 0.006 * height, left: 0.054 * width),
                           child: Text('Burn calories and save the environment',
                               style: TextStyle(
                                   color: Color(0xff31AC53),
@@ -422,12 +438,12 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ]),
                       Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20,
+                        padding: EdgeInsets.only(
+                          left: 0.054 * width,
                         ),
                         child: Image.asset(
                           'assets/ping.png',
-                          width: 50,
+                          width: 0.14 * width,
                         ),
                       ),
                       Text('5',
@@ -439,30 +455,44 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Container(
-                child: SizedBox(
-                    height: 106,
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: entries.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Container(
-                            color: Colors.grey,
-                            width: 106,
-                            height: 106,
-                            child: Text('${entries[index]}번 뉴스',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
-                                    fontFamily: 'GoogleSans')),
+                height: 0.283 * height,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: entries.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.only(left: 0.032 * width),
+                      child: InkWell(
+                        child: Container(
+                          height: 0.283 * height,
+                          width: 0.504 * width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/homeTab${entries[index]}.png'),
+                                fit: BoxFit.fill),
+                            boxShadow: [
+                              BoxShadow(
+                                color: entries[index] == '1'
+                                    ? Color(0xff4DA8FC)
+                                    : entries[index] == '2'
+                                        ? Color(0xffB6730F)
+                                        : Color(0xff08BD61),
+                                blurRadius: 3,
+                                offset: Offset(0, 1),
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const Divider(),
-                    )))
+                        ),
+                        onTap: null,
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(),
+                ))
           ],
         ));
   }

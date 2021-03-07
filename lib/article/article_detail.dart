@@ -38,6 +38,8 @@ class ArticleDetailPage extends StatelessWidget {
   final List<double> _stops = [0, 1];
 
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: CupertinoNavigationBar(
           border: Border(
@@ -66,17 +68,18 @@ class ArticleDetailPage extends StatelessWidget {
         ),
         body: ListView(children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(left: 16, right: 17, top: 23),
+            padding: EdgeInsets.only(
+                left: 0.04 * width, right: 0.04 * width, top: 0.028 * height),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Row(children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 4),
+                      padding: EdgeInsets.only(right: 0.01 * width),
                       child: Container(
-                        width: 3,
-                        height: 14,
+                        width: 0.008 * width,
+                        height: 0.017 * height,
                         color: Color(0xffF4BB27),
                       ),
                     ),
@@ -98,7 +101,8 @@ class ArticleDetailPage extends StatelessWidget {
                 ]),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 17, left: 16, right: 16),
+            padding: EdgeInsets.only(
+                top: 0.02 * height, left: 0.04 * width, right: 0.04 * width),
             child: Container(
               width: 342,
               child: Text(
@@ -111,10 +115,11 @@ class ArticleDetailPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 2, left: 12, right: 13),
+            padding: EdgeInsets.only(
+                top: 2, left: 0.034 * width, right: 0.034 * width),
             child: Container(
-              width: 350,
-              height: 158.63,
+              width: 0.934 * width,
+              height: 0.195 * height,
               decoration: new BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: new DecorationImage(
@@ -127,7 +132,7 @@ class ArticleDetailPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 1.37, left: 12),
+            padding: EdgeInsets.only(top: 2, left: 0.032 * width),
             child: Container(
               child: Text('Unsplash/Matthew T. Rader',
                   style: TextStyle(
@@ -148,8 +153,10 @@ class ArticleDetailPage extends StatelessWidget {
                     stops: _stops,
                   )),
               child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 9.0, left: 19, right: 18, bottom: 8),
+                padding: EdgeInsets.symmetric(
+                  vertical: 0.024 * width,
+                  horizontal: 0.023 * height,
+                ),
                 child: Text(
                     'The official return of the United States to the Paris Agreement on Climate Change represents good news for the country and the world, UN Secretary-General António Guterres said on Friday during a virtual event to mark the occasion. ',
                     style: TextStyle(
@@ -161,9 +168,10 @@ class ArticleDetailPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 16, left: 19, right: 20),
+            padding: EdgeInsets.only(
+                top: 0.019 * height, left: 0.05 * width, right: 0.05 * width),
             child: Container(
-              width: 336,
+              width: 0.896 * width,
               child: Text(
                   'The US, under the Trump administration, withdrew from the landmark treaty to curb global warming but President Joseph Biden reversed the decision when he assumed office in January. \n\n“For the past four years, the absence of a key player created a gap in the Paris Agreement; a missing link that weakened the whole”, Mr. Guterres said.\n\n“So today, as we mark the United States re-entry into this treaty, we also recognize its restoration, in its entirety, as its creators intended. Welcome back.” \n\n‘Humility and ambition’ \n\n Describing the occasion as “a day of hope”, the Secretary-General said he was particularly pleased to be commemorating the event with John Kerry, the US Special Presidential Envoy for Climate.\n\nThe veteran politician and diplomat was Secretary of State when the US, alongside 194 other countries, adopted the Paris Agreement in December 2015.  He was at the UN the following April to sign the treaty, accompanied by his granddaughter.\n\n“We rejoin the international climate effort with humility and with ambition”, said Mr. Kerry.\n\n“Humility knowing that we lost four years during which America was absent from the table, and humility in knowing that today, no country and no continent is getting the job done. But also with ambition, knowing that Paris alone will not do what science tells us we must do together”. A ‘pivotal’ year for action The Paris Agreement aims to limit global temperature rise to 1.5 Celsius above pre-industrial levels by curbing greenhouse gas emissions. It requires countries to commit to increasingly ambitious climate action through plans known as Nationally Determined Contributions (NDCs). ',
                   style: TextStyle(

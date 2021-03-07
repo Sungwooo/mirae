@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:folding_cell/folding_cell.dart';
 import 'package:expansion_card/expansion_card.dart';
+import 'package:mirae/components/text_underline.dart';
 
 class Challenge extends StatefulWidget {
   @override
@@ -11,13 +12,14 @@ class Challenge extends StatefulWidget {
 
 class _ChallengeState extends State<Challenge> {
   Widget build(BuildContext context) {
-    double _width = 330;
-    double _height = 260;
     var _isCheck1 = false;
     var _isCheck2 = false;
     var _isCheck3 = false;
 
     int day = 5;
+    List<int> fiveList = [5, 4, 3, 2, 1];
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: CupertinoNavigationBar(
           border: Border(
@@ -28,7 +30,7 @@ class _ChallengeState extends State<Challenge> {
             ),
           ),
           middle: Text(
-            "E-CHALLENGES",
+            "E - CHALLENGES",
             style:
                 TextStyle(color: Color(0xff31AC53), fontFamily: 'GoogleSans'),
           ),
@@ -139,356 +141,274 @@ class _ChallengeState extends State<Challenge> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top:27),
+              padding: const EdgeInsets.only(top: 27),
               child: Container(
                 width: 350,
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        GestureDetector(
-                          onTap: () {_height=0;},
-                          child: Container(
-                            width: 36,
-                            height: 49,
-                            child: Column(
-                              mainAxisAlignment:
-                              MainAxisAlignment.center,
-                              children: [
-                                Text("Day 1", style: TextStyle(
-                                    color: Color(0xff000000),
-                                    fontSize: 14,
-                                    fontFamily: 'GoogleSans')),
-                                Container(
-                                  width: 26,
-                                  height: 26,
-                                  decoration: new BoxDecoration(
-                                    image: new DecorationImage(
-                                      image: new AssetImage(
-                                          'assets/check.png'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            day = 2;
-                            if (_height == 0)
-                              _height = 220;
-                            else
-                              _height = 0;
-                          },
-                          child: Container(
-                            width: 36,
-                            height: 49,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Day 2", style: TextStyle(
-                                    color: Color(0xff000000),
-                                    fontSize: 14,
-                                    fontFamily: 'GoogleSans')),
-                                Container(
-                                  width: 26,
-                                  height: 26,
-                                  decoration: new BoxDecoration(
-                                    image: new DecorationImage(
-                                      image: new AssetImage(
-                                          'assets/check.png'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            day = 3;
-                            if (_height == 0)
-                              _height = 220;
-                            else
-                              _height = 0;
-                          },
-                          child: Container(
-                            width: 36,
-                            height: 49,
-                            child: Column(
-                              mainAxisAlignment:
-                              MainAxisAlignment.center,
-                              children: [
-                                Text("Day 3", style: TextStyle(
-                                    color: Color(0xff000000),
-                                    fontSize: 14,
-                                    fontFamily: 'GoogleSans')),
-                                Container(
-                                  width: 26,
-                                  height: 26,
-                                  decoration: new BoxDecoration(
-                                    image: new DecorationImage(
-                                      image: new AssetImage(
-                                          'assets/check.png'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            day = 4;
-                            if (_height == 0)
-                              _height = 220;
-                            else
-                              _height = 0;
-                          },
-                          child: Container(
-                            width: 36,
-                            height: 49,
-                            child: Column(
-                              mainAxisAlignment:
-                              MainAxisAlignment.center,
-                              children: [
-                                Text("Day 4", style: TextStyle(
-                                    color: Color(0xff000000),
-                                    fontSize: 14,
-                                    fontFamily: 'GoogleSans')),
-                                Container(
-                                  width: 26,
-                                  height: 26,
-                                  decoration: new BoxDecoration(
-                                    image: new DecorationImage(
-                                      image: new AssetImage(
-                                          'assets/check.png'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            day = 5;
-                            if (_height == 0)
-                              _height = 220;
-                            else
-                              _height = 0;
-                          },
-                          child: Container(
-                            width: 36,
-                            height: 49,
-                            child: Column(
-                              mainAxisAlignment:
-                              MainAxisAlignment.center,
-                              children: [
-                                Text("Day 5", style: TextStyle(
-                                    color: Color(0xff000000),
-                                    fontSize: 14,
-                                    fontFamily: 'GoogleSans')),
-                                Container(
-                                  width: 26,
-                                  height: 26,
-                                  decoration: new BoxDecoration(
-                                    image: new DecorationImage(
-                                      image: new AssetImage(
-                                          'assets/check.png'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    AnimatedContainer(
-                      width: _width,
-                      height: _height,
-                      duration: Duration(),
-                      curve: Curves.fastOutSlowIn,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey.shade200,
-                              offset: Offset(3, 3)),
-                          BoxShadow(
-                              color: Colors.grey.shade200,
-                              offset: Offset(-3, -3)),
-                        ],
-                        color: Color(0xff42B261),
-                        borderRadius: BorderRadius.circular(10),
-                        // boxShadow
-                      ),
-                      child: Column(
-                        children: [
-                          Row(children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 82.0, top: 11.0),
-                              child: Container(
-                                width: 30,
-                                height: 30,
+                      children: List.generate(fiveList.length, (index) {
+                        return InkWell(
+                          child: (Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Day ${index + 1}",
+                                  style: TextStyle(
+                                      color: Color(0xff000000),
+                                      fontSize: 14,
+                                      fontFamily: 'GoogleSans')),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                width: 26,
+                                height: 26,
                                 decoration: new BoxDecoration(
                                   image: new DecorationImage(
                                     image: new AssetImage(
-                                        'assets/world.png'),
+                                        'assets/challengeCheck.png'),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
+                            ],
+                          )),
+                        );
+                      }),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: width * 0.03, vertical: 12),
+              child: Container(
+                width: 0.93 * width,
+                height: 0.29 * height,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromRGBO(54, 174, 87, 0.7),
+                      spreadRadius: 3,
+                      blurRadius: 3,
+                      offset: Offset(0, 1),
+                    ),
+                  ],
+                  color: Color(0xff36AE57).withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(10),
+                  // boxShadow
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 0.018 * height),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/world.png',
+                              width: 0.08 * width,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 15.0, top: 14.0),
-                              child: Text('E - Challenge',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontFamily: 'GoogleSans')),
-                            )
+                            SizedBox(
+                              width: 0.04 * width,
+                            ),
+                            Text('E - Challenge',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'GoogleSans')),
                           ]),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 25.0, left: 13.0),
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  width: 25,
-                                  height: 25,
-                                  decoration: new BoxDecoration(
-                                    image: new DecorationImage(
-                                      image: new AssetImage(
-                                          'assets/circle1.png'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Image.asset(
+                                'assets/circle1.png',
+                                width: 0.07 * width,
+                              ),
+                              Container(
+                                  width: 0.65 * width,
+                                  child: TextUnderline(
+                                    message: "Using a tumbler",
+                                  )),
+                              Column(children: [
+                                InkWell(
+                                  onTap: () => setState(() {
+                                    _isCheck1 = !_isCheck1;
+                                  }),
+                                  child: _isCheck1
+                                      ? Container(
+                                          width: 0.15 * width,
+                                          height: 0.05 * height,
+                                          child: Column(
+                                            children: [
+                                              Image.asset(
+                                                "assets/homeChecked.png",
+                                                width: 0.07 * width,
+                                              ),
+                                              SizedBox(
+                                                height: 3,
+                                              ),
+                                              Text(
+                                                "+ 20 points",
+                                                style: TextStyle(
+                                                    fontFamily: "GoogleSans",
+                                                    fontSize: 8,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      : Container(
+                                          width: 0.15 * width,
+                                          height: 0.05 * height,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Image.asset(
+                                                "assets/homeUnChecked.png",
+                                                width: 0.07 * width,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                 ),
-                                Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 14.0, right: 16),
-                                    child: Container(
-                                      width: 210,
-                                      child: Text('Using a tumbler',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontFamily:
-                                              'GoogleSans')),
-                                    )),
-                                Column(children: [
-                                  Checkbox(
-                                    activeColor: Colors.white,
-                                    checkColor: Colors.green,
-                                    value: _isCheck1,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _isCheck1 = value;
-                                      });
-                                    },
-                                  ),
-                                ]),
-                              ],
-                            ),
+                              ]),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 25.0, left: 13.0),
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  width: 22,
-                                  height: 22,
-                                  decoration: new BoxDecoration(
-                                    image: new DecorationImage(
-                                      image: new AssetImage(
-                                          'assets/circle2.png'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Image.asset(
+                                'assets/circle2.png',
+                                width: 0.07 * width,
+                              ),
+                              Container(
+                                  width: 0.65 * width,
+                                  child: TextUnderline(
+                                    message: "Donate items you don\'t use",
+                                  )),
+                              Column(children: [
+                                InkWell(
+                                  onTap: () => setState(() {
+                                    _isCheck2 = !_isCheck2;
+                                  }),
+                                  child: _isCheck2
+                                      ? Container(
+                                          width: 0.15 * width,
+                                          height: 0.05 * height,
+                                          child: Column(
+                                            children: [
+                                              Image.asset(
+                                                "assets/homeChecked.png",
+                                                width: 0.07 * width,
+                                              ),
+                                              SizedBox(
+                                                height: 3,
+                                              ),
+                                              Text(
+                                                "+ 20 points",
+                                                style: TextStyle(
+                                                    fontFamily: "GoogleSans",
+                                                    fontSize: 8,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      : Container(
+                                          width: 0.15 * width,
+                                          height: 0.05 * height,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Image.asset(
+                                                "assets/homeUnChecked.png",
+                                                width: 0.07 * width,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                 ),
-                                Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 14.0, right: 16),
-                                    child: Container(
-                                      width: 210,
-                                      child: Text(
-                                          'Donating items you don\'t use at home',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontFamily:
-                                              'GoogleSans')),
-                                    )),
-                                Column(children: [
-                                  Checkbox(
-                                    activeColor: Colors.white,
-                                    checkColor: Colors.green,
-                                    value: _isCheck2,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _isCheck2 = value;
-                                      });
-                                    },
-                                  ),
-                                ]),
-                              ],
-                            ),
+                              ]),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 25.0, left: 13.0),
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  width: 25,
-                                  height: 25,
-                                  decoration: new BoxDecoration(
-                                    image: new DecorationImage(
-                                      image: new AssetImage(
-                                          'assets/circle3.png'),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Image.asset(
+                                'assets/circle3.png',
+                                width: 0.07 * width,
+                              ),
+                              Container(
+                                width: 0.65 * width,
+                                child: TextUnderline(
+                                    message: 'Using public transportation'),
+                              ),
+                              Column(children: [
+                                InkWell(
+                                  onTap: () => setState(() {
+                                    _isCheck3 = !_isCheck3;
+                                  }),
+                                  child: _isCheck3
+                                      ? Container(
+                                          width: 0.15 * width,
+                                          height: 0.05 * height,
+                                          child: Column(
+                                            children: [
+                                              Image.asset(
+                                                "assets/homeChecked.png",
+                                                width: 0.07 * width,
+                                              ),
+                                              SizedBox(
+                                                height: 3,
+                                              ),
+                                              Text(
+                                                "+ 20 points",
+                                                style: TextStyle(
+                                                    fontFamily: "GoogleSans",
+                                                    fontSize: 8,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      : Container(
+                                          width: 0.15 * width,
+                                          height: 0.05 * height,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Image.asset(
+                                                "assets/homeUnChecked.png",
+                                                width: 0.07 * width,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                 ),
-                                Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 14.0, right: 16),
-                                    child: Container(
-                                      width: 210,
-                                      child: Text(
-                                          'Using public transportation',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontFamily:
-                                              'GoogleSans')),
-                                    )),
-                                Column(children: [
-                                  Checkbox(
-                                    activeColor: Colors.white,
-                                    checkColor: Colors.green,
-                                    value: _isCheck3,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _isCheck3 = value;
-                                      });
-                                    },
-                                  ),
-                                ]),
-                              ],
-                            ),
+                              ]),
+                            ],
                           ),
                         ],
                       ),
