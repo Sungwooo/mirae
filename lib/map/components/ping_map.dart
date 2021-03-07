@@ -217,7 +217,7 @@ class PingMapState extends State<PingMap> {
     super.initState();
     loading = true;
     toggleBtn = true;
-    isArrived = false;
+    isArrived = true;
     fToast = FToast();
     fToast.init(context);
 

@@ -30,6 +30,7 @@ class MainPage extends StatelessWidget {
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
+          backgroundColor: Colors.white,
           unselectedItemColor: Color(0xff8F8F8F),
           selectedItemColor: Color(0xff31AC53),
           type: BottomNavigationBarType.fixed,
@@ -60,7 +61,7 @@ class MainPage extends StatelessWidget {
                   "assets/icon/bottomNavigation/cameraIcon.png",
                   width: 60,
                 ),
-                transform: Matrix4.translationValues(0.0, -30.0, 0.0),
+                transform: Matrix4.translationValues(0.0, -20.0, 0.0),
               ),
               label: "",
             ),
