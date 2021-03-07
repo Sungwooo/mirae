@@ -27,7 +27,7 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> bodyContent = [
     HomePage(),
-    MapPage(),
+    Text("Map..."),
     Text("Camera.."),
     ArticlePage(),
     MyPage(),
@@ -43,6 +43,7 @@ class _MainPageState extends State<MainPage> {
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
+          backgroundColor: Colors.white,
           unselectedItemColor: Color(0xff8F8F8F),
           selectedItemColor: Color(0xff31AC53),
           type: BottomNavigationBarType.fixed,
@@ -73,7 +74,7 @@ class _MainPageState extends State<MainPage> {
                   "assets/icon/bottomNavigation/cameraIcon.png",
                   width: 60,
                 ),
-                transform: Matrix4.translationValues(0.0, -30.0, 0.0),
+                transform: Matrix4.translationValues(0.0, -20.0, 0.0),
               ),
               label: "",
             ),
@@ -92,8 +93,10 @@ class _MainPageState extends State<MainPage> {
           ],
           currentIndex: navController.selectedIndex,
           onTap: (index) => index == 2
-              ? Get.to(() => RankingPage()) // CameraPage(widget.cameras))
-              : navController.selectedIndex = index,
+              ? Get.to(() => RankingPage())
+              : index == 1
+                  ? Get.to(() => MapPage())
+                  : navController.selectedIndex = index,
         ),
       ),
     );

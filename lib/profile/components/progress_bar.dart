@@ -13,13 +13,6 @@ class ProgressBarWidget extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xffA79F84),
-              blurRadius: 7,
-              offset: Offset(0, 1),
-            ),
-          ],
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 0.06 * width),

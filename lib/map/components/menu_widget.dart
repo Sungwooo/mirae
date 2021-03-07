@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -92,59 +91,67 @@ class _MenuWidgetState extends State<MenuWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       getEffect(
-                          Color(0xffCCF795),
+                          Color(0xffCCF795).withOpacity(0.7),
                           "assets/icon/map/worldIcon.png",
                           'save world',
                           Color(0xff31AC53)),
                       getEffect(
-                          Color(0xffFFDF6D),
+                          Color(0xffFFDF6D).withOpacity(0.7),
                           "assets/icon/map/runIcon.png",
                           '-30kcal',
                           Color(0xffFF8A00)),
                       getEffect(
-                          Color(0xff96F2FF),
+                          Color(0xff96F2FF).withOpacity(0.7),
                           "assets/icon/map/pointIcon.png",
                           '+ 40 points',
                           Color(0xff1B91FF)),
                     ],
                   ),
-                  Padding(
-                      padding: EdgeInsets.only(top: 10, bottom: 0),
-                      child: Container(
-                        width: width * 0.6,
-                        child: Text(
-                          "Picking up trash can save the environment and save 30 calories",
-                          style: TextStyle(
-                            fontFamily: "GoogleSans",
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xff31AC53),
-                            fontSize: 12,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      FlatButton(
-                          child: Image.asset(
-                            "assets/icon/map/nextTimeBt.png",
-                            width: width * 0.3,
-                            height: width * 0.3,
-                          ),
-                          onPressed: null),
-                      FlatButton(
-                          child: Image.asset(
-                            "assets/icon/map/letsGoBt.png",
-                            width: width * 0.3,
-                            height: width * 0.3,
-                          ),
-                          onPressed: () {
-                            widget.pingMapState.sendRequest();
-                            Get.to(() => LetsGoMapPage());
-                          }),
-                    ],
-                  )
+                  Container(
+                    width: width * 0.65,
+                    child: Text(
+                      "Picking up trash can save the environment and save 30 calories",
+                      style: TextStyle(
+                        fontFamily: "GoogleSans",
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xff31AC53),
+                        fontSize: 12,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Stack(children: [
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 0.03 * height),
+                        child: FlatButton(
+                            child: Image.asset(
+                              "assets/icon/map/letsGoBtn.png",
+                              width: width * 0.3,
+                              height: width * 0.3,
+                            ),
+                            onPressed: () {
+                              widget.pingMapState.sendRequest();
+                              Get.to(() => LetsGoMapPage());
+                            }),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: FlatButton(
+                        onPressed: null,
+                        child: Text("Next time",
+                            style: TextStyle(
+                                color: Color(0xffF3A932),
+                                fontFamily: "GoogleSans",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700)),
+                      ),
+                    ),
+                  ]),
                 ],
               ),
             ),
