@@ -1,12 +1,14 @@
 import 'dart:async';
+import 'dart:math' as math;
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mirae/camera/trash_info.dart';
+import 'package:tflite/tflite.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../map/map.dart';
+import 'bounding_box.dart';
 
 class TrashType {
   String title;
@@ -27,6 +29,56 @@ class _CameraPageState extends State<CameraPage> {
   List<TrashType> typeList = new List();
   CameraController _controller;
   Future<void> _initializeControllerFuture;
+  bool isDetecting = false;
+  List<dynamic> _recognitions;
+  int _imageHeight = 0;
+  int _imageWidth = 0;
+
+  loadTfModel() async {
+    await Tflite.loadModel(
+      model: "assets/models/ssd_mobilenet.tflite",
+      labels: "assets/models/labels.txt",
+    );
+  }
+
+  Future<void> _cameraInitialize() async {
+    _controller = CameraController(widget.cameras[0], ResolutionPreset.high);
+    _initializeControllerFuture = _controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+
+      _controller.startImageStream((CameraImage img) {
+        if (!isDetecting) {
+          isDetecting = true;
+          Tflite.detectObjectOnFrame(
+            bytesList: img.planes.map((plane) {return plane.bytes;}).toList(),
+            model: "SSDMobileNet",
+            imageHeight: img.height,
+            imageWidth: img.width,
+            imageMean: 127.5,
+            imageStd: 127.5,
+            numResultsPerClass: 1,
+            threshold: 0.4,
+          ).then((recognitions) {
+            /*
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => MapPage()),
+            );
+             */
+            setState(() {
+              _recognitions = recognitions;
+              _imageHeight = img.height;
+              _imageWidth = img.width;
+            });
+            isDetecting = false;
+          });
+        }
+      });
+    });
+  }
 
   @override
   void initState() {
@@ -38,9 +90,7 @@ class _CameraPageState extends State<CameraPage> {
     typeList.add(TrashType(title: "Paper"));
     typeList.add(TrashType(title: "Can"));
 
-    Future.delayed(Duration(seconds: 3), () {
-      // _captureImage();
-    });
+    loadTfModel();
   }
 
   @override
@@ -241,10 +291,18 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Widget _renderCameraView(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
     return Container(
       child: Stack(
         children: <Widget>[
           CameraPreview(_controller),
+          BoundingBox(
+            _recognitions == null ? [] : _recognitions,
+            math.max(_imageHeight, _imageWidth),
+            math.min(_imageHeight, _imageWidth),
+            screen.height,
+            screen.width,
+          ),
           Align(
               alignment: Alignment.topCenter,
               child: _renderTopContainer(context)),

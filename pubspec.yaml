@@ -21,6 +21,7 @@ dependencies:
     flutter_conditional_rendering:
     latlong:
     fluttertoast:
+    tflite:
     url_launcher:
 
 dev_dependencies:
@@ -34,6 +35,8 @@ flutter:
         - assets/icon/
         - assets/icon/bottomNavigation/
         - assets/icon/map/
+        - assets/models/ssd_mobilenet.tflite
+        - assets/models/labels.txt
 
     fonts:
         - family: GoogleSans
