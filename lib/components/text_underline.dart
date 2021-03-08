@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class TextUnderline extends StatelessWidget {
   final String message;
+  final Color color;
 
-  TextUnderline({this.message, Key key}) : super(key: key);
+  TextUnderline({this.message, this.color = Colors.white, Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class TextUnderline extends StatelessWidget {
         Text(
           "$message",
           style: TextStyle(
-              color: Colors.white,
+              color: color,
               fontFamily: "GoogleSans",
               fontWeight: FontWeight.w700,
               fontSize: 18),
@@ -23,6 +25,7 @@ class TextUnderline extends StatelessWidget {
           "assets/underline.png",
           width: (msgLength.toDouble() * 9),
           height: 6,
+          color: color,
           fit: BoxFit.fill,
         )
       ],

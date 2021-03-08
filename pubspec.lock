@@ -92,13 +92,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.3"
-  expansion_card:
-    dependency: "direct main"
-    description:
-      name: expansion_card
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0"
   fake_async:
     dependency: transitive
     description:
@@ -163,13 +156,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.1.8"
-  folding_cell:
-    dependency: "direct main"
-    description:
-      name: folding_cell
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   get:
     dependency: "direct main"
     description:
