@@ -3,15 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:mirae/article/article.dart';
-import 'package:mirae/camera/trash_info.dart';
 import 'package:mirae/home/home_page.dart';
-import 'package:mirae/map/map.dart';
+import 'package:mirae/main.dart';
 import 'package:mirae/profile/profile.dart';
 import 'package:mirae/ranking/ranking-page.dart';
-
 import '../camera/camera.dart';
-import '../camera/camera.dart';
-import '../camera/trash_info.dart';
 import 'controller/nav_controller.dart';
 
 class MainPage extends StatefulWidget {
@@ -27,7 +23,7 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> bodyContent = [
     HomePage(),
-    MapPage(),
+    RankingPage(),
     Text("Camera.."),
     ArticlePage(),
     MyPage(),
@@ -43,6 +39,7 @@ class _MainPageState extends State<MainPage> {
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
+          backgroundColor: Colors.white,
           unselectedItemColor: Color(0xff8F8F8F),
           selectedItemColor: Color(0xff31AC53),
           type: BottomNavigationBarType.fixed,
@@ -73,7 +70,7 @@ class _MainPageState extends State<MainPage> {
                   "assets/icon/bottomNavigation/cameraIcon.png",
                   width: 60,
                 ),
-                transform: Matrix4.translationValues(0.0, -30.0, 0.0),
+                transform: Matrix4.translationValues(0.0, -20.0, 0.0),
               ),
               label: "",
             ),

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mirae/map/map.dart';
 
 class RankerType {
@@ -10,7 +12,12 @@ class RankerType {
   int pingCount;
 
   RankerType(
-      {this.name, this.imageUrl, this.flag, this.points, this.discardCount, this.pingCount});
+      {this.name,
+      this.imageUrl,
+      this.flag,
+      this.points,
+      this.discardCount,
+      this.pingCount});
 }
 
 class RankingPage extends StatefulWidget {
@@ -63,13 +70,15 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   Widget _renderProfile(BuildContext context, index) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Row(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.0),
+          padding: EdgeInsets.symmetric(horizontal: 0.032 * width),
           child: Container(
-            width: 60,
-            height: 60,
+            width: 0.16 * width,
+            height: 0.16 * width,
             child: CircleAvatar(
               radius: 50,
               backgroundImage: NetworkImage(rankerList[index].imageUrl),
@@ -85,8 +94,18 @@ class _RankingPageState extends State<RankingPage> {
         ),
         Column(
           children: [
-            Text(rankerList[index].name, style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'GoogleSans', fontWeight: FontWeight.w600)),
-            Text("${rankerList[index].points} pts", style: TextStyle(color: Color.fromRGBO(66, 178, 97, 1), fontSize: 14, fontFamily: 'GoogleSans', fontWeight: FontWeight.w600)),
+            Text(rankerList[index].name,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontFamily: 'GoogleSans',
+                    fontWeight: FontWeight.w700)),
+            Text("${rankerList[index].points} pts",
+                style: TextStyle(
+                    color: Color.fromRGBO(66, 178, 97, 1),
+                    fontSize: 14,
+                    fontFamily: 'GoogleSans',
+                    fontWeight: FontWeight.w400)),
           ],
         )
       ],
@@ -94,63 +113,109 @@ class _RankingPageState extends State<RankingPage> {
   }
 
   Widget _renderTypeItem(BuildContext context, index) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-        child: GestureDetector(onTap: () => {},
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text("${index + 1}", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'GoogleSans', fontWeight: FontWeight.w600)),
-              _renderProfile(context, index),
-              Image.asset('assets/ic_loc_discard.png', width: 56, height: 56),
-              Text('${rankerList[index].discardCount}', style: TextStyle(color: Color.fromRGBO(66, 178, 97, 1), fontSize: 16, fontFamily: 'GoogleSans', fontWeight: FontWeight.w600)),
-              Image.asset('assets/ic_loc_ping.png', width: 56, height: 56),
-              Text('${rankerList[index].pingCount}', style: TextStyle(color: Color.fromRGBO(244, 198, 35, 1), fontSize: 16, fontFamily: 'GoogleSans', fontWeight: FontWeight.w600)),
-            ],
-          )
-        ));
+        padding: EdgeInsets.symmetric(
+            horizontal: 0.03 * width, vertical: 0.007 * height),
+        child: GestureDetector(
+            onTap: () => {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text("${index + 1}",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontFamily: 'GoogleSans',
+                        fontWeight: FontWeight.w700)),
+                _renderProfile(context, index),
+                Image.asset('assets/ic_loc_discard.png', width: 0.14 * width),
+                Text('${rankerList[index].discardCount}',
+                    style: TextStyle(
+                        color: Color.fromRGBO(66, 178, 97, 1),
+                        fontSize: 16,
+                        fontFamily: 'GoogleSans',
+                        fontWeight: FontWeight.w700)),
+                Image.asset('assets/ic_loc_ping.png', width: 0.14 * width),
+                Text('${rankerList[index].pingCount}',
+                    style: TextStyle(
+                        color: Color.fromRGBO(244, 198, 35, 1),
+                        fontSize: 16,
+                        fontFamily: 'GoogleSans',
+                        fontWeight: FontWeight.w700)),
+              ],
+            )));
   }
 
   Widget _renderHeaderContent() {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Column(
-            children: [
-              Padding(
-                  padding: EdgeInsets.only(top: 12),
-                  child: Text('DISCARD', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'GoogleSans', fontWeight: FontWeight.w600))
-              ),
-              Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+                padding: EdgeInsets.only(top: 0.014 * height),
+                child: Text('DISCARD',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontFamily: 'GoogleSans',
+                        fontWeight: FontWeight.w700))),
+            Padding(
+              padding: EdgeInsets.only(left: 0.016 * width),
+              child: Row(
                 children: [
-                  Image.asset('assets/ic_loc_discard.png', width: 60, height: 60),
-                  Text('3050', style: TextStyle(color: Color.fromRGBO(66, 178, 97, 1), fontSize: 28, fontFamily: 'GoogleSans', fontWeight: FontWeight.w600))
+                  Image.asset('assets/ic_loc_discard.png', width: 0.16 * width),
+                  Text('3050',
+                      style: TextStyle(
+                          color: Color.fromRGBO(66, 178, 97, 1),
+                          fontSize: 28,
+                          fontFamily: 'GoogleSans',
+                          fontWeight: FontWeight.w700))
                 ],
               ),
-            ],
-          ),
-          Column(
-            children: [
-              Padding(
-                  padding: EdgeInsets.only(top: 12),
-                  child: Text('PING', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'GoogleSans', fontWeight: FontWeight.w600))
-              ),
-              Row(
-                children: [
-                  Image.asset('assets/ic_loc_ping.png', width: 60, height: 60),
-                  Text('10208', style: TextStyle(color: Color.fromRGBO(244, 198, 35, 1), fontSize: 28, fontFamily: 'GoogleSans', fontWeight: FontWeight.w600))
-                ],
-              ),
-            ],
-          ),
+            ),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+                padding:
+                    EdgeInsets.only(top: 0.014 * height, left: 0.016 * width),
+                child: Text('PING',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontFamily: 'GoogleSans',
+                        fontWeight: FontWeight.w600))),
+            Row(
+              children: [
+                Image.asset('assets/ic_loc_ping.png', width: 0.16 * width),
+                Text('10208',
+                    style: TextStyle(
+                        color: Color.fromRGBO(244, 198, 35, 1),
+                        fontSize: 28,
+                        fontFamily: 'GoogleSans',
+                        fontWeight: FontWeight.w600))
+              ],
+            ),
+          ],
+        ),
       ],
     );
   }
 
   Widget _renderHandlinedTitle() {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 24),
-      width: 250,
+      width: 0.67 * width,
       child: Column(
         children: [
           Text("World Ranking",
@@ -158,8 +223,14 @@ class _RankingPageState extends State<RankingPage> {
                   fontSize: 28,
                   color: Color.fromRGBO(66, 178, 97, 1),
                   fontFamily: 'GoogleSans',
-                  fontWeight: FontWeight.w600)),
-          Image.asset('assets/handline_green.png', height: 10),
+                  fontWeight: FontWeight.w700)),
+          Image.asset(
+            'assets/underline.png',
+            width: 0.54 * width,
+            height: 0.01 * height,
+            color: Color(0xff42B261),
+            fit: BoxFit.fill,
+          ),
         ],
       ),
     );
@@ -167,35 +238,48 @@ class _RankingPageState extends State<RankingPage> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
-        appBar: AppBar(
-            title: Text('MAP',
-                style: TextStyle(
-                    color: Color.fromRGBO(49, 172, 131, 1),
-                    fontFamily: 'GoogleSans',
-                    fontWeight: FontWeight.w600)),
-            centerTitle: true),
+        appBar: CupertinoNavigationBar(
+          middle: Text(
+            "MAP",
+            style:
+                TextStyle(color: Color(0xff31AC53), fontFamily: 'GoogleSans'),
+          ),
+        ),
         body: Column(
           children: [
-            GestureDetector(
+            InkWell(
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => MapPage()),
               ),
               child: Container(
-                height: 250,
-                width: double.infinity,
+                height: 0.35 * height,
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: new AssetImage('assets/bg_ranking.png'),
-                        fit: BoxFit.cover)),
+                  image: DecorationImage(
+                      image: AssetImage('assets/bg_ranking.png'),
+                      fit: BoxFit.cover),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.25),
+                      spreadRadius: 3,
+                      blurRadius: 3,
+                      offset: Offset(0, 1),
+                    ),
+                  ],
+                ),
                 child: _renderHeaderContent(),
               ),
             ),
             _renderHandlinedTitle(),
             Expanded(
               child: SizedBox(
-                height: 200.0,
+                height: 0.246 * height,
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   itemCount: rankerList.length,
