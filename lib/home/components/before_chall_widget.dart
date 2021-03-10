@@ -12,7 +12,7 @@ class BeforeChallWidget extends StatefulWidget {
 class _BeforeChallWidgetState extends State<BeforeChallWidget> {
   var _isCheck1 = true;
   var _isCheck2 = true;
-  var _isCheck3 = true;
+  var _isCheck3 = false;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -55,48 +55,46 @@ class _BeforeChallWidgetState extends State<BeforeChallWidget> {
                     children: <Widget>[
                       Image.asset(
                         'assets/circle1.png',
-                        color: Color(0xff42B261),
+                        color:
+                            _isCheck1 ? Color(0xff42B261) : Color(0xff797979),
                         width: 0.07 * width,
                       ),
                       Container(
                           width: 0.65 * width,
                           child: TextUnderline(
                             message: "Using a tumbler",
-                            color: Color(0xff42B261),
+                            color: _isCheck1
+                                ? Color(0xff42B261)
+                                : Color(0xff797979),
                           )),
                       Column(children: [
-                        InkWell(
-                          onTap: () => setState(() {
-                            _isCheck1 = !_isCheck1;
-                          }),
-                          child: _isCheck1
-                              ? Container(
-                                  width: 0.15 * width,
-                                  height: 0.05 * height,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Image.asset(
-                                        "assets/challengeCheck.png",
-                                        width: 0.07 * width,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : Container(
-                                  width: 0.15 * width,
-                                  height: 0.05 * height,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Image.asset(
-                                        "assets/challengeFailed.png",
-                                        width: 0.07 * width,
-                                      ),
-                                    ],
-                                  ),
+                        _isCheck1
+                            ? Container(
+                                width: 0.15 * width,
+                                height: 0.05 * height,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      "assets/challengeCheck.png",
+                                      width: 0.07 * width,
+                                    ),
+                                  ],
                                 ),
-                        ),
+                              )
+                            : Container(
+                                width: 0.15 * width,
+                                height: 0.05 * height,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      "assets/challengeFailed.png",
+                                      width: 0.07 * width,
+                                    ),
+                                  ],
+                                ),
+                              ),
                       ]),
                     ],
                   ),
@@ -107,47 +105,45 @@ class _BeforeChallWidgetState extends State<BeforeChallWidget> {
                       Image.asset(
                         'assets/circle2.png',
                         width: 0.07 * width,
-                        color: Color(0xff42B261),
+                        color:
+                            _isCheck2 ? Color(0xff42B261) : Color(0xff797979),
                       ),
                       Container(
                           width: 0.65 * width,
                           child: TextUnderline(
                             message: "Donate items you don\'t use",
-                            color: Color(0xff42B261),
+                            color: _isCheck2
+                                ? Color(0xff42B261)
+                                : Color(0xff797979),
                           )),
                       Column(children: [
-                        InkWell(
-                          onTap: () => setState(() {
-                            _isCheck2 = !_isCheck2;
-                          }),
-                          child: _isCheck2
-                              ? Container(
-                                  width: 0.15 * width,
-                                  height: 0.05 * height,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Image.asset(
-                                        "assets/challengeCheck.png",
-                                        width: 0.07 * width,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : Container(
-                                  width: 0.15 * width,
-                                  height: 0.05 * height,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Image.asset(
-                                        "assets/challengeFailed.png",
-                                        width: 0.07 * width,
-                                      ),
-                                    ],
-                                  ),
+                        _isCheck2
+                            ? Container(
+                                width: 0.15 * width,
+                                height: 0.05 * height,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      "assets/challengeCheck.png",
+                                      width: 0.07 * width,
+                                    ),
+                                  ],
                                 ),
-                        ),
+                              )
+                            : Container(
+                                width: 0.15 * width,
+                                height: 0.05 * height,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      "assets/challengeFailed.png",
+                                      width: 0.07 * width,
+                                    ),
+                                  ],
+                                ),
+                              ),
                       ]),
                     ],
                   ),
@@ -158,48 +154,45 @@ class _BeforeChallWidgetState extends State<BeforeChallWidget> {
                       Image.asset(
                         'assets/circle3.png',
                         width: 0.07 * width,
-                        color: Color(0xff42B261),
+                        color:
+                            _isCheck3 ? Color(0xff42B261) : Color(0xff797979),
                       ),
                       Container(
                         width: 0.65 * width,
                         child: TextUnderline(
                           message: 'Using public transportation',
-                          color: Color(0xff42B261),
+                          color:
+                              _isCheck3 ? Color(0xff42B261) : Color(0xff797979),
                         ),
                       ),
                       Column(children: [
-                        InkWell(
-                          onTap: () => setState(() {
-                            _isCheck3 = !_isCheck3;
-                          }),
-                          child: _isCheck3
-                              ? Container(
-                                  width: 0.15 * width,
-                                  height: 0.05 * height,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Image.asset(
-                                        "assets/challengeCheck.png",
-                                        width: 0.07 * width,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : Container(
-                                  width: 0.15 * width,
-                                  height: 0.05 * height,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Image.asset(
-                                        "assets/challengeFailed.png",
-                                        width: 0.07 * width,
-                                      ),
-                                    ],
-                                  ),
+                        _isCheck3
+                            ? Container(
+                                width: 0.15 * width,
+                                height: 0.05 * height,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      "assets/challengeCheck.png",
+                                      width: 0.07 * width,
+                                    ),
+                                  ],
                                 ),
-                        ),
+                              )
+                            : Container(
+                                width: 0.15 * width,
+                                height: 0.05 * height,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      "assets/challengeFailed.png",
+                                      width: 0.07 * width,
+                                    ),
+                                  ],
+                                ),
+                              ),
                       ]),
                     ],
                   ),
