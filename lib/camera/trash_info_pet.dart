@@ -3,15 +3,15 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import '../mainPage/mainPage.dart';
 
-class TrashInfo extends StatefulWidget {
+class TrashInfoPet extends StatefulWidget {
   final List<CameraDescription> cameras;
-  TrashInfo(this.cameras);
+  TrashInfoPet(this.cameras);
 
   @override
-  _TrashInfoState createState() => _TrashInfoState();
+  _TrashInfoPetState createState() => _TrashInfoPetState();
 }
 
-class _TrashInfoState extends State<TrashInfo> {
+class _TrashInfoPetState extends State<TrashInfoPet> {
   Widget _renderRecycleButton() {
     return Container(
       width: 150,
@@ -69,16 +69,16 @@ class _TrashInfoState extends State<TrashInfo> {
                 Image.asset('assets/ic_number_1.png', width: 30, height: 30),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.only(left: 12),
-                  child: Text("How ddasdasd sadasdasd sadasdsada",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black,
-                          fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w500)),
-                )),
+                      padding: EdgeInsets.only(left: 12),
+                      child: Text("How ddasdasd sadasdasd sadasdsada",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.black,
+                              fontFamily: 'GoogleSans',
+                              fontWeight: FontWeight.w500)),
+                    )),
               ],
             ),
             SizedBox(height: 14),
@@ -87,16 +87,16 @@ class _TrashInfoState extends State<TrashInfo> {
                 Image.asset('assets/ic_number_1.png', width: 30, height: 30),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.only(left: 12),
-                  child: Text("How ddasdasd sadasdasd sadasdsada",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black,
-                          fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w500)),
-                )),
+                      padding: EdgeInsets.only(left: 12),
+                      child: Text("How ddasdasd sadasdasd sadasdsada",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.black,
+                              fontFamily: 'GoogleSans',
+                              fontWeight: FontWeight.w500)),
+                    )),
               ],
             ),
             SizedBox(height: 14),
@@ -105,16 +105,16 @@ class _TrashInfoState extends State<TrashInfo> {
                 Image.asset('assets/ic_number_1.png', width: 30, height: 30),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.only(left: 12),
-                  child: Text("How ddasdasd sadasdasd sadasdsada",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black,
-                          fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w500)),
-                )),
+                      padding: EdgeInsets.only(left: 12),
+                      child: Text("How ddasdasd sadasdasd sadasdsada",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.black,
+                              fontFamily: 'GoogleSans',
+                              fontWeight: FontWeight.w500)),
+                    )),
               ],
             ),
             SizedBox(height: 14),
@@ -123,16 +123,16 @@ class _TrashInfoState extends State<TrashInfo> {
                 Image.asset('assets/ic_number_1.png', width: 30, height: 30),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.only(left: 12),
-                  child: Text("How ddasdasd sadasdasd sadasdsada",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black,
-                          fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w500)),
-                )),
+                      padding: EdgeInsets.only(left: 12),
+                      child: Text("How ddasdasd sadasdasd sadasdsada",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.black,
+                              fontFamily: 'GoogleSans',
+                              fontWeight: FontWeight.w500)),
+                    )),
               ],
             ),
             SizedBox(height: 24),
@@ -148,24 +148,24 @@ class _TrashInfoState extends State<TrashInfo> {
           color: Color.fromRGBO(54, 174, 87, 0.9),
           padding: EdgeInsets.all(10.0),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: GestureDetector(
-            onTap: () => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => MainPage(widget.cameras)),
-            ),
+              onTap: () => Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => MainPage(widget.cameras)),
+              ),
               child: Column(
-            children: [
-              Text("+ 40 poinsts",
-                  style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontFamily: 'GoogleSans',
-                      fontWeight: FontWeight.w600)),
-              Image.asset('assets/handline_white.png',
-                  width: double.infinity, height: 10)
-            ],
-          )),
+                children: [
+                  Text("+ 40 poinsts",
+                      style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                          fontFamily: 'GoogleSans',
+                          fontWeight: FontWeight.w600)),
+                  Image.asset('assets/handline_white.png',
+                      width: double.infinity, height: 10)
+                ],
+              )),
         ));
   }
 
@@ -176,7 +176,7 @@ class _TrashInfoState extends State<TrashInfo> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(bottom: 12.0),
-            child: Text('PAPER',
+            child: Text('CAN',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 32,
@@ -224,7 +224,7 @@ class _TrashInfoState extends State<TrashInfo> {
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: new AssetImage('assets/bg_trash.png'),
+                  image: new AssetImage('assets/bg_pet.png'),
                   fit: BoxFit.cover)),
           child: ClipRRect(
             child: BackdropFilter(

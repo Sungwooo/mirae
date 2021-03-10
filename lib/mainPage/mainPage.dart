@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:mirae/article/article.dart';
-import 'package:mirae/camera/trash_info.dart';
+import 'package:mirae/camera/trash_info_paper.dart';
 import 'package:mirae/home/home_page.dart';
 import 'package:mirae/map/map.dart';
 import 'package:mirae/profile/profile.dart';
@@ -11,7 +11,7 @@ import 'package:mirae/ranking/ranking-page.dart';
 
 import '../camera/camera.dart';
 import '../camera/camera.dart';
-import '../camera/trash_info.dart';
+import '../camera/trash_info_paper.dart';
 import 'controller/nav_controller.dart';
 
 class MainPage extends StatefulWidget {
