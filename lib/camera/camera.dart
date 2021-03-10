@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 import 'package:camera/camera.dart';
-import 'dart:developer' as developer;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mirae/camera/trash_info_can.dart';
@@ -120,6 +120,27 @@ class _CameraPageState extends State<CameraPage> {
 
     Get.to(() => TrashInfoPet(widget.cameras));
   }
+  
+  Future<void> _cameraInitialize() async {
+    _controller = CameraController(widget.cameras[0], ResolutionPreset.medium);
+    _initializeControllerFuture = _controller.initialize();
+  }
+
+  _captureImage() async {
+    if (!_controller.value.isInitialized) {
+      return;
+    }
+
+    try {
+      await _initializeControllerFuture;
+
+      final image = await _controller.takePicture();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MapPage()),
+      );
+    } on CameraException catch (e) {}
+  }
 
   _launchHelpURL() async {
     const url = 'https://flutter.dev';
@@ -132,20 +153,30 @@ class _CameraPageState extends State<CameraPage> {
 
   Widget _renderTypeItem(BuildContext context, index) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 4.0),
-      child: GestureDetector(onTap: () => setState(() {
-        selectedTypeIndex = index;
-      }), child: Column(
-        children: [
-          Text(typeList[index].title, style: TextStyle(fontSize: 14, color: index == selectedTypeIndex ? Color.fromRGBO(54, 174, 87, 1) : Colors.white, fontFamily: 'GoogleSans', fontWeight: FontWeight.w500)),
-          Image.asset(
-            index == selectedTypeIndex ? 'assets/ic_type_selected.png' : 'assets/ic_type_unselected.png',
-            width: 55.0,
-            height: 70.0,
-          ),
-        ],
-      )
-    ));
+        padding: EdgeInsets.symmetric(horizontal: 4.0),
+        child: GestureDetector(
+            onTap: () => setState(() {
+                  selectedTypeIndex = index;
+                }),
+            child: Column(
+              children: [
+                Text(typeList[index].title,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: index == selectedTypeIndex
+                            ? Color.fromRGBO(54, 174, 87, 1)
+                            : Colors.white,
+                        fontFamily: 'GoogleSans',
+                        fontWeight: FontWeight.w500)),
+                Image.asset(
+                  index == selectedTypeIndex
+                      ? 'assets/ic_type_selected.png'
+                      : 'assets/ic_type_unselected.png',
+                  width: 55.0,
+                  height: 70.0,
+                ),
+              ],
+            )));
   }
 
   Widget _renderTypeList(BuildContext context) {
@@ -234,7 +265,8 @@ class _CameraPageState extends State<CameraPage> {
       child: FlatButton(
         color: Color.fromRGBO(54, 174, 87, 0.8),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Text("Trash Type: ${typeList[selectedTypeIndex].title}", style: TextStyle(color: Colors.white)),
+        child: Text("Trash Type: ${typeList[selectedTypeIndex].title}",
+            style: TextStyle(color: Colors.white)),
         onPressed: () => {},
       ),
     );
@@ -251,16 +283,16 @@ class _CameraPageState extends State<CameraPage> {
           children: [
             GestureDetector(
               onTap: () => _launchHelpURL(),
-              child: Text('?', style: TextStyle(color: Colors.white, fontSize: 24)),
+              child: Text('?',
+                  style: TextStyle(color: Colors.white, fontSize: 24)),
             ),
             GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Image.asset(
-                'assets/ic_cancel.png',
-                width: 14.0,
-                height: 14.0,
-              )
-            ),
+                onTap: () => Navigator.pop(context),
+                child: Image.asset(
+                  'assets/ic_cancel.png',
+                  width: 14.0,
+                  height: 14.0,
+                )),
           ],
         ));
   }
@@ -313,13 +345,21 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text('Camera',
-              style: TextStyle(
-                  color: Color.fromRGBO(49, 172, 131, 1),
-                  fontFamily: 'GoogleSans',
-                  fontWeight: FontWeight.w600)),
-          centerTitle: true),
+      appBar: CupertinoNavigationBar(
+        middle: Text(
+          "CAMERA",
+          style: TextStyle(color: Color(0xff31AC53), fontFamily: 'GoogleSans'),
+        ),
+        leading: GestureDetector(
+          child: Icon(
+            CupertinoIcons.back,
+            color: Color(0xff31AC53),
+          ),
+          onTap: () {
+            Get.back();
+          },
+        ),
+      ),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {

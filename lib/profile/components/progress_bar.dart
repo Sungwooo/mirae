@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ProgressBarWidget extends StatelessWidget {
+class ProgressBarWidget extends StatefulWidget {
+  @override
+  _ProgressBarWidgetState createState() => _ProgressBarWidgetState();
+}
+
+class _ProgressBarWidgetState extends State<ProgressBarWidget> {
+  int points = 10030;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -12,14 +19,7 @@ class ProgressBarWidget extends StatelessWidget {
         height: 0.2 * height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xffA79F84),
-              blurRadius: 7,
-              offset: Offset(0, 1),
-            ),
-          ],
+          color: Color(0xffB1ECFF),
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 0.06 * width),
@@ -27,11 +27,44 @@ class ProgressBarWidget extends StatelessWidget {
             children: [
               Container(
                 height: 0.15 * height,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Container(
+                        width: 83,
+                        height: points > 6500 ? 107 : 107 * (points / 6500),
+                        child: points > 0
+                            ? Image.asset(
+                                'assets/levelTreeIcon.png',
+                              )
+                            : null),
+                    Container(
+                        width: 83,
+                        height:
+                            points > 6500 ? 107 * ((points - 6500) / 6500) : 0,
+                        child: points > 6500
+                            ? Image.asset(
+                                'assets/levelTreeIcon.png',
+                              )
+                            : null),
+                    Container(
+                        width: 83,
+                        height: points > 13000
+                            ? 107 * ((points - 13000) / 6500)
+                            : 0,
+                        child: points > 6500
+                            ? Image.asset(
+                                'assets/levelTreeIcon.png',
+                              )
+                            : null),
+                  ],
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: width * 0.4 * 0.65, bottom: 4),
                 child: Text(
-                  "10030 pts",
+                  "$points pts",
                   style: TextStyle(
                       fontFamily: "GoogleSans",
                       fontSize: 12,

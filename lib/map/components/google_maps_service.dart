@@ -26,7 +26,7 @@ class GoogleMapsServices {
     if (values["status"] == "ZERO_RESULTS") {
       return "Not Supported this location.";
     }
-    return values["routes"][0]["legs"][0]["steps"][1] != null
+    return values["routes"][0]["legs"][0]["steps"].length != 1
         ? values["routes"][0]["legs"][0]["steps"][1]["html_instructions"]
             .toString()
             .replaceAll('<b>', '')

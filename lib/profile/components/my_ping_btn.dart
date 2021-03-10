@@ -9,7 +9,7 @@ class MyPingButtonWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(
           horizontal: width * 0.03, vertical: 0.009 * height),
       child: Container(
-        height: 76,
+        height: 0.1 * height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           image: DecorationImage(
@@ -32,7 +32,7 @@ class MyPingButtonWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(
-                      "assets/icon/map/myMarker.png",
+                      "assets/discardIcon.png",
                       width: 0.16 * width,
                     ),
                     Text(
@@ -64,7 +64,7 @@ class MyPingButtonWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(
-                      "assets/icon/map/trashMarker.png",
+                      "assets/myPingIcon.png",
                       width: 0.16 * width,
                     ),
                     Text(
