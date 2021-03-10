@@ -4,7 +4,9 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mirae/camera/trash_info.dart';
+import 'package:mirae/camera/trash_info_can.dart';
+import 'package:mirae/camera/trash_info_paper.dart';
+import 'package:mirae/camera/trash_info_pet.dart';
 import 'package:tflite/tflite.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../map/map.dart';
@@ -61,13 +63,20 @@ class _CameraPageState extends State<CameraPage> {
             imageStd: 127.5,
             numResultsPerClass: 1,
             threshold: 0.4,
-          ).then((recognitions) {
             /*
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => MapPage()),
-            );
+              bytesList: img.planes.map((plane) {return plane.bytes;}).toList(),// required
+              model: "YOLO",
+              imageHeight: img.height,
+              imageWidth: img.width,
+              imageMean: 0,         // defaults to 127.5
+              imageStd: 255.0,      // defaults to 127.5
+              threshold: 0.1,       // defaults to 0.1
+              numResultsPerClass: 2,// defaults to 5
+              blockSize: 32,        // defaults to 32
+              numBoxesPerBlock: 5,  // defaults to 5
+              asynch: true          // defaults to true
              */
+          ).then((recognitions) {
             setState(() {
               _recognitions = recognitions;
               _imageHeight = img.height;
@@ -99,6 +108,19 @@ class _CameraPageState extends State<CameraPage> {
     super.dispose();
   }
 
+  void _onDiscardPress() {
+    if (selectedTypeIndex == 1) {
+      Get.to(() => TrashInfoPaper(widget.cameras));
+      return;
+    }
+    if (selectedTypeIndex == 2) {
+      Get.to(() => TrashInfoCan(widget.cameras));
+      return;
+    }
+
+    Get.to(() => TrashInfoPet(widget.cameras));
+  }
+  
   Future<void> _cameraInitialize() async {
     _controller = CameraController(widget.cameras[0], ResolutionPreset.medium);
     _initializeControllerFuture = _controller.initialize();
@@ -217,7 +239,7 @@ class _CameraPageState extends State<CameraPage> {
             child: InkWell(
               borderRadius: BorderRadius.all(Radius.circular(50.0)),
               child: FlatButton(
-                onPressed: () => Get.to(() => TrashInfo(widget.cameras)),
+                onPressed: _onDiscardPress,
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 4.0),
                   child: GestureDetector(
