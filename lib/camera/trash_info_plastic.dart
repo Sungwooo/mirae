@@ -5,19 +5,19 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import '../mainPage/mainPage.dart';
 
-final List<int> carouselList = [0, 1, 2];
+final List<int> carouselList = [0, 1];
 
-class TrashInfoCan extends StatefulWidget {
+class TrashInfoPlastic extends StatefulWidget {
   final List<CameraDescription> cameras;
   final String imagePath;
 
-  TrashInfoCan(this.cameras, this.imagePath);
+  TrashInfoPlastic(this.cameras, this.imagePath);
 
   @override
-  _TrashInfoCanState createState() => _TrashInfoCanState();
+  _TrashInfoPlasticState createState() => _TrashInfoPlasticState();
 }
 
-class _TrashInfoCanState extends State<TrashInfoCan> {
+class _TrashInfoPlasticState extends State<TrashInfoPlastic> {
   int _currentCarousel = 0;
 
   Widget _renderRecycleButton() {
@@ -47,10 +47,7 @@ class _TrashInfoCanState extends State<TrashInfoCan> {
 
   String getTrueTitle(int type) {
     if (type == 1) {
-      return "Recycling 1kg of cans";
-    }
-    if (type == 2) {
-      return "Tips";
+      return "Recycling plastic";
     }
 
     return "How is it recycled?";
@@ -92,27 +89,8 @@ class _TrashInfoCanState extends State<TrashInfoCan> {
                     child: Padding(
                   padding: EdgeInsets.only(left: 12),
                   child: Text(
-                      "Aluminium cans are shredded, removing any coloured coating.",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black,
-                          fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w500)),
-                )),
-              ],
-            ),
-            SizedBox(height: 14),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset('assets/ic_number_1.png', width: 30, height: 30),
-                Expanded(
-                    child: Padding(
-                  padding: EdgeInsets.only(left: 12),
-                  child: Text("They are then melted in a huge furnace.",
-                      maxLines: 2,
+                      "Sorting is mainly done automatically with a manual sort to ensure all contaminants have been removed",
+                      maxLines: 4,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 17,
@@ -131,8 +109,8 @@ class _TrashInfoCanState extends State<TrashInfoCan> {
                     child: Padding(
                   padding: EdgeInsets.only(left: 12),
                   child: Text(
-                      "The molten metal is poured into ingot casts to set. Each ingot can be made into around 1.5 million cans.",
-                      maxLines: 4,
+                      "Once sorted and cleaned, plastic can either be shredded into flakes or melt processed to form pellets before finally being moulded into new products.",
+                      maxLines: 5,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 17,
@@ -148,7 +126,7 @@ class _TrashInfoCanState extends State<TrashInfoCan> {
                 return Container(
                   width: 8.0,
                   height: 8.0,
-                  margin: EdgeInsets.only(top: 48, left: 2, right: 2),
+                  margin: EdgeInsets.only(top: 60, left: 2, right: 2),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: _currentCarousel == i
@@ -172,66 +150,84 @@ class _TrashInfoCanState extends State<TrashInfoCan> {
         child: Column(
           children: [
             _renderHandlinedTitle(_currentCarousel),
-            Text("save up",
+            Text("means",
                 style: TextStyle(
                     fontSize: 15,
-                    color: Colors.black,
+                    color: Color.fromRGBO(82, 82, 82, 1),
                     fontFamily: 'GoogleSans',
-                    fontWeight: FontWeight.w500)),
-            SizedBox(height: 30),
+                    fontWeight: FontWeight.w600)),
+            SizedBox(height: 20),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset('assets/ic_number_1.png', width: 30, height: 30),
                 Expanded(
                     child: Padding(
                   padding: EdgeInsets.only(left: 12),
-                  child: Text("6kg of bauxite",
+                  child: Text("Conserve non-renewable fossil fuels (oil)",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 17,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w600)),
+                          fontWeight: FontWeight.w500)),
                 )),
               ],
             ),
-            SizedBox(height: 24),
+            SizedBox(height: 14),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset('assets/ic_number_1.png', width: 30, height: 30),
                 Expanded(
                     child: Padding(
                   padding: EdgeInsets.only(left: 12),
-                  child: Text("14kWh of electricity",
+                  child: Text(
+                      "Reduce energy used in the production of new plastic",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 17,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w600)),
+                          fontWeight: FontWeight.w500)),
                 )),
               ],
             ),
-            SizedBox(height: 24),
+            SizedBox(height: 14),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset('assets/ic_number_1.png', width: 30, height: 30),
                 Expanded(
                     child: Padding(
                   padding: EdgeInsets.only(left: 12),
-                  child: Text("4kg of chemical products",
+                  child: Text(
+                      "Reduce the amount of solid waste going to landfill",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 17,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w600)),
+                          fontWeight: FontWeight.w500)),
+                )),
+              ],
+            ),
+            SizedBox(height: 14),
+            Row(
+              children: [
+                Image.asset('assets/ic_number_1.png', width: 30, height: 30),
+                Expanded(
+                    child: Padding(
+                  padding: EdgeInsets.only(left: 12),
+                  child: Text(
+                      "Reduce emission of gases like carbon dioxide into the atmosphere.",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black,
+                          fontFamily: 'GoogleSans',
+                          fontWeight: FontWeight.w500)),
                 )),
               ],
             ),
@@ -241,49 +237,7 @@ class _TrashInfoCanState extends State<TrashInfoCan> {
                 return Container(
                   width: 8.0,
                   height: 8.0,
-                  margin: EdgeInsets.only(top: 84, left: 2, right: 2),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _currentCarousel == i
-                        ? Color.fromRGBO(57, 169, 84, 1)
-                        : Color.fromRGBO(192, 192, 192, 1),
-                  ),
-                );
-              }).toList(),
-            ),
-          ],
-        ));
-  }
-
-  Widget _renderHandleContainer2() {
-    final longString = '''
-Remember to recycle drinks cans when away from home - at work, while travelling or at sports and leisure locations. If you can't find a recycling bin, take it home and recycle it later.
-
-Rinse out food cans with your leftover washing up water before the residue has chance to dry out - it will take much less effort!
-''';
-    return Container(
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 18),
-        margin: EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-            color: Color.fromRGBO(255, 255, 255, 0.8),
-            borderRadius: BorderRadius.circular(10.0)),
-        child: Column(
-          children: [
-            _renderHandlinedTitle(_currentCarousel),
-            SizedBox(height: 30),
-            Text(longString,
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.black,
-                    fontFamily: 'GoogleSans',
-                    fontWeight: FontWeight.w500)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: carouselList.map((i) {
-                return Container(
-                  width: 8.0,
-                  height: 8.0,
-                  margin: EdgeInsets.only(top: 32, left: 2, right: 2),
+                  margin: EdgeInsets.only(top: 24, left: 2, right: 2),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: _currentCarousel == i
@@ -301,7 +255,6 @@ Rinse out food cans with your leftover washing up water before the residue has c
     List<Widget> carouselComponentList = [
       _renderHandleContainer0(),
       _renderHandleContainer1(),
-      _renderHandleContainer2()
     ];
 
     return CarouselSlider(
@@ -355,7 +308,7 @@ Rinse out food cans with your leftover washing up water before the residue has c
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(bottom: 12.0),
-            child: Text('CAN',
+            child: Text('PAPER',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 32,
