@@ -55,7 +55,9 @@ class _CameraPageState extends State<CameraPage> {
         if (!isDetecting) {
           isDetecting = true;
           Tflite.detectObjectOnFrame(
-            bytesList: img.planes.map((plane) {return plane.bytes;}).toList(),
+            bytesList: img.planes.map((plane) {
+              return plane.bytes;
+            }).toList(),
             model: "SSDMobileNet",
             imageHeight: img.height,
             imageWidth: img.width,
@@ -63,19 +65,6 @@ class _CameraPageState extends State<CameraPage> {
             imageStd: 127.5,
             numResultsPerClass: 1,
             threshold: 0.4,
-            /*
-              bytesList: img.planes.map((plane) {return plane.bytes;}).toList(),// required
-              model: "YOLO",
-              imageHeight: img.height,
-              imageWidth: img.width,
-              imageMean: 0,         // defaults to 127.5
-              imageStd: 255.0,      // defaults to 127.5
-              threshold: 0.1,       // defaults to 0.1
-              numResultsPerClass: 2,// defaults to 5
-              blockSize: 32,        // defaults to 32
-              numBoxesPerBlock: 5,  // defaults to 5
-              asynch: true          // defaults to true
-             */
           ).then((recognitions) {
             setState(() {
               _recognitions = recognitions;
@@ -108,38 +97,34 @@ class _CameraPageState extends State<CameraPage> {
     super.dispose();
   }
 
-  void _onDiscardPress() {
-    if (selectedTypeIndex == 1) {
-      Get.to(() => TrashInfoPaper(widget.cameras));
-      return;
-    }
-    if (selectedTypeIndex == 2) {
-      Get.to(() => TrashInfoCan(widget.cameras));
-      return;
-    }
-
-    Get.to(() => TrashInfoPet(widget.cameras));
-  }
-  
-  Future<void> _cameraInitialize() async {
-    _controller = CameraController(widget.cameras[0], ResolutionPreset.medium);
-    _initializeControllerFuture = _controller.initialize();
-  }
-
-  _captureImage() async {
+  Future<void> _onDiscardPress() async {
     if (!_controller.value.isInitialized) {
       return;
     }
 
     try {
+      await _controller.stopImageStream();
+      // Ensure that the camera is initialized.
       await _initializeControllerFuture;
 
       final image = await _controller.takePicture();
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => MapPage()),
-      );
-    } on CameraException catch (e) {}
+      if (selectedTypeIndex == 1) {
+        Get.to(() => TrashInfoPaper(widget.cameras, image.path));
+        return;
+      }
+      if (selectedTypeIndex == 2) {
+        Get.to(() => TrashInfoCan(widget.cameras, image.path));
+        return;
+      }
+
+      Get.to(() => TrashInfoPlastic(widget.cameras, image.path));
+    } on CameraException catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void _onPingPress() {
+    Get.to(() => MapPage());
   }
 
   _launchHelpURL() async {
@@ -201,10 +186,7 @@ class _CameraPageState extends State<CameraPage> {
               child: Padding(
                 padding: EdgeInsets.all(4.0),
                 child: GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MapPage()),
-                  ),
+                  onTap: _onPingPress,
                   child: Image.asset(
                     'assets/ic_ping.png',
                     width: 100.0,
@@ -238,17 +220,14 @@ class _CameraPageState extends State<CameraPage> {
             color: Colors.transparent,
             child: InkWell(
               borderRadius: BorderRadius.all(Radius.circular(50.0)),
-              child: FlatButton(
-                onPressed: _onDiscardPress,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 4.0),
-                  child: GestureDetector(
-                    onTap: () => {},
-                    child: Image.asset(
-                      'assets/ic_discard.png',
-                      width: 100.0,
-                      height: 100.0,
-                    ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 4.0),
+                child: GestureDetector(
+                  onTap: _onDiscardPress,
+                  child: Image.asset(
+                    'assets/ic_discard.png',
+                    width: 100.0,
+                    height: 100.0,
                   ),
                 ),
               ),
@@ -260,12 +239,18 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Widget _renderCurrentType(BuildContext context) {
+    var objectName = _recognitions == null
+        ? ""
+        : _recognitions.reduce((current, next) =>
+            current['confidenceInClass'] > next['confidenceInClass']
+                ? current
+                : next)["detectedClass"];
     return Padding(
       padding: EdgeInsets.only(bottom: 12),
       child: FlatButton(
         color: Color.fromRGBO(54, 174, 87, 0.8),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Text("Trash Type: ${typeList[selectedTypeIndex].title}",
+        child: Text("Trash Type: $objectName",
             style: TextStyle(color: Colors.white)),
         onPressed: () => {},
       ),
@@ -319,7 +304,14 @@ class _CameraPageState extends State<CameraPage> {
         children: <Widget>[
           CameraPreview(_controller),
           BoundingBox(
-            _recognitions == null ? [] : _recognitions,
+            _recognitions == null
+                ? []
+                : [
+                    _recognitions.reduce((current, next) =>
+                        current['confidenceInClass'] > next['confidenceInClass']
+                            ? current
+                            : next)
+                  ],
             math.max(_imageHeight, _imageWidth),
             math.min(_imageHeight, _imageWidth),
             screen.height,
