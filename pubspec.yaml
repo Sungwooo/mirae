@@ -23,6 +23,10 @@ dependencies:
     fluttertoast:
     tflite:
     url_launcher:
+    firebase_core:
+    firebase_auth:
+    google_sign_in:
+    web_scraper: ^0.0.6
 
 dev_dependencies:
     flutter_test:

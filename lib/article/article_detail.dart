@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'argument.dart';
+
 class GradientText extends StatelessWidget {
   GradientText(
     this.text, {
@@ -31,6 +33,9 @@ class GradientText extends StatelessWidget {
 }
 
 class ArticleDetailPage extends StatelessWidget {
+  final Arguments arguments;
+
+  ArticleDetailPage({Key key, @required this.arguments}) : super(key: key);
   final List<Color> _colors = [
     Color(0xff88C81F).withOpacity(0.9),
     Color(0xff36AE57).withOpacity(0.9),
@@ -38,6 +43,7 @@ class ArticleDetailPage extends StatelessWidget {
   final List<double> _stops = [0, 1];
 
   Widget build(BuildContext context) {
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -83,7 +89,7 @@ class ArticleDetailPage extends StatelessWidget {
                         color: Color(0xffF4BB27),
                       ),
                     ),
-                    Text('Africa',
+                    Text(arguments.category,
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             color: Colors.lightBlueAccent,
@@ -91,7 +97,7 @@ class ArticleDetailPage extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                             fontFamily: 'GoogleSans')),
                   ]),
-                  Text('2021.02.22',
+                  Text(arguments.date,
                       textAlign: TextAlign.right,
                       style: TextStyle(
                           color: Color(0xff4B4B4B),
@@ -106,7 +112,7 @@ class ArticleDetailPage extends StatelessWidget {
             child: Container(
               width: 342,
               child: Text(
-                  'UN hails ‘day of hope’ as US officially rejoins Paris climate accord',
+                  arguments.title,
                   style: TextStyle(
                       color: Color(0xff000000),
                       fontSize: 24,
@@ -124,7 +130,7 @@ class ArticleDetailPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 image: new DecorationImage(
                   image: new NetworkImage(
-                    "https://global.unitednations.entermediadb.net/assets/mediadb/services/module/asset/downloads/preset/Libraries/Production+Library/19-02-2021_UNOCHA_Climate_Change_Crisis-01.jpg/image350x235cropped.jpg",
+                    arguments.image
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -134,7 +140,7 @@ class ArticleDetailPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 2, left: 0.032 * width),
             child: Container(
-              child: Text('Unsplash/Matthew T. Rader',
+              child: Text(arguments.writer,
                   style: TextStyle(
                       color: Color(0xff8A8A8A),
                       fontSize: 12,
@@ -158,7 +164,7 @@ class ArticleDetailPage extends StatelessWidget {
                   horizontal: 0.023 * height,
                 ),
                 child: Text(
-                    'The official return of the United States to the Paris Agreement on Climate Change represents good news for the country and the world, UN Secretary-General António Guterres said on Friday during a virtual event to mark the occasion. ',
+                    arguments.attract,
                     style: TextStyle(
                         color: Color(0xffF8F8F8),
                         fontSize: 16,

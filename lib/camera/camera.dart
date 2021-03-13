@@ -55,7 +55,9 @@ class _CameraPageState extends State<CameraPage> {
         if (!isDetecting) {
           isDetecting = true;
           Tflite.detectObjectOnFrame(
-            bytesList: img.planes.map((plane) {return plane.bytes;}).toList(),
+            bytesList: img.planes.map((plane) {
+              return plane.bytes;
+            }).toList(),
             model: "SSDMobileNet",
             imageHeight: img.height,
             imageWidth: img.width,
@@ -119,11 +121,6 @@ class _CameraPageState extends State<CameraPage> {
     }
 
     Get.to(() => TrashInfoPet(widget.cameras));
-  }
-  
-  Future<void> _cameraInitialize() async {
-    _controller = CameraController(widget.cameras[0], ResolutionPreset.medium);
-    _initializeControllerFuture = _controller.initialize();
   }
 
   _captureImage() async {
