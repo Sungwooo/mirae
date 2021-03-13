@@ -9,12 +9,12 @@ class BoundingBox extends StatelessWidget {
   final double screenW;
 
   BoundingBox(
-      this.results,
-      this.previewH,
-      this.previewW,
-      this.screenH,
-      this.screenW,
-      );
+    this.results,
+    this.previewH,
+    this.previewW,
+    this.screenH,
+    this.screenW,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -49,24 +49,26 @@ class BoundingBox extends StatelessWidget {
         return Positioned(
           left: math.max(0, x),
           top: math.max(0, y),
-          width: w,
-          height: h,
+          width: 150, // w,
+          height: 150, // h,
           child: Container(
             padding: EdgeInsets.only(top: 5.0, left: 5.0),
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
               border: Border.all(
-                color: Color.fromRGBO(37, 213, 253, 1.0),
-                width: 3.0,
+                color: Color.fromRGBO(49, 172, 83, 1.0),
+                width: 2.0,
               ),
             ),
-            child: Text(
-              "${re["detectedClass"]} ${(re["confidenceInClass"] * 100).toStringAsFixed(0)}%",
+            child: Center(
+                child: Text(
+              "${(re["confidenceInClass"] * 100).toStringAsFixed(0)}%", // "${re["detectedClass"]} ${(re["confidenceInClass"] * 100).toStringAsFixed(0)}%",
               style: TextStyle(
-                color: Color.fromRGBO(37, 213, 253, 1.0),
-                fontSize: 14.0,
+                color: Color.fromRGBO(49, 172, 83, 1.0),
+                fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
-            ),
+            )),
           ),
         );
       }).toList();
