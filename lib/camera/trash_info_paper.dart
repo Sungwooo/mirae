@@ -5,7 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import '../mainPage/mainPage.dart';
 
-final List<int> carouselList = [0, 1, 2];
+final List<int> carouselList = [0, 1];
 
 class TrashInfoPaper extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -47,10 +47,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
 
   String getTrueTitle(int type) {
     if (type == 1) {
-      return "Recycling 1kg of cans";
-    }
-    if (type == 2) {
-      return "Tips";
+      return "Recycling 1 ton of paper";
     }
 
     return "How is it recycled?";
@@ -58,12 +55,12 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
 
   Widget _renderHandlinedTitle(int type) {
     return Container(
-      width: 250,
+      width: 260,
       child: Column(
         children: [
           Text(getTrueTitle(type),
               style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 22,
                   color: Colors.black,
                   fontFamily: 'GoogleSans',
                   fontWeight: FontWeight.w600)),
@@ -83,7 +80,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
         child: Column(
           children: [
             _renderHandlinedTitle(_currentCarousel),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             Row(
               children: [
                 Image.asset('assets/ic_number_1.png', width: 30, height: 30),
@@ -91,26 +88,8 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                     child: Padding(
                   padding: EdgeInsets.only(left: 12),
                   child: Text(
-                      "Aluminium cans are shredded, removing any coloured coating.",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black,
-                          fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w500)),
-                )),
-              ],
-            ),
-            SizedBox(height: 14),
-            Row(
-              children: [
-                Image.asset('assets/ic_number_1.png', width: 30, height: 30),
-                Expanded(
-                    child: Padding(
-                  padding: EdgeInsets.only(left: 12),
-                  child: Text("They are then melted in a huge furnace.",
-                      maxLines: 2,
+                      "Involves mixing used/old paper with water and chemicals to break it down",
+                      maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 17,
@@ -128,8 +107,44 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                     child: Padding(
                   padding: EdgeInsets.only(left: 12),
                   child: Text(
-                      "The molten metal is poured into ingot casts to set. Each ingot can be made into around 1.5 million cans.",
-                      maxLines: 4,
+                      "Chopped up and heated, which breaks it down further into strands of cellulose",
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black,
+                          fontFamily: 'GoogleSans',
+                          fontWeight: FontWeight.w500)),
+                )),
+              ],
+            ),
+            SizedBox(height: 14),
+            Row(
+              children: [
+                Image.asset('assets/ic_number_1.png', width: 30, height: 30),
+                Expanded(
+                    child: Padding(
+                  padding: EdgeInsets.only(left: 12),
+                  child: Text(
+                      "Remove any remaining plastic and ink from the mixture",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black,
+                          fontFamily: 'GoogleSans',
+                          fontWeight: FontWeight.w500)),
+                )),
+              ],
+            ),
+            SizedBox(height: 14),
+            Row(
+              children: [
+                Image.asset('assets/ic_number_1.png', width: 30, height: 30),
+                Expanded(
+                    child: Padding(
+                  padding: EdgeInsets.only(left: 12),
+                  child: Text("Then it can be made into new paper",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 17,
@@ -145,7 +160,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                 return Container(
                   width: 8.0,
                   height: 8.0,
-                  margin: EdgeInsets.only(top: 48, left: 2, right: 2),
+                  margin: EdgeInsets.only(top: 14, left: 2, right: 2),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: _currentCarousel == i
@@ -175,14 +190,15 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                     color: Colors.black,
                     fontFamily: 'GoogleSans',
                     fontWeight: FontWeight.w500)),
-            SizedBox(height: 30),
+            SizedBox(height: 24),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset('assets/ic_number_1.png', width: 30, height: 30),
                 Expanded(
                     child: Padding(
                   padding: EdgeInsets.only(left: 12),
-                  child: Text("6kg of bauxite",
+                  child: Text("17 trees born in 30 years old",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -195,12 +211,13 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
             ),
             SizedBox(height: 24),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset('assets/ic_number_1.png', width: 30, height: 30),
                 Expanded(
                     child: Padding(
                   padding: EdgeInsets.only(left: 12),
-                  child: Text("14kWh of electricity",
+                  child: Text("4,200kW of electricity",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -213,12 +230,13 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
             ),
             SizedBox(height: 24),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset('assets/ic_number_1.png', width: 30, height: 30),
                 Expanded(
                     child: Padding(
                   padding: EdgeInsets.only(left: 12),
-                  child: Text("4kg of chemical products",
+                  child: Text("1,500ℓ of oil",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -229,48 +247,25 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                 )),
               ],
             ),
+            SizedBox(height: 24),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: carouselList.map((i) {
-                return Container(
-                  width: 8.0,
-                  height: 8.0,
-                  margin: EdgeInsets.only(top: 84, left: 2, right: 2),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _currentCarousel == i
-                        ? Color.fromRGBO(57, 169, 84, 1)
-                        : Color.fromRGBO(192, 192, 192, 1),
-                  ),
-                );
-              }).toList(),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset('assets/ic_number_1.png', width: 30, height: 30),
+                Expanded(
+                    child: Padding(
+                  padding: EdgeInsets.only(left: 12),
+                  child: Text("28 tons of water",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontFamily: 'GoogleSans',
+                          fontWeight: FontWeight.w600)),
+                )),
+              ],
             ),
-          ],
-        ));
-  }
-
-  Widget _renderHandleContainer2() {
-    final longString = '''
-Remember to recycle drinks cans when away from home - at work, while travelling or at sports and leisure locations. If you can't find a recycling bin, take it home and recycle it later.
-
-Rinse out food cans with your leftover washing up water before the residue has chance to dry out - it will take much less effort!
-''';
-    return Container(
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 18),
-        margin: EdgeInsets.symmetric(horizontal: 12),
-        decoration: BoxDecoration(
-            color: Color.fromRGBO(255, 255, 255, 0.8),
-            borderRadius: BorderRadius.circular(10.0)),
-        child: Column(
-          children: [
-            _renderHandlinedTitle(_currentCarousel),
-            SizedBox(height: 30),
-            Text(longString,
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.black,
-                    fontFamily: 'GoogleSans',
-                    fontWeight: FontWeight.w500)),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: carouselList.map((i) {
@@ -295,7 +290,6 @@ Rinse out food cans with your leftover washing up water before the residue has c
     List<Widget> carouselComponentList = [
       _renderHandleContainer0(),
       _renderHandleContainer1(),
-      _renderHandleContainer2()
     ];
 
     return CarouselSlider(
