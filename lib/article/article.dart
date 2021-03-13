@@ -3,7 +3,112 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mirae/article/argument.dart';
 import 'package:mirae/article/article_detail.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:web_scraper/web_scraper.dart';
+
+class ResultItem extends StatelessWidget {
+  final String title;
+  final String date;
+  final String category;
+  final String attract;
+  final String writer;
+  final String image;
+  final String url;
+
+  const ResultItem(
+      {Key key,
+      this.writer,
+      this.title,
+      this.date,
+      this.category,
+      this.attract,
+      this.url,
+      this.image})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Arguments data =
+        Arguments(title, date, category, attract, writer, image, url);
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    return Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ArticleDetailPage(arguments: data),
+              ),
+            );
+          },
+          child: Container(
+            child: Row(
+              children: [
+                Container(
+                  width: 0.408 * width,
+                  height: 0.127 * height,
+                  decoration: new BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: new DecorationImage(
+                      image: new NetworkImage(
+                        image,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 0.034 * width),
+                  child: Container(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(children: [
+                            Container(
+                              width: 0.49 * width,
+                              child: Text(title,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'GoogleSans')),
+                            )
+                          ]),
+                          Padding(
+                            padding: EdgeInsets.only(top: 0.005 * height),
+                            child: Row(children: [
+                              Padding(
+                                padding: EdgeInsets.only(right: 0.01 * width),
+                                child: Container(
+                                  width: 0.008 * width,
+                                  height: 0.017 * height,
+                                  color: Color(0xffF4BB27),
+                                ),
+                              ),
+                              Text(category != '' ? category : 'Video',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      color: Colors.lightBlueAccent,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'GoogleSans')),
+                            ]),
+                          ),
+                        ]),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
+
+}
 
 class GradientText extends StatelessWidget {
   GradientText(
@@ -33,7 +138,69 @@ class GradientText extends StatelessWidget {
   }
 }
 
-class ArticlePage extends StatelessWidget {
+class ArticlePage extends StatefulWidget {
+  final String search;
+
+  const ArticlePage({Key key, this.search}) : super(key: key);
+
+  @override
+  _ArticleState createState() => _ArticleState();
+}
+
+class _ArticleState extends State<ArticlePage> {
+  bool loaded = false;
+  // ignore: deprecated_member_use
+  List<ResultItem> resultList = List();
+
+  @override
+  void initState() {
+    super.initState();
+    initChaptersTitleScrap();
+  }
+
+  void initChaptersTitleScrap() async {
+    final rawUrl = 'https://news.un.org/en/news/topic/climate-change';
+    final webScraper = WebScraper('https://news.un.org/');
+    final endpoint = rawUrl.replaceAll(r'https://news.un.org/', '');
+    if (await webScraper.loadWebPage(endpoint)) {
+      List<Map<String, dynamic>> writers = webScraper
+          .getElement('div.field-name-field-scald-photo-credit ', ['']);
+      List<Map<String, dynamic>> titles = webScraper.getElement(
+          'div.view-content > div.views-row > div.body-wrapper > h1.story-title ',
+          []);
+      List<Map<String, dynamic>> dates = webScraper.getElement(
+          'div.view-content > div.views-row > div.body-wrapper > div.wrapper-date >  div.story-date ',
+          []);
+      List<Map<String, dynamic>> categories =
+          webScraper.getElement('div.topics', ['']);
+      List<Map<String, dynamic>> attracts = webScraper.getElement(
+          'div.view-content > div.views-row > div.body-wrapper > div.news-body ',
+          []);
+      List<Map<String, dynamic>> images =
+          webScraper.getElement('img.img-responsive', ['src']);
+      List<Map<String, dynamic>> urls =
+          webScraper.getElement('h1.story-title > a', ['href']);
+
+      titles.forEach((title) {
+        int i = titles.indexOf(title);
+        resultList.add(
+          ResultItem(
+            title: titles[i]['title'],
+            date: dates[i]['title'],
+            category: categories[i]['title'] ?? 'video',
+            attract: attracts[i]['title'],
+            writer: writers[i]['title'],
+            url: urls[i]['attributes']['href'],
+            image: images[i + 1]['attributes']['src'],
+          ),
+        );
+      });
+      setState(() {
+        loaded = true;
+      });
+    }
+  }
+
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -168,7 +335,7 @@ class ArticlePage extends StatelessWidget {
                           fontFamily: 'GoogleSans'))
                 ]),
           ),
-          Padding(
+          /*Padding(
             padding: EdgeInsets.symmetric(horizontal: 0.032 * width),
             child: GestureDetector(
               onTap: () {
@@ -184,7 +351,7 @@ class ArticlePage extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: new DecorationImage(
                           image: new NetworkImage(
-                            "https://global.unitednations.entermediadb.net/assets/mediadb/services/module/asset/downloads/preset/Libraries/Production+Library/19-02-2021_UNOCHA_Climate_Change_Crisis-01.jpg/image350x235cropped.jpg",
+                            resultList[0].image,
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -218,7 +385,7 @@ class ArticlePage extends StatelessWidget {
                                 child: Container(
                                     width: 0.853 * width,
                                     child: Text(
-                                      'FROM THE FIELD: Poor and vulnerable bear brunt of climate change',
+                                      resultList[0].title,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 24,
@@ -233,132 +400,18 @@ class ArticlePage extends StatelessWidget {
                 ),
               ),
             ),
-          ),
+          ),*/
+
           Padding(
             padding: EdgeInsets.only(top: 0.024 * height, left: 0.032 * width),
-            child: Container(
-              child: Row(
-                children: [
-                  Container(
-                    width: 0.408 * width,
-                    height: 0.127 * height,
-                    decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: new DecorationImage(
-                        image: new NetworkImage(
-                          "https://global.unitednations.entermediadb.net/assets/mediadb/services/module/asset/downloads/preset/Libraries/Production+Library/25-02-2021_UNDP_Ghana-02.jpg/image350x235cropped.jpg",
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.034 * width),
-                    child: Container(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(children: [
-                              Container(
-                                width: 0.49 * width,
-                                child: Text(
-                                    'FROM THE FIELD: Adapting to survive and thrive in Ghana',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'GoogleSans')),
-                              )
-                            ]),
-                            Padding(
-                              padding: EdgeInsets.only(top: 0.005 * height),
-                              child: Row(children: [
-                                Padding(
-                                  padding: EdgeInsets.only(right: 0.01 * width),
-                                  child: Container(
-                                    width: 0.008 * width,
-                                    height: 0.017 * height,
-                                    color: Color(0xffF4BB27),
-                                  ),
-                                ),
-                                Text('Africa',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                        color: Colors.lightBlueAccent,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'GoogleSans')),
-                              ]),
-                            ),
-                          ]),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 0.024 * height, left: 0.032 * width),
-            child: Container(
-              child: Row(
-                children: [
-                  Container(
-                    width: 0.408 * width,
-                    height: 0.127 * height,
-                    decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: new DecorationImage(
-                        image: new NetworkImage(
-                          "https://global.unitednations.entermediadb.net/assets/mediadb/services/module/asset/downloads/preset/Libraries/Production+Library/16-01-2020-ZIM_20191203_WFP-Matteo_Cosorich_9596.jpg/image350x235cropped.jpg",
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.034 * width),
-                    child: Container(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(children: [
-                              Container(
-                                width: 0.49 * width,
-                                child: Text(
-                                    'UN climate report a ‘red alert’ for the planet: Guterres',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'GoogleSans')),
-                              )
-                            ]),
-                            Padding(
-                              padding: EdgeInsets.only(top: 0.005 * height),
-                              child: Row(children: [
-                                Padding(
-                                  padding: EdgeInsets.only(right: 0.01 * width),
-                                  child: Container(
-                                    width: 0.008 * width,
-                                    height: 0.017 * height,
-                                    color: Color(0xffF4BB27),
-                                  ),
-                                ),
-                                Text('Global',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                        color: Colors.lightBlueAccent,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'GoogleSans')),
-                              ]),
-                            ),
-                          ]),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            child: (loaded)
+                ? ListView(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: BouncingScrollPhysics(),
+                    children: resultList.toList(),
+                  )
+                : CircularProgressIndicator(),
           ),
         ]));
   }

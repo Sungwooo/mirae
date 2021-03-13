@@ -1,8 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mirae/login/loginpage.dart';
 import 'constants/material_color.dart';
-import 'mainPage/mainPage.dart';
 
 List<CameraDescription> cameras;
 
@@ -18,17 +18,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'MIRAE',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: white,
-        appBarTheme: AppBarTheme(
-          color: Colors.transparent,
-          elevation: 0.0,
+        title: 'MIRAE',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: white,
+          appBarTheme: AppBarTheme(
+            color: Colors.transparent,
+            elevation: 0.0,
+          ),
+          splashColor: Colors.grey[700],
         ),
-        splashColor: Colors.grey[700],
-      ),
-      home: MainPage(cameras),
-    );
+        home: LogIn());
   }
 }
