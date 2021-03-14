@@ -1,8 +1,110 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:web_scraper/web_scraper.dart';
 
 import 'argument.dart';
+class ResultItem extends StatelessWidget {
+  final String title;
+  final String date;
+  final String category;
+  final String attract;
+  final String writer;
+  final String image;
+  final String url;
+
+  const ResultItem(
+      {Key key,
+        this.writer,
+        this.title,
+        this.date,
+        this.category,
+        this.attract,
+        this.url,
+        this.image})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Arguments data =
+    Arguments(title, date, category, attract, writer, image, url);
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    return Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ArticleDetailPage(arguments: data),
+              ),
+            );
+          },
+          child: Container(
+            child: Row(
+              children: [
+                Container(
+                  width: 0.408 * width,
+                  height: 0.127 * height,
+                  decoration: new BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: new DecorationImage(
+                      image: new NetworkImage(
+                        image,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 0.034 * width),
+                  child: Container(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(children: [
+                            Container(
+                              width: 0.49 * width,
+                              child: Text(title,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'GoogleSans')),
+                            )
+                          ]),
+                          Padding(
+                            padding: EdgeInsets.only(top: 0.005 * height),
+                            child: Row(children: [
+                              Padding(
+                                padding: EdgeInsets.only(right: 0.01 * width),
+                                child: Container(
+                                  width: 0.008 * width,
+                                  height: 0.017 * height,
+                                  color: Color(0xffF4BB27),
+                                ),
+                              ),
+                              Text(category != '' ? category : 'Video',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      color: Colors.lightBlueAccent,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'GoogleSans')),
+                            ]),
+                          ),
+                        ]),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
+
+}
 
 class GradientText extends StatelessWidget {
   GradientText(
@@ -32,15 +134,32 @@ class GradientText extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class ArticleDetailPage extends StatelessWidget {
+
+  // ignore: deprecated_member_use
+  List<ResultItem> resultList = List();
+
   final Arguments arguments;
 
   ArticleDetailPage({Key key, @required this.arguments}) : super(key: key);
+
   final List<Color> _colors = [
     Color(0xff88C81F).withOpacity(0.9),
     Color(0xff36AE57).withOpacity(0.9),
   ];
   final List<double> _stops = [0, 1];
+  void initChaptersTitleScrap() async {
+    final rawUrl = arguments.url;
+    print(arguments.url);
+    final webScraper = WebScraper('https://news.un.org/');
+    final endpoint = rawUrl.replaceAll(r'https://news.un.org/', '');
+    if (await webScraper.loadWebPage(endpoint)) {
+      List<Map<String, dynamic>> elements = webScraper.getElement('div.content > div.field > div.content', ['h3']);
+      print(elements);
+
+    }
+  }
 
   Widget build(BuildContext context) {
 

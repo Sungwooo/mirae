@@ -10,6 +10,8 @@ import 'package:mirae/ranking/ranking-page.dart';
 import '../camera/camera.dart';
 import 'controller/nav_controller.dart';
 
+_MainPageState pageState;
+
 class MainPage extends StatefulWidget {
   final List<CameraDescription> cameras;
   MainPage(this.cameras);

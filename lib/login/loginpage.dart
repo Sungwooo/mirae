@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mirae/login/sign_in.dart';
+import 'package:mirae/login/sign_up.dart';
 import 'package:mirae/mainPage/mainPage.dart';
-
+import 'package:mirae/login/auth_page.dart';
+import 'package:provider/provider.dart';
 import '../main.dart';
+import 'firebase_provider.dart';
+
+LogInState pageState;
 
 class LogIn extends StatefulWidget {
   @override
@@ -12,8 +17,19 @@ class LogIn extends StatefulWidget {
 
 class LogInState extends State<LogIn> {
 
+  final _mailCon = TextEditingController();
+  final _pwCon = TextEditingController();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  FirebaseProvider fp;
+
   Widget build(BuildContext context) {
+
+    fp = Provider.of<FirebaseProvider>(context);
+    logger.d(fp.getUser());
+
     return Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomInset : false,
       body: Column(
         children: [
@@ -55,16 +71,14 @@ class LogInState extends State<LogIn> {
                           color: Color(0xff7D7D7D),
                           fontSize: 14,
                           fontFamily: 'GoogleSans')),
-                  TextField(
+                  TextFormField(
+                    controller: _mailCon,
+                    onSaved: (value) => _mailCon.text = value.trim(),
                     cursorColor: Colors.red,
                     cursorWidth: 4.0,
                     maxLength: 20,
-                    obscureText: true,
                     onChanged: (text) {
                       print(text);
-                    },
-                    onSubmitted: (text) {
-                      print('Submitted:$text');
                     },
                   ),
                   Text('Password',
@@ -72,7 +86,9 @@ class LogInState extends State<LogIn> {
                           color: Color(0xff7D7D7D),
                           fontSize: 14,
                           fontFamily: 'GoogleSans')),
-                  TextField(
+                  TextFormField(
+                    controller: _pwCon,
+                    onSaved: (value) => _pwCon.text = value.trim(),
                     cursorColor: Colors.red,
                     cursorWidth: 4.0,
                     maxLength: 20,
@@ -80,16 +96,15 @@ class LogInState extends State<LogIn> {
                     onChanged: (text) {
                       print(text);
                     },
-                    onSubmitted: (text) {
-                      print('Submitted:$text');
-                    },
                   ),
                   Text('find ID/PW',
                       style: TextStyle(
                           color: Color(0xff7D7D7D),
                           fontSize: 12,
                           fontFamily: 'GoogleSans')),
-                ],
+                ].map((c) {
+                  return c;
+                }).toList(),
               ),
             ),
           ),
@@ -98,17 +113,25 @@ class LogInState extends State<LogIn> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: new BoxDecoration(
-                    image: new DecorationImage(
-                      image: new AssetImage('assets/btsignup.png'),
-                      fit: BoxFit.cover,
+                new GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SignUpPage()));
+                  },
+                  child: Container(
+                    width: 80,
+                    height: 80,
+                    decoration: new BoxDecoration(
+                      image: new DecorationImage(
+                        image: new AssetImage('assets/btsignup.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
-                Container(
+                GestureDetector(
+                  onTap: () async => _signIn(),
+                  child: Container(
                   width: 80,
                   height: 80,
                   decoration: new BoxDecoration(
@@ -117,7 +140,7 @@ class LogInState extends State<LogIn> {
                       fit: BoxFit.cover,
                     ),
                   ),
-                ),
+                ),)
               ],
             ),
           ),
@@ -130,8 +153,7 @@ class LogInState extends State<LogIn> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {
-                          return MainPage(cameras);
-                        },
+                          return MainPage(cameras);},
                       ),
                     );
                   }
@@ -152,5 +174,43 @@ class LogInState extends State<LogIn> {
         ],
       ),
     );
+  }
+
+  Future<void> _signIn() async {
+
+    _scaffoldKey.currentState
+      // ignore: deprecated_member_use
+      ..hideCurrentSnackBar()
+      // ignore: deprecated_member_use
+      ..showSnackBar(SnackBar(
+        duration: Duration(seconds: 10),
+        content: Row(
+          children: <Widget>[
+            CircularProgressIndicator(),
+            Text("   Signing-In...")
+          ],
+        ),
+      ));
+
+    final result = await fp.signInWithEmail(_mailCon.text, _pwCon.text);
+
+    // ignore: deprecated_member_use
+    _scaffoldKey.currentState.hideCurrentSnackBar();
+    if (result == null) showLastFBMessage();
+  }
+
+  showLastFBMessage() {
+    _scaffoldKey.currentState
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(
+        backgroundColor: Colors.red[400],
+        duration: Duration(seconds: 10),
+        content: Text(fp.getLastFBMessage()),
+        action: SnackBarAction(
+          label: "Done",
+          textColor: Colors.white,
+          onPressed: () {},
+        ),
+      ));
   }
 }
