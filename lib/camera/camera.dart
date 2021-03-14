@@ -88,6 +88,8 @@ class _CameraPageState extends State<CameraPage> {
     typeList.add(TrashType(title: "Auto"));
     typeList.add(TrashType(title: "Paper"));
     typeList.add(TrashType(title: "Can"));
+    typeList.add(TrashType(title: "Plastic"));
+    typeList.add(TrashType(title: "Glass"));
 
     loadTfModel();
   }
@@ -115,6 +117,14 @@ class _CameraPageState extends State<CameraPage> {
       }
       if (selectedTypeIndex == 2) {
         Get.to(() => TrashInfoCan(widget.cameras, image.path));
+        return;
+      }
+      if (selectedTypeIndex == 3) {
+        Get.to(() => TrashInfoPlastic(widget.cameras, image.path));
+        return;
+      }
+      if (selectedTypeIndex == 4) {
+        Get.to(() => TrashInfoGlass(widget.cameras, image.path));
         return;
       }
 
@@ -166,7 +176,9 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Widget _renderTypeList(BuildContext context) {
+    final vpWidth = MediaQuery.of(context).size.width;
     return ListView.builder(
+      padding: EdgeInsets.only(left: vpWidth / 3),
       scrollDirection: Axis.horizontal,
       itemCount: typeList.length,
       itemBuilder: (context, index) {
@@ -240,8 +252,8 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Widget _renderCurrentType(BuildContext context) {
-    var objectName = _recognitions == null
-        ? ""
+    var objectName = _recognitions == null || _recognitions.isEmpty
+        ? typeList[selectedTypeIndex].title
         : _recognitions.reduce((current, next) =>
             current['confidenceInClass'] > next['confidenceInClass']
                 ? current
@@ -305,7 +317,7 @@ class _CameraPageState extends State<CameraPage> {
         children: <Widget>[
           CameraPreview(_controller),
           BoundingBox(
-            _recognitions == null
+            _recognitions == null || _recognitions.isEmpty
                 ? []
                 : [
                     _recognitions.reduce((current, next) =>
