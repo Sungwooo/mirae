@@ -13,7 +13,7 @@ dependencies:
     location: ^3.0.0
     google_maps_flutter: ^1.2.0
     camera: ^0.7.0+2
-    carousel_slider: 
+    carousel_slider:
     path: ^1.7.0
     path_provider: ^1.6.27
     flutter_svg:
@@ -28,6 +28,7 @@ dependencies:
     firebase_auth:
     google_sign_in:
     web_scraper: ^0.0.6
+    country_picker: ^2.0.0
 
 dev_dependencies:
     flutter_test:

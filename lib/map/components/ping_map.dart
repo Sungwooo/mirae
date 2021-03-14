@@ -220,7 +220,7 @@ class PingMapState extends State<PingMap> {
     isArrived = true;
     fToast = FToast();
     fToast.init(context);
-
+    _showToast();
     getCurrentLocation();
     _markers = Set.from([]);
     setCustomMapPin();
@@ -316,7 +316,6 @@ class PingMapState extends State<PingMap> {
             backgroundColor: Colors.white.withOpacity(0.7),
             onPressed: () {
               getCurrentLocation();
-              _showToast();
 
               toggleBtn = !toggleBtn;
             }),

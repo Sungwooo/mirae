@@ -56,7 +56,9 @@ class _MainPageState extends State<MainPage> {
               icon: ImageIcon(
                   AssetImage("assets/icon/bottomNavigation/home.png")),
               activeIcon: ImageIcon(
-                  AssetImage("assets/icon/bottomNavigation/homeSelected.png")),
+                AssetImage("assets/icon/bottomNavigation/homeSelected.png"),
+                size: 26,
+              ),
               label: "Home",
             ),
             BottomNavigationBarItem(

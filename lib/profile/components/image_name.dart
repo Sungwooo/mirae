@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'package:mirae/profile/edit_profile.dart';
 
 class ImageNameWidget extends StatelessWidget {
   @override
@@ -19,13 +22,42 @@ class ImageNameWidget extends StatelessWidget {
         SizedBox(
           height: 5,
         ),
-        Text(
-          "Mad Max",
-          style: TextStyle(
-              color: Color(0xff424242),
-              fontFamily: "GoogleSans",
-              fontSize: 20,
-              fontWeight: FontWeight.w700),
+        InkWell(
+          onTap: () => Get.to(() => EditProfile()),
+          child: Row(
+            children: [
+              Column(
+                children: [
+                  Text(
+                    "Mad Max",
+                    style: TextStyle(
+                        color: Color(0xff424242),
+                        fontFamily: "GoogleSans",
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  Image.asset(
+                    "assets/underline.png",
+                    width: 90,
+                    height: 6,
+                    color: Color(0xff42B261),
+                    fit: BoxFit.fill,
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Image.asset(
+                    "assets/profileEdit.png",
+                    width: 14,
+                  ),
+                ],
+              )
+            ],
+          ),
         )
       ]),
     );

@@ -454,45 +454,53 @@ class _HomePageState extends State<HomePage> {
                     ]),
               ),
             ),
-            Container(
-                height: 0.283 * height,
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: entries.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.only(left: 0.032 * width),
-                      child: InkWell(
-                        child: Container(
-                          height: 0.283 * height,
-                          width: 0.504 * width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/homeTab${entries[index]}.png'),
-                                fit: BoxFit.fill),
-                            boxShadow: [
-                              BoxShadow(
-                                color: entries[index] == '1'
-                                    ? Color(0xff4DA8FC)
-                                    : entries[index] == '2'
-                                        ? Color(0xffB6730F)
-                                        : Color(0xff08BD61),
-                                blurRadius: 3,
-                                offset: Offset(0, 1),
-                              ),
-                            ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6.0),
+              child: Container(
+                  height: 0.303 * height,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: entries.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                            left: 0.032 * width, bottom: 0.02 * height),
+                        child: InkWell(
+                          child: Container(
+                            height: 0.283 * height,
+                            width: 0.504 * width,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/homeTab${entries[index]}.png'),
+                                  fit: BoxFit.fill),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: entries[index] == '1'
+                                      ? Color(0xff4DA8FC)
+                                      : entries[index] == '2'
+                                          ? Color(0xffB6730F)
+                                          : Color(0xff08BD61),
+                                  blurRadius: 3,
+                                  offset: Offset(0, 1),
+                                ),
+                              ],
+                            ),
                           ),
+                          onTap: null,
                         ),
-                        onTap: null,
-                      ),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(),
-                ))
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const Divider(),
+                  )),
+            ),
+            SizedBox(
+              height: 20,
+            )
           ],
         ));
   }

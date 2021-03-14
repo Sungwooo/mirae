@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:mirae/article/argument.dart';
 import 'package:mirae/article/article_detail.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 import 'package:web_scraper/web_scraper.dart';
 
 class ResultItem extends StatelessWidget {
@@ -107,7 +107,6 @@ class ResultItem extends StatelessWidget {
           ),
         ));
   }
-
 }
 
 class GradientText extends StatelessWidget {
@@ -156,6 +155,13 @@ class _ArticleState extends State<ArticlePage> {
   void initState() {
     super.initState();
     initChaptersTitleScrap();
+  }
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
   }
 
   void initChaptersTitleScrap() async {
