@@ -25,47 +25,47 @@ bear
 zebra
 giraffe
 ???
-backpack
-umbrella
+Plastic
+Plastic
 ???
 ???
-handbag
-tie
-suitcase
+Plastic
+Plastic
+Plastic
 frisbee
-skis
-snowboard
+Plastic
+Plastic
 sports ball
 kite
 baseball bat
 baseball glove
 skateboard
-surfboard
+Plastic
 tennis racket
-bottle
+Plastic
 ???
-wine glass
-cup
-fork
-knife
-spoon
-bowl
-banana
-apple
-sandwich
-orange
-broccoli
-carrot
-hot dog
-pizza
-donut
-cake
+Glass
+Glass
+Can
+Can
+Can
+Can
+Food
+Food
+Food
+Food
+Food
+Food
+Food
+Food
+Food
+Food
 chair
 couch
-potted plant
+Glass
 bed
 ???
-dining table
+Plastic
 ???
 ???
 toilet
@@ -82,10 +82,10 @@ toaster
 sink
 refrigerator
 ???
-book
+Paper
 clock
-vase
+Glass
 scissors
 teddy bear
 hair drier
-toothbrush
+Plastic

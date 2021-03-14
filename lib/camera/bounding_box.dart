@@ -74,6 +74,10 @@ class BoundingBox extends StatelessWidget {
       }).toList();
     }
 
+    if (results == []) {
+      return Stack();
+    }
+
     return Stack(
       children: _renderBox(),
     );
