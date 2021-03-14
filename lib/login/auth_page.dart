@@ -22,7 +22,6 @@ class AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
 
-    logger.d("user: ${fp.getUser()}");
     if (fp.getUser() != null) {
       return MainPage(cameras);
     } else {

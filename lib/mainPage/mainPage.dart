@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:mirae/article/article.dart';
 import 'package:mirae/home/home_page.dart';
-import 'package:mirae/main.dart';
 import 'package:mirae/profile/profile.dart';
 import 'package:mirae/ranking/ranking-page.dart';
 import '../camera/camera.dart';

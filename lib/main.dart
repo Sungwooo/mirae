@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<FirebaseProvider>( create: (_) => FirebaseProvider())
         ],
-        child: MaterialApp(title: 'MIRAE',
+        child: GetMaterialApp(title: 'MIRAE',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               primarySwatch: white,
@@ -39,7 +40,8 @@ class MyApp extends StatelessWidget {
               ),
               splashColor: Colors.grey[700],
             ),
-            home: AuthPage()),
-        );
+            home: AuthPage(),
+        )
+    );
   }
 }

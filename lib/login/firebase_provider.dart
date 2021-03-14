@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:logger/logger.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-Logger logger = Logger();
 
 class FirebaseProvider with ChangeNotifier {
   final FirebaseAuth fAuth = FirebaseAuth.instance;
@@ -42,7 +40,6 @@ class FirebaseProvider with ChangeNotifier {
          return true;
       }
     } on Exception catch (e) {
-      logger.e(e.toString().trim());
       List<String> result = e.toString().split(", ");
       setLastFBMessage(result[1]);
       return false;
@@ -55,12 +52,10 @@ class FirebaseProvider with ChangeNotifier {
           email: email, password: password);
       if (result != null) {
         setUser(result.user);
-        logger.d(getUser());
         return true;
       }
       return false;
     } on Exception catch (e) {
-      logger.e(e.toString().trim());
       List<String> result = e.toString().split(", ");
       setLastFBMessage(result[1]);
       return false;
@@ -86,7 +81,6 @@ class FirebaseProvider with ChangeNotifier {
       setUser(user);
       return true;
     } on Exception catch (e) {
-      logger.e(e.toString().trim());
       List<String> result = e.toString().split(", ");
       setLastFBMessage(result[1]);
       return false;
