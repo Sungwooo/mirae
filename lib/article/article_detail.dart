@@ -5,107 +5,6 @@ import 'package:web_scraper/web_scraper.dart';
 
 import 'argument.dart';
 
-class ResultItem extends StatelessWidget {
-  final String title;
-  final String date;
-  final String category;
-  final String attract;
-  final String writer;
-  final String image;
-  final String url;
-
-  const ResultItem(
-      {Key key,
-      this.writer,
-      this.title,
-      this.date,
-      this.category,
-      this.attract,
-      this.url,
-      this.image})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Arguments data =
-        Arguments(title, date, category, attract, writer, image, url);
-
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    return Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ArticleDetailPage(arguments: data),
-              ),
-            );
-          },
-          child: Container(
-            child: Row(
-              children: [
-                Container(
-                  width: 0.408 * width,
-                  height: 0.127 * height,
-                  decoration: new BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: new DecorationImage(
-                      image: new NetworkImage(
-                        image,
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 0.034 * width),
-                  child: Container(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(children: [
-                            Container(
-                              width: 0.49 * width,
-                              child: Text(title,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'GoogleSans')),
-                            )
-                          ]),
-                          Padding(
-                            padding: EdgeInsets.only(top: 0.005 * height),
-                            child: Row(children: [
-                              Padding(
-                                padding: EdgeInsets.only(right: 0.01 * width),
-                                child: Container(
-                                  width: 0.008 * width,
-                                  height: 0.017 * height,
-                                  color: Color(0xffF4BB27),
-                                ),
-                              ),
-                              Text(category != '' ? category : 'Video',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      color: Color(0xff239EDD),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'GoogleSans')),
-                            ]),
-                          ),
-                        ]),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ));
-  }
-}
-
 class GradientText extends StatelessWidget {
   GradientText(
     this.text, {
@@ -137,7 +36,6 @@ class GradientText extends StatelessWidget {
 // ignore: must_be_immutable
 class ArticleDetailPage extends StatelessWidget {
   // ignore: deprecated_member_use
-  List<ResultItem> resultList = List();
 
   final Arguments arguments;
 
@@ -148,21 +46,30 @@ class ArticleDetailPage extends StatelessWidget {
     Color(0xff36AE57).withOpacity(0.9),
   ];
   final List<double> _stops = [0, 1];
-  void initChaptersTitleScrap() async {
+
+  // ignore: missing_return
+  Future<List> initChaptersTitleScrap() async {
+    List resultList = [];
     final rawUrl = arguments.url;
     print(arguments.url);
     final webScraper = WebScraper('https://news.un.org/');
-    final endpoint = rawUrl.replaceAll(r'https://news.un.org/', '');
-    if (await webScraper.loadWebPage(endpoint)) {
-      List<Map<String, dynamic>> elements = webScraper
-          .getElement('div.content > div.field > div.content', ['h3']);
-      print(elements);
+    if (await webScraper.loadWebPage(rawUrl)) {
+      List<Map<String, dynamic>> articles =
+          webScraper.getElement('div.field-item.even > p, h3', []);
+      print(articles);
+      articles.forEach((article) {
+        int i = articles.indexOf(article);
+        resultList.add(articles[i]['title']);
+      });
+      resultList.removeRange(0, 2);
+      return resultList;
     }
   }
 
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
         appBar: CupertinoNavigationBar(
           border: Border(
@@ -292,23 +199,50 @@ class ArticleDetailPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 0.019 * height,
-                ),
-                child: Container(
-                  width: 0.896 * width,
-                  child: Text(
-                      'The US, under the Trump administration, withdrew from the landmark treaty to curb global warming but President Joseph Biden reversed the decision when he assumed office in January. \n\n“For the past four years, the absence of a key player created a gap in the Paris Agreement; a missing link that weakened the whole”, Mr. Guterres said.\n\n“So today, as we mark the United States re-entry into this treaty, we also recognize its restoration, in its entirety, as its creators intended. Welcome back.” \n\n‘Humility and ambition’ \n\n Describing the occasion as “a day of hope”, the Secretary-General said he was particularly pleased to be commemorating the event with John Kerry, the US Special Presidential Envoy for Climate.\n\nThe veteran politician and diplomat was Secretary of State when the US, alongside 194 other countries, adopted the Paris Agreement in December 2015.  He was at the UN the following April to sign the treaty, accompanied by his granddaughter.\n\n“We rejoin the international climate effort with humility and with ambition”, said Mr. Kerry.\n\n“Humility knowing that we lost four years during which America was absent from the table, and humility in knowing that today, no country and no continent is getting the job done. But also with ambition, knowing that Paris alone will not do what science tells us we must do together”. A ‘pivotal’ year for action The Paris Agreement aims to limit global temperature rise to 1.5 Celsius above pre-industrial levels by curbing greenhouse gas emissions. It requires countries to commit to increasingly ambitious climate action through plans known as Nationally Determined Contributions (NDCs). ',
-                      style: TextStyle(
-                          color: Color(0xff363636),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'GoogleSans')),
-                ),
-              ),
             ],
           ),
+          FutureBuilder(
+              future: initChaptersTitleScrap(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData == false) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Error: ${snapshot.error}',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  );
+                }
+                else {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      top: 0.019 * height, left: 0.032 * width, right: 0.032 * width
+                    ),
+                    child: ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top:8.0, bottom: 8.0),
+                            child: Container(
+                              width: 0.936 * width,
+                              child: Text(snapshot.data[index],
+                                  style: TextStyle(
+                                      color: Color(0xff363636),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: 'GoogleSans')),
+                            ),
+                          );
+                        }),
+                  );
+                }
+              }),
         ]));
   }
 }
+
