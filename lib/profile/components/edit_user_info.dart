@@ -1,6 +1,8 @@
 import 'package:country_picker/country_picker.dart';
 
 import 'package:flutter/material.dart';
+import 'package:mirae/login/firebase_provider.dart';
+import 'package:provider/provider.dart';
 
 class EditUserInfo extends StatefulWidget {
   @override
@@ -8,15 +10,24 @@ class EditUserInfo extends StatefulWidget {
 }
 
 class _EditUserInfoState extends State<EditUserInfo> {
+  FirebaseProvider fp;
   Country selectedCountry;
-  String userEmail = "mukjo96@gmail.com";
-  String userStartDate = "2021.03.15";
+  String userEmail = "";
+  String userStartDate;
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context, listen: true);
+    userStartDate =
+        fp.getUser().metadata.creationTime.toString().substring(0, 10);
+    userEmail = "${fp.getUser().email}";
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: Container(
-        height: 253,
+        height: 0.67 * width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +44,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                       fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
-                  width: 12,
+                  width: 0.032 * width,
                 ),
                 InkWell(
                   onTap: () => showCountryPicker(
@@ -70,7 +81,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                       fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
-                  height: 8,
+                  height: 0.01 * height,
                 ),
                 Text(
                   "$userEmail",
@@ -94,7 +105,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                       fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
-                  height: 8,
+                  height: 0.01 * height,
                 ),
                 Text(
                   "Day 17 / 32 challenges",
@@ -118,7 +129,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                       fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
-                  height: 8,
+                  height: 0.01 * height,
                 ),
                 Text(
                   "$userStartDate",

@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mirae/login/sign_in.dart';
+import 'package:mirae/login/sign_up.dart';
 import 'package:mirae/mainPage/mainPage.dart';
-
+import 'package:mirae/login/auth_page.dart';
+import 'package:provider/provider.dart';
 import '../main.dart';
+import 'firebase_provider.dart';
+
+LogInState pageState;
 
 class LogIn extends StatefulWidget {
   @override
@@ -11,41 +16,29 @@ class LogIn extends StatefulWidget {
 }
 
 class LogInState extends State<LogIn> {
+  final _mailCon = TextEditingController();
+  final _pwCon = TextEditingController();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  FirebaseProvider fp;
 
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
+
     return Scaffold(
-      resizeToAvoidBottomInset : false,
+      key: _scaffoldKey,
+      resizeToAvoidBottomInset: false,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 79),
-            child: Container(
-              child: Column(
-                children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: new BoxDecoration(
-                      image: new DecorationImage(
-                        image: new AssetImage('assets/mirae_logo.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 17),
-                    child: Text('mE',
-                        style: TextStyle(
-                            color: Color(0xff31AC53),
-                            fontSize: 25,
-                            fontFamily: 'GoogleSans')),
-                  ),
-                ],
-              ),
-            ),
-          ),
+              padding: EdgeInsets.only(top: 120),
+              child: Image.asset(
+                'assets/mirae_logo.png',
+                width: 100,
+              )),
           Padding(
-            padding: const EdgeInsets.only(top: 58, left: 46, right: 46),
+            padding: const EdgeInsets.only(top: 100, left: 46, right: 46),
             child: Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,16 +48,14 @@ class LogInState extends State<LogIn> {
                           color: Color(0xff7D7D7D),
                           fontSize: 14,
                           fontFamily: 'GoogleSans')),
-                  TextField(
+                  TextFormField(
+                    controller: _mailCon,
+                    onSaved: (value) => _mailCon.text = value.trim(),
                     cursorColor: Colors.red,
                     cursorWidth: 4.0,
                     maxLength: 20,
-                    obscureText: true,
                     onChanged: (text) {
                       print(text);
-                    },
-                    onSubmitted: (text) {
-                      print('Submitted:$text');
                     },
                   ),
                   Text('Password',
@@ -72,7 +63,9 @@ class LogInState extends State<LogIn> {
                           color: Color(0xff7D7D7D),
                           fontSize: 14,
                           fontFamily: 'GoogleSans')),
-                  TextField(
+                  TextFormField(
+                    controller: _pwCon,
+                    onSaved: (value) => _pwCon.text = value.trim(),
                     cursorColor: Colors.red,
                     cursorWidth: 4.0,
                     maxLength: 20,
@@ -80,77 +73,123 @@ class LogInState extends State<LogIn> {
                     onChanged: (text) {
                       print(text);
                     },
-                    onSubmitted: (text) {
-                      print('Submitted:$text');
-                    },
                   ),
-                  Text('find ID/PW',
+                  /*Text('find ID/PW',
                       style: TextStyle(
                           color: Color(0xff7D7D7D),
                           fontSize: 12,
-                          fontFamily: 'GoogleSans')),
-                ],
+                          fontFamily: 'GoogleSans')),*/
+                ].map((c) {
+                  return c;
+                }).toList(),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 48),
+            padding: const EdgeInsets.only(top: 30, left: 46, right: 46),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: new BoxDecoration(
-                    image: new DecorationImage(
-                      image: new AssetImage('assets/btsignup.png'),
-                      fit: BoxFit.cover,
+                new GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SignUpPage()));
+                  },
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: new BoxDecoration(
+                      image: new DecorationImage(
+                        image: new AssetImage('assets/btsignup.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: new BoxDecoration(
-                    image: new DecorationImage(
-                      image: new AssetImage('assets/btlogin.png'),
-                      fit: BoxFit.cover,
+                GestureDetector(
+                  onTap: () async => _signIn(),
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: new BoxDecoration(
+                      image: new DecorationImage(
+                        image: new AssetImage('assets/btlogin.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 40),
+            padding: const EdgeInsets.only(top: 70),
             child: new GestureDetector(
               onTap: () {
-                signInWithGoogle().then((result) {
-                  if (result != null) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return MainPage(cameras);
-                        },
-                      ),
-                    );
-                  }
-                });
+                try {
+                  signInWithGoogle().then((result) {
+                    if (result != null) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return MainPage(cameras);
+                          },
+                        ),
+                      );
+                    }
+                  });
+                } catch (error) {
+                  print("error");
+                }
               },
-              child: Container(
+              child: Image.asset(
+                'assets/signwithgg.png',
                 width: 300,
-                height: 50,
-                decoration: new BoxDecoration(
-                  image: new DecorationImage(
-                    image: new AssetImage('assets/signwithgg.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                fit: BoxFit.contain,
               ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _signIn() async {
+    print(fp.getUser());
+
+    _scaffoldKey.currentState
+      // ignore: deprecated_member_use
+      ..hideCurrentSnackBar()
+      // ignore: deprecated_member_use
+      ..showSnackBar(SnackBar(
+        duration: Duration(seconds: 10),
+        content: Row(
+          children: <Widget>[
+            CircularProgressIndicator(),
+            Text("   Signing-In...")
+          ],
+        ),
+      ));
+
+    final result = await fp.signInWithEmail(_mailCon.text, _pwCon.text);
+
+    // ignore: deprecated_member_use
+    _scaffoldKey.currentState.hideCurrentSnackBar();
+    if (result == null) showLastFBMessage();
+  }
+
+  showLastFBMessage() {
+    _scaffoldKey.currentState
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(
+        backgroundColor: Colors.red[400],
+        duration: Duration(seconds: 10),
+        content: Text(fp.getLastFBMessage()),
+        action: SnackBarAction(
+          label: "Done",
+          textColor: Colors.white,
+          onPressed: () {},
+        ),
+      ));
   }
 }

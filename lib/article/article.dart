@@ -1,12 +1,12 @@
 import 'dart:ui';
-
+import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:mirae/article/argument.dart';
 import 'package:mirae/article/article_detail.dart';
-
 import 'package:web_scraper/web_scraper.dart';
+
+var now = DateFormat.yMd().format(DateTime.now());
 
 class ResultItem extends StatelessWidget {
   final String title;
@@ -47,7 +47,9 @@ class ResultItem extends StatelessWidget {
             );
           },
           child: Container(
+            width: 0.934 * width,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 0.408 * width,
@@ -71,7 +73,10 @@ class ResultItem extends StatelessWidget {
                           Row(children: [
                             Container(
                               width: 0.49 * width,
-                              child: Text(title,
+                              child: Text(
+                                  title.length > 80
+                                      ? title.substring(0, 80) + "..."
+                                      : title,
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
@@ -317,10 +322,7 @@ class _ArticleState extends State<ArticlePage> {
                 )),
           ),
           Padding(
-            padding: EdgeInsets.only(
-                left: 0.032 * width,
-                right: 0.04 * width,
-                bottom: 0.007 * height),
+            padding: EdgeInsets.symmetric(horizontal: 0.034 * width),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -332,91 +334,120 @@ class _ArticleState extends State<ArticlePage> {
                       Color(0xff2EC9C0),
                     ]),
                   ),
-                  Text('2021.02.22',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                          color: Color(0xff4B4B4B),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'GoogleSans'))
+                  Column(
+                    children: [
+                      Text(now,
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              color: Color(0xff4B4B4B),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'GoogleSans')),
+                      SizedBox(
+                        height: 0.006 * height,
+                      ),
+                    ],
+                  )
                 ]),
           ),
           /*Padding(
             padding: EdgeInsets.symmetric(horizontal: 0.032 * width),
-            child: GestureDetector(
-              onTap: () {
-                Get.to(() => ArticleDetailPage());
-              },
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Stack(
-                  children: [
-                    Container(
-                      width: 0.934 * width,
-                      height: 0.295 * height,
-                      decoration: BoxDecoration(
-                        image: new DecorationImage(
-                          image: new NetworkImage(
-                            resultList[0].image,
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                        // boxShadow
-                      ),
-                    ),
-                    BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                      child: Container(
-                        width: 0.934 * width,
-                        height: 0.295 * height,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            gradient: LinearGradient(
-                                begin: FractionalOffset.bottomLeft,
-                                end: FractionalOffset.topRight,
-                                colors: [
-                                  Colors.black.withOpacity(0.5),
-                                  Colors.black.withOpacity(0)
-                                ],
-                                stops: [
-                                  0.5,
-                                  1.0
-                                ])),
-                        child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: 0.04 * width, bottom: 0.01 * height),
-                                child: Container(
-                                    width: 0.853 * width,
-                                    child: Text(
-                                      resultList[0].title,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily: 'GoogleSans'),
-                                    )),
-                              ),
-                            ]),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            child:
           ),*/
 
           Padding(
-            padding: EdgeInsets.only(top: 0.024 * height, left: 0.032 * width),
+            padding: EdgeInsets.only(top: 0.01 * height),
             child: (loaded)
-                ? ListView(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    physics: BouncingScrollPhysics(),
-                    children: resultList.toList(),
-                  )
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ArticleDetailPage(
+                                    arguments: Arguments(
+                                        resultList[0].title,
+                                        resultList[0].date,
+                                        resultList[0].category,
+                                        resultList[0].attract,
+                                        resultList[0].writer,
+                                        resultList[0].image,
+                                        resultList[0].url)),
+                              ),
+                            );
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  width: 0.934 * width,
+                                  height: 0.295 * height,
+                                  decoration: BoxDecoration(
+                                    image: new DecorationImage(
+                                      image: new NetworkImage(
+                                        resultList[0].image,
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    // boxShadow
+                                  ),
+                                ),
+                                BackdropFilter(
+                                  filter:
+                                      ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                                  child: Container(
+                                    width: 0.934 * width,
+                                    height: 0.295 * height,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        gradient: LinearGradient(
+                                            begin: FractionalOffset.bottomLeft,
+                                            end: FractionalOffset.topRight,
+                                            colors: [
+                                              Colors.black.withOpacity(0.5),
+                                              Colors.black.withOpacity(0)
+                                            ],
+                                            stops: [
+                                              0.5,
+                                              1.0
+                                            ])),
+                                    child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 0.04 * width,
+                                                bottom: 0.01 * height),
+                                            child: Container(
+                                                width: 0.853 * width,
+                                                child: Text(
+                                                  resultList[0].title,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 24,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontFamily: 'GoogleSans'),
+                                                )),
+                                          ),
+                                        ]),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ListView(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          children: resultList.getRange(1, 10).toList(),
+                        )
+                      ])
                 : CircularProgressIndicator(),
           ),
         ]));

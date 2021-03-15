@@ -214,7 +214,7 @@ class _RankingPageState extends State<RankingPage> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 24),
+      padding: EdgeInsets.symmetric(vertical: 0.03 * height),
       width: 0.67 * width,
       child: Column(
         children: [

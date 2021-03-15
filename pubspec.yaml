@@ -25,10 +25,14 @@ dependencies:
     tflite:
     url_launcher:
     firebase_core:
-    firebase_auth:
+    firebase_auth: ^0.15.0+1
     google_sign_in:
     web_scraper: ^0.0.6
     country_picker: ^2.0.0
+    provider: ^5.0.0
+    shared_preferences: ^0.5.3+4
+    logger: ^0.7.0+2
+    webview_flutter: ^0.3.19+9
 
 dev_dependencies:
     flutter_test:

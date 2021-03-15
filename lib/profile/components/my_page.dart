@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mirae/login/firebase_provider.dart';
 import 'package:mirae/profile/components/image_name.dart';
 import 'package:mirae/profile/components/level_rank.dart';
 import 'package:mirae/profile/components/my_ping_btn.dart';
 import 'package:mirae/profile/components/my_score_box.dart';
 import 'package:mirae/profile/components/progress_bar.dart';
+import 'package:provider/provider.dart';
 
 class MyInfoPage extends StatefulWidget {
   @override

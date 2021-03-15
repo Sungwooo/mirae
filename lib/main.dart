@@ -1,8 +1,11 @@
 import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mirae/login/loginpage.dart';
+import 'package:provider/provider.dart';
 import 'constants/material_color.dart';
+import 'login/auth_page.dart';
+import 'login/firebase_provider.dart';
 
 List<CameraDescription> cameras;
 
@@ -17,17 +20,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-        title: 'MIRAE',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: white,
-          appBarTheme: AppBarTheme(
-            color: Colors.transparent,
-            elevation: 0.0,
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<FirebaseProvider>(
+              create: (_) => FirebaseProvider())
+        ],
+        child: GetMaterialApp(
+          title: 'MIRAE',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: white,
+            appBarTheme: AppBarTheme(
+              color: Colors.transparent,
+              elevation: 0.0,
+            ),
+            splashColor: Colors.grey[700],
           ),
-          splashColor: Colors.grey[700],
-        ),
-        home: LogIn());
+          home: AuthPage(),
+        ));
   }
 }

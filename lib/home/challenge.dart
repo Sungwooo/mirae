@@ -47,7 +47,7 @@ class ChallengeState extends State<Challenge> {
         body: ListView(
           children: [
             Container(
-              height: 164,
+              height: 0.2 * height,
               decoration: BoxDecoration(
                 color: Color(0xff36AE57).withOpacity(0.8),
                 borderRadius: BorderRadius.only(
@@ -65,11 +65,14 @@ class ChallengeState extends State<Challenge> {
               child: Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(
-                        top: 22, left: 29, bottom: 26, right: 52),
+                    padding: EdgeInsets.only(
+                        top: 0.027 * height,
+                        left: 0.077 * width,
+                        bottom: 0.032 * height,
+                        right: 0.138 * width),
                     child: Container(
-                      width: 112,
-                      height: 112,
+                      width: 0.3 * width,
+                      height: 0.3 * width,
                       decoration: new BoxDecoration(
                         image: new DecorationImage(
                           image: new AssetImage('assets/earth.png'),
@@ -91,7 +94,8 @@ class ChallengeState extends State<Challenge> {
                               fontFamily: 'GoogleSans'),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 11, bottom: 8),
+                          padding: EdgeInsets.only(
+                              top: 0.013 * height, bottom: 0.01 * height),
                           child: Text(
                             "Today you can burn",
                             style: TextStyle(
@@ -102,8 +106,8 @@ class ChallengeState extends State<Challenge> {
                           ),
                         ),
                         Container(
-                          width: 152, // 텍스트의 길이에 따라 맞추어야할듯
-                          height: 44,
+                          width: 0.405 * width, // 텍스트의 길이에 따라 맞추어야할듯
+                          height: 0.054 * height,
                           decoration: BoxDecoration(
                             color: Color(0xffFCE596),
                             borderRadius: BorderRadius.circular(10),
@@ -111,18 +115,20 @@ class ChallengeState extends State<Challenge> {
                           ),
 
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            padding:
+                                EdgeInsets.symmetric(horizontal: 0.02 * height),
                             child: Row(
                               children: [
                                 Image.asset(
                                   'assets/running.png',
-                                  height: 28,
+                                  height: 0.034 * height,
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 11),
+                                      padding:
+                                          EdgeInsets.only(left: 0.03 * width),
                                       child: Text(
                                         "10",
                                         style: TextStyle(
@@ -135,7 +141,7 @@ class ChallengeState extends State<Challenge> {
                                   ],
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 4),
+                                  padding: EdgeInsets.only(left: 0.01 * width),
                                   child: Text(
                                     "calories",
                                     style: TextStyle(
@@ -156,9 +162,9 @@ class ChallengeState extends State<Challenge> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 27),
+              padding: EdgeInsets.only(top: 0.033 * height),
               child: Container(
-                width: 350,
+                width: 0.934 * width,
                 child: Column(
                   children: [
                     Row(
@@ -176,8 +182,8 @@ class ChallengeState extends State<Challenge> {
                               }),
                               child: (selectedDay != index + 1
                                   ? Container(
-                                      width: 70,
-                                      height: 70,
+                                      width: 0.187 * width,
+                                      height: 0.187 * width,
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -188,11 +194,11 @@ class ChallengeState extends State<Challenge> {
                                                   fontSize: 14,
                                                   fontFamily: 'GoogleSans')),
                                           SizedBox(
-                                            height: 5,
+                                            height: 0.006 * height,
                                           ),
                                           Container(
-                                            width: 26,
-                                            height: 26,
+                                            width: 0.07 * width,
+                                            height: 0.07 * width,
                                             decoration: new BoxDecoration(
                                               image: new DecorationImage(
                                                 image: new AssetImage(
@@ -205,8 +211,8 @@ class ChallengeState extends State<Challenge> {
                                       ),
                                     )
                                   : Container(
-                                      width: 70,
-                                      height: 70,
+                                      width: 0.187 * width,
+                                      height: 0.187 * width,
                                       decoration: new BoxDecoration(
                                         image: new DecorationImage(
                                           image: new AssetImage(
@@ -250,8 +256,8 @@ class ChallengeState extends State<Challenge> {
                                     }),
                                 child: (isTodayExpanded
                                     ? Container(
-                                        width: 70,
-                                        height: 70,
+                                        width: 0.187 * width,
+                                        height: 0.187 * width,
                                         decoration: new BoxDecoration(
                                           image: new DecorationImage(
                                             image: new AssetImage(
@@ -285,8 +291,8 @@ class ChallengeState extends State<Challenge> {
                                         ),
                                       )
                                     : Container(
-                                        width: 70,
-                                        height: 70,
+                                        width: 0.187 * width,
+                                        height: 0.187 * width,
                                         decoration: new BoxDecoration(
                                           image: new DecorationImage(
                                             image: new AssetImage(
@@ -345,8 +351,8 @@ class ChallengeState extends State<Challenge> {
                       fiveList.length,
                       (index) {
                         return Container(
-                          width: 70,
-                          height: 70,
+                          width: 0.187 * width,
+                          height: 0.187 * width,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -356,11 +362,11 @@ class ChallengeState extends State<Challenge> {
                                       fontSize: 14,
                                       fontFamily: 'GoogleSans')),
                               SizedBox(
-                                height: 5,
+                                height: 0.006 * height,
                               ),
                               Container(
-                                width: 30,
-                                height: 30,
+                                width: 0.08 * width,
+                                height: 0.08 * width,
                                 decoration: new BoxDecoration(
                                   image: new DecorationImage(
                                     image: new AssetImage(

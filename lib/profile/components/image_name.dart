@@ -1,11 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:mirae/login/firebase_provider.dart';
 import 'package:mirae/profile/edit_profile.dart';
+import 'package:provider/provider.dart';
 
 class ImageNameWidget extends StatelessWidget {
+  FirebaseProvider fp;
+  FirebaseUser currentUser;
+
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context, listen: true);
+    currentUser = fp?.getUser();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
@@ -20,7 +27,7 @@ class ImageNameWidget extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 5,
+          height: 0.006 * height,
         ),
         InkWell(
           onTap: () => Get.to(() => EditProfile()),
@@ -29,7 +36,9 @@ class ImageNameWidget extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    "Mad Max",
+                    currentUser.displayName != null
+                        ? "${currentUser.displayName}"
+                        : "Loading..",
                     style: TextStyle(
                         color: Color(0xff424242),
                         fontFamily: "GoogleSans",
@@ -38,8 +47,8 @@ class ImageNameWidget extends StatelessWidget {
                   ),
                   Image.asset(
                     "assets/underline.png",
-                    width: 90,
-                    height: 6,
+                    width: 0.24 * width,
+                    height: 0.007 * height,
                     color: Color(0xff42B261),
                     fit: BoxFit.fill,
                   ),
@@ -48,11 +57,11 @@ class ImageNameWidget extends StatelessWidget {
               Column(
                 children: [
                   SizedBox(
-                    height: 5,
+                    height: 0.006 * height,
                   ),
                   Image.asset(
                     "assets/profileEdit.png",
-                    width: 14,
+                    width: 0.037 * width,
                   ),
                 ],
               )
