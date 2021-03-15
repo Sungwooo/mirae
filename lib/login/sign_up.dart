@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mirae/login/firebase_provider.dart';
+import 'package:mirae/login/sign_in.dart';
+import 'package:mirae/mainPage/mainPage.dart';
 import 'package:provider/provider.dart';
+
+import '../main.dart';
+import 'loginpage.dart';
 
 SignUpPageState pageState;
 
@@ -14,7 +19,10 @@ class SignUpPage extends StatefulWidget {
 
 class SignUpPageState extends State<SignUpPage> {
   TextEditingController _mailCon = TextEditingController();
+  TextEditingController _nameCon = TextEditingController();
   TextEditingController _pwCon = TextEditingController();
+  TextEditingController _pwChkCon = TextEditingController();
+
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   FirebaseProvider fp;
@@ -22,6 +30,7 @@ class SignUpPageState extends State<SignUpPage> {
   @override
   void dispose() {
     _mailCon.dispose();
+    _nameCon.dispose();
     _pwCon.dispose();
     super.dispose();
   }
@@ -33,80 +42,182 @@ class SignUpPageState extends State<SignUpPage> {
     }
 
     return Scaffold(
+        resizeToAvoidBottomInset : false,
         key: _scaffoldKey,
-        body: ListView(
+        body: Column(
           children: <Widget>[
             Container(
               margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
               child: Column(
                 children: <Widget>[
                   //Header
-                  Container(
-                    height: 50,
-                    decoration: BoxDecoration(color: Colors.amber),
-                    child: Center(
-                      child: Text(
-                        "Create Account",
-                        style: TextStyle(
-                            color: Colors.blueGrey,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 79),
+                    child: Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 70,
+                            height: 70,
+                            decoration: new BoxDecoration(
+                              image: new DecorationImage(
+                                image: new AssetImage('assets/mirae_logo.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
 
                   // Input Area
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.amber, width: 1),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        TextField(
-                          controller: _mailCon,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.mail),
-                            hintText: "Email",
+                  Padding(
+                    padding: const EdgeInsets.only(top: 58, left: 46, right: 46),
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('E-mail',
+                              style: TextStyle(
+                                  color: Color(0xff7D7D7D),
+                                  fontSize: 14,
+                                  fontFamily: 'GoogleSans')),
+                          TextFormField(
+                            controller: _mailCon,
+                            onSaved: (value) => _mailCon.text = value.trim(),
+                            cursorColor: Colors.red,
+                            cursorWidth: 4.0,
+                            maxLength: 20,
+                            onChanged: (text) {
+                              print(text);
+                            },
                           ),
-                        ),
-                        TextField(
-                          controller: _pwCon,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.lock),
-                            hintText: "Password",
+                          Text('Name',
+                              style: TextStyle(
+                                  color: Color(0xff7D7D7D),
+                                  fontSize: 14,
+                                  fontFamily: 'GoogleSans')),
+                          TextFormField(
+                            controller: _nameCon,
+                            onSaved: (value) => _nameCon.text = value.trim(),
+                            cursorColor: Colors.red,
+                            cursorWidth: 4.0,
+                            maxLength: 20,
+                            onChanged: (text) {
+                              print(text);
+                            },
                           ),
-                          obscureText: true,
-                        ),
-                      ].map((c) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 10),
-                          child: c,
-                        );
-                      }).toList(),
+                          Text('Password',
+                              style: TextStyle(
+                                  color: Color(0xff7D7D7D),
+                                  fontSize: 14,
+                                  fontFamily: 'GoogleSans')),
+                          TextFormField(
+                            controller: _pwCon,
+                            onSaved: (value) => _pwCon.text = value.trim(),
+                            cursorColor: Colors.red,
+                            cursorWidth: 4.0,
+                            maxLength: 20,
+                            obscureText: true,
+                            onChanged: (text) {
+                              print(text);
+                            },
+                          ),
+                          Text('Repeat Password',
+                              style: TextStyle(
+                                  color: Color(0xff7D7D7D),
+                                  fontSize: 14,
+                                  fontFamily: 'GoogleSans')),
+                          TextFormField(
+                            controller: _pwChkCon,
+                            validator: (val){
+                              if(val.isEmpty)
+                                return 'Empty';
+                              if(val != _pwCon.text)
+                                return 'Not Match';
+                              return null;
+                            },
+                            cursorColor: Colors.red,
+                            cursorWidth: 4.0,
+                            maxLength: 20,
+                            obscureText: true,
+                            onChanged: (text) {
+                              print(text);
+                            },
+                          ),
+                        ].map((c) {
+                          return c;
+                        }).toList(),
+                      ),
                     ),
-                  )
+                  ),
+
                 ],
               ),
             ),
 
-            // Sign Up Button
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              // ignore: deprecated_member_use
-              child: RaisedButton(
-                color: Colors.indigo[300],
-                child: Text(
-                  "SIGN UP",
-                  style: TextStyle(color: Colors.white),
+            GestureDetector(
+              onTap: () {
+                FocusScope.of(context)
+                    .requestFocus(new FocusNode()); // 키보드 감춤
+                _signUp();
+              },
+              child: Container(
+                width: 80,
+                height: 80,
+                decoration: new BoxDecoration(
+                  image: new DecorationImage(
+                    image: new AssetImage('assets/btsignup.png'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                onPressed: () {
-                  FocusScope.of(context)
-                      .requestFocus(new FocusNode()); // 키보드 감춤
-                  _signUp();
-                },
               ),
             ),
+            GestureDetector(
+              onTap: () {
+                LogIn();
+              },
+              child : Container(
+                width: 50,
+                height: 50,
+                child: Text('Log in',
+                    style: TextStyle(
+                        color: Color(0xff31AC53),
+                        fontSize: 16,
+                        fontFamily: 'GoogleSans')
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 40),
+              child: new GestureDetector(
+                onTap: () {
+                  signInWithGoogle().then((result) {
+                    if (result != null) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return MainPage(cameras);},
+                        ),
+                      );
+                    }
+                  });
+                },
+                child: Container(
+                  width: 300,
+                  height: 50,
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      image: new AssetImage('assets/signwithgg.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+
           ],
         ));
   }
@@ -125,7 +236,7 @@ class SignUpPageState extends State<SignUpPage> {
           ],
         ),
       ));
-    bool result = await fp.signUpWithEmail(_mailCon.text, _pwCon.text);
+    bool result = await fp.signUpWithEmail(_mailCon.text, _pwCon.text, _nameCon.text);
     // ignore: deprecated_member_use
     _scaffoldKey.currentState.hideCurrentSnackBar();
     if (result) {

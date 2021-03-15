@@ -96,11 +96,11 @@ class LogInState extends State<LogIn> {
                       print(text);
                     },
                   ),
-                  Text('find ID/PW',
+                  /*Text('find ID/PW',
                       style: TextStyle(
                           color: Color(0xff7D7D7D),
                           fontSize: 12,
-                          fontFamily: 'GoogleSans')),
+                          fontFamily: 'GoogleSans')),*/
                 ].map((c) {
                   return c;
                 }).toList(),
@@ -176,6 +176,7 @@ class LogInState extends State<LogIn> {
   }
 
   Future<void> _signIn() async {
+    print(fp.getUser());
 
     _scaffoldKey.currentState
       // ignore: deprecated_member_use

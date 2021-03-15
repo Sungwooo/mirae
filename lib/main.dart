@@ -3,13 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'article/article.dart';
 import 'constants/material_color.dart';
 import 'login/auth_page.dart';
 import 'login/firebase_provider.dart';
-import 'login/loginpage.dart';
-import 'login/loginpage.dart';
-import 'login/sign_in.dart';
+
 
 List<CameraDescription> cameras;
 

@@ -30,11 +30,17 @@ class FirebaseProvider with ChangeNotifier {
     });
   }
 
-  // ignore: missing_return
-  Future<bool> signUpWithEmail(String email, String password) async {
+  // ignore: missing_return, non_constant_identifier_names
+  Future<bool> signUpWithEmail(String email, String password, String name) async {
     try {
       AuthResult result = await fAuth.createUserWithEmailAndPassword(
           email: email, password: password);
+      FirebaseUser user = await fAuth.currentUser();
+
+      UserUpdateInfo updateInfo = UserUpdateInfo();
+      updateInfo.displayName = name;
+      user.updateProfile(updateInfo);
+      print('USERNAME IS: ${user.displayName}');
       if (result.user != null) {
         signOut();
          return true;
