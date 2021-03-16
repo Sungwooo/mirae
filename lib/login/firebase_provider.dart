@@ -41,6 +41,56 @@ class FirebaseProvider with ChangeNotifier {
     print("user : ${user.displayName}");
   }
 
+  Future<bool> signInWithGoogleAccount() async {
+    try {
+      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth =
+      await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+      final FirebaseUser user =
+          (await fAuth.signInWithCredential(credential)).user;
+      assert(user.email != null);
+      assert(user.displayName != null);
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
+
+      final FirebaseUser currentUser = await fAuth.currentUser();
+      assert(user.uid == currentUser.uid);
+      setUser(user);
+      return true;
+    } on Exception catch (e) {
+      List<String> result = e.toString().split(", ");
+      setLastFBMessage(result[1]);
+      return false;
+    }
+  }
+
+
+  // ignore: missing_return
+  Future<String> signInWithGoogle() async {
+    setUser(null);
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+    GoogleSignIn googleSignIn = _googleSignIn;
+    GoogleSignInAccount account = await googleSignIn.signIn();
+    GoogleSignInAuthentication authentication = await account.authentication;
+    AuthCredential credential = GoogleAuthProvider.getCredential(
+        idToken: authentication.idToken, accessToken: authentication.accessToken);
+    AuthResult authResult = await auth.signInWithCredential(credential);
+
+    final FirebaseUser user = authResult.user;
+
+    if (user != null) {
+
+      print('signInWithGoogle succeeded: $user');
+      print("user : ${user.uid}");
+      print("user : ${user.displayName}");
+
+      return '$user';
+    }
+  }
+
   // ignore: missing_return, non_constant_identifier_names
   Future<bool> signUpWithEmail(
       String email, String password, String name) async {
@@ -66,6 +116,7 @@ class FirebaseProvider with ChangeNotifier {
 
   Future<bool> signInWithEmail(String email, String password) async {
     try {
+      signOut();
       var result = await fAuth.signInWithEmailAndPassword(
           email: email, password: password);
       if (result != null) {
@@ -80,48 +131,9 @@ class FirebaseProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> signInWithGoogleAccount() async {
-    try {
-      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
-          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-      final FirebaseUser user =
-          (await fAuth.signInWithCredential(credential)).user;
-      assert(user.email != null);
-      assert(user.displayName != null);
-      assert(!user.isAnonymous);
-      assert(await user.getIdToken() != null);
-
-      final FirebaseUser currentUser = await fAuth.currentUser();
-      assert(user.uid == currentUser.uid);
-      setUser(user);
-      return true;
-    } on Exception catch (e) {
-      List<String> result = e.toString().split(", ");
-      setLastFBMessage(result[1]);
-      return false;
-    }
-  }
-
   signOut() async {
     await fAuth.signOut();
     setUser(null);
-  }
-
-  sendPasswordResetEmailByEnglish() async {
-    await fAuth.setLanguageCode("en");
-    sendPasswordResetEmail();
-  }
-
-  sendPasswordResetEmailByKorean() async {
-    await fAuth.setLanguageCode("ko");
-    sendPasswordResetEmail();
-  }
-
-  sendPasswordResetEmail() async {
-    fAuth.sendPasswordResetEmail(email: getUser().email);
   }
 
   withdrawalAccount() async {

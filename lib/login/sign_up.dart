@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mirae/login/firebase_provider.dart';
-import 'package:mirae/login/sign_in.dart';
 import 'package:mirae/mainPage/mainPage.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +38,6 @@ class SignUpPageState extends State<SignUpPage> {
     if (fp == null) {
       fp = Provider.of<FirebaseProvider>(context);
     }
-    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -206,7 +204,7 @@ class SignUpPageState extends State<SignUpPage> {
             ),
             GestureDetector(
               onTap: () {
-                signInWithGoogle().then((result) {
+                fp.signInWithGoogle().then((result) {
                   if (result != null) {
                     Navigator.of(context).push(
                       MaterialPageRoute(
