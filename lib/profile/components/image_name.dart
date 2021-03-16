@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mirae/login/firebase_provider.dart';
 import 'package:mirae/profile/edit_profile.dart';
-import 'package:provider/provider.dart';
 
 class ImageNameWidget extends StatelessWidget {
   FirebaseProvider fp;
+  ImageNameWidget({this.fp});
   FirebaseUser currentUser;
 
   @override
   Widget build(BuildContext context) {
-    fp = Provider.of<FirebaseProvider>(context, listen: true);
-    currentUser = fp?.getUser();
+    currentUser = fp.getUser();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(

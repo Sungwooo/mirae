@@ -251,10 +251,7 @@ class _RankingPageState extends State<RankingPage> {
         body: Column(
           children: [
             InkWell(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MapPage()),
-              ),
+              onTap: () => Get.to(MapPage()),
               child: Container(
                 height: 0.35 * height,
                 decoration: BoxDecoration(

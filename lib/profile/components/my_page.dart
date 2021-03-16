@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mirae/login/firebase_provider.dart';
 import 'package:mirae/profile/components/image_name.dart';
@@ -14,8 +13,11 @@ class MyInfoPage extends StatefulWidget {
 }
 
 class _MyInfoPageState extends State<MyInfoPage> {
+  FirebaseProvider fp;
+
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context, listen: true);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
@@ -30,7 +32,9 @@ class _MyInfoPageState extends State<MyInfoPage> {
               Positioned(
                   left: width * 0.368,
                   top: 0.165 * height,
-                  child: ImageNameWidget()),
+                  child: ImageNameWidget(
+                    fp: fp,
+                  )),
             ]),
           ),
           MyPingButtonWidget(),
