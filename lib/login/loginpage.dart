@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mirae/login/sign_in.dart';
 import 'package:mirae/login/sign_up.dart';
 import 'package:mirae/mainPage/mainPage.dart';
-import 'package:mirae/login/auth_page.dart';
 import 'package:provider/provider.dart';
 import '../main.dart';
 import 'firebase_provider.dart';
@@ -32,7 +30,7 @@ class LogInState extends State<LogIn> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-              padding: EdgeInsets.only(top: 120),
+              padding: EdgeInsets.only(top: 80),
               child: Image.asset(
                 'assets/mirae_logo.png',
                 width: 100,
@@ -74,11 +72,6 @@ class LogInState extends State<LogIn> {
                       print(text);
                     },
                   ),
-                  /*Text('find ID/PW',
-                      style: TextStyle(
-                          color: Color(0xff7D7D7D),
-                          fontSize: 12,
-                          fontFamily: 'GoogleSans')),*/
                 ].map((c) {
                   return c;
                 }).toList(),
@@ -118,7 +111,7 @@ class LogInState extends State<LogIn> {
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -127,7 +120,7 @@ class LogInState extends State<LogIn> {
             child: new GestureDetector(
               onTap: () {
                 try {
-                  signInWithGoogle().then((result) {
+                  fp.signInWithGoogle().then((result) {
                     if (result != null) {
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -180,7 +173,9 @@ class LogInState extends State<LogIn> {
 
   showLastFBMessage() {
     _scaffoldKey.currentState
+      // ignore: deprecated_member_use
       ..hideCurrentSnackBar()
+      // ignore: deprecated_member_use
       ..showSnackBar(SnackBar(
         backgroundColor: Colors.red[400],
         duration: Duration(seconds: 10),
