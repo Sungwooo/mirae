@@ -16,13 +16,15 @@ class ImageNameWidget extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Container(
       transform: Matrix4.translationValues(0.0, -50.0, 0.0),
-      child: Column(children: [
+      child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
         CircleAvatar(
           radius: width * 0.13,
           backgroundColor: Colors.white,
           child: CircleAvatar(
             radius: (width * 0.13) - 2,
-            backgroundImage: AssetImage('assets/profileImage.png'),
+            backgroundImage: currentUser.photoUrl != null
+                ? NetworkImage(currentUser.photoUrl, scale: 2)
+                : AssetImage('assets/profileImage.png'),
           ),
         ),
         SizedBox(

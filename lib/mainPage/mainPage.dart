@@ -94,7 +94,7 @@ class _MainPageState extends State<MainPage> {
           ],
           currentIndex: navController.selectedIndex,
           onTap: (index) => index == 2
-              ? Get.to(() => MapPage())
+              ? Get.to(() => CameraPage(widget.cameras))
               : navController.selectedIndex = index,
         ),
       ),

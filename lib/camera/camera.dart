@@ -355,15 +355,6 @@ class _CameraPageState extends State<CameraPage> {
           "CAMERA",
           style: TextStyle(color: Color(0xff31AC53), fontFamily: 'GoogleSans'),
         ),
-        leading: GestureDetector(
-          child: Icon(
-            CupertinoIcons.back,
-            color: Color(0xff31AC53),
-          ),
-          onTap: () {
-            Get.back();
-          },
-        ),
       ),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,

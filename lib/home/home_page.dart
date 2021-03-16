@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:mirae/components/text_underline.dart';
 import 'package:mirae/home/challenge.dart';
+import 'package:mirae/map/map.dart';
+
+var now = DateFormat('y.MM.dd').format(DateTime.now());
 
 class GradientText extends StatelessWidget {
   GradientText(
@@ -127,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-                    Text('2021.02.22',
+                    Text(now,
                         textAlign: TextAlign.right,
                         style: TextStyle(
                             color: Color(0xff36AE57),
@@ -381,77 +385,81 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: width * 0.03, vertical: 0.025 * height),
-              child: Container(
-                height: 0.1 * height,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  image: DecorationImage(
-                      image: AssetImage("assets/homePingBg.png"),
-                      fit: BoxFit.fill),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0xffA79F84),
-                      blurRadius: 3,
-                      offset: Offset(0, 1),
-                    ),
-                  ],
-                ),
-                child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 0.014 * height, left: 0.043 * width),
-                          child: Text(
-                            'There are 5 pings nearby',
-                            style: TextStyle(
-                                color: Color(0xff343434),
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: 'GoogleSans'),
+              child: InkWell(
+                onTap: () => Get.to(() => MapPage()),
+                child: Container(
+                  height: 0.1 * height,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    image: DecorationImage(
+                        image: AssetImage("assets/homePingBg.png"),
+                        fit: BoxFit.fill),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0xffA79F84),
+                        blurRadius: 3,
+                        offset: Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: 0.014 * height, left: 0.043 * width),
+                            child: Text(
+                              'There are 5 pings nearby',
+                              style: TextStyle(
+                                  color: Color(0xff343434),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'GoogleSans'),
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding:
-                              EdgeInsets.only(top: 1.0, left: 0.043 * width),
-                          child: Container(
-                            width: 0.616 * width,
-                            height: 0.009 * height,
-                            decoration: new BoxDecoration(
-                              image: new DecorationImage(
-                                image: new AssetImage('assets/underline.png'),
-                                fit: BoxFit.cover,
+                          Padding(
+                            padding:
+                                EdgeInsets.only(top: 1.0, left: 0.043 * width),
+                            child: Container(
+                              width: 0.616 * width,
+                              height: 0.009 * height,
+                              decoration: new BoxDecoration(
+                                image: new DecorationImage(
+                                  image: new AssetImage('assets/underline.png'),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: 0.006 * height, left: 0.054 * width),
+                            child: Text(
+                                'Burn calories and save the environment',
+                                style: TextStyle(
+                                    color: Color(0xff31AC53),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'GoogleSans')),
+                          ),
+                        ]),
                         Padding(
                           padding: EdgeInsets.only(
-                              top: 0.006 * height, left: 0.054 * width),
-                          child: Text('Burn calories and save the environment',
-                              style: TextStyle(
-                                  color: Color(0xff31AC53),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'GoogleSans')),
+                            left: 0.054 * width,
+                          ),
+                          child: Image.asset(
+                            'assets/ping.png',
+                            width: 0.14 * width,
+                          ),
                         ),
+                        Text('5',
+                            style: TextStyle(
+                                color: Color(0xff000000),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700)),
                       ]),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: 0.054 * width,
-                        ),
-                        child: Image.asset(
-                          'assets/ping.png',
-                          width: 0.14 * width,
-                        ),
-                      ),
-                      Text('5',
-                          style: TextStyle(
-                              color: Color(0xff000000),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700)),
-                    ]),
+                ),
               ),
             ),
             Padding(

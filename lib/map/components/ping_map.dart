@@ -147,29 +147,74 @@ class PingMapState extends State<PingMap> {
 
   _showToast() {
     Widget toast = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: Color(0xff36AC56),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
+      child: Column(
         children: [
-          Image.asset(
-            "assets/icon/map/checkIcon.png",
-            width: 26,
-            height: 26,
+          Container(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 13.0, vertical: 4.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30.0),
+                color: Color(0xff48A7FF).withOpacity(0.7),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.25),
+                    spreadRadius: 1,
+                    blurRadius: 1,
+                    offset: Offset(0, 1),
+                  ),
+                ]),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "+ 20 points",
+                  style: TextStyle(
+                      fontFamily: "GoogleSans",
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white),
+                ),
+              ],
+            ),
           ),
           SizedBox(
-            width: 10.0,
+            height: 5,
           ),
-          Text(
-            "PING added",
-            style: TextStyle(
-                fontFamily: "GoogleSans",
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-                color: Colors.white),
+          Container(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Color(0xff36AC56).withOpacity(0.7),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.25),
+                    spreadRadius: 1,
+                    blurRadius: 1,
+                    offset: Offset(0, 1),
+                  ),
+                ]),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  "assets/icon/map/checkIcon.png",
+                  width: 26,
+                  height: 26,
+                ),
+                SizedBox(
+                  width: 10.0,
+                ),
+                Text(
+                  "PING added",
+                  style: TextStyle(
+                      fontFamily: "GoogleSans",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -188,10 +233,7 @@ class PingMapState extends State<PingMap> {
         positionedToastBuilder: (context, child) {
           return Align(
             alignment: Alignment.center,
-            child: Container(
-                margin: EdgeInsets.only(
-                    top: (MediaQuery.of(context).size.height * 1 / 9)),
-                child: child),
+            child: Container(margin: EdgeInsets.only(top: 400), child: child),
           );
         });
   }
@@ -218,10 +260,15 @@ class PingMapState extends State<PingMap> {
     loading = true;
     toggleBtn = true;
     isArrived = true;
-    fToast = FToast();
-    fToast.init(context);
-    _showToast();
-    getCurrentLocation();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (isPingWidget) {
+        fToast = FToast();
+        fToast.init(context);
+        _showToast();
+      }
+      getCurrentLocation();
+    });
+
     _markers = Set.from([]);
     setCustomMapPin();
   }

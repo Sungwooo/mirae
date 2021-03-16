@@ -6,7 +6,7 @@ import 'package:mirae/article/argument.dart';
 import 'package:mirae/article/article_detail.dart';
 import 'package:web_scraper/web_scraper.dart';
 
-var now = DateFormat.yMd().format(DateTime.now());
+var now = DateFormat('y.MM.dd').format(DateTime.now());
 
 class ResultItem extends StatelessWidget {
   final String title;
@@ -448,7 +448,18 @@ class _ArticleState extends State<ArticlePage> {
                           children: resultList.getRange(1, 10).toList(),
                         )
                       ])
-                : CircularProgressIndicator(),
+                : Container(
+                    height: height * 0.6,
+                    child: Center(
+                      child: Container(
+                          width: width * 0.3,
+                          height: width * 0.3,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Color(0xff36A257)),
+                          )),
+                    ),
+                  ),
           ),
         ]));
   }

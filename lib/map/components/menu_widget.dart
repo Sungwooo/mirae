@@ -25,9 +25,8 @@ class _MenuWidgetState extends State<MenuWidget> {
             widget.pingMapState.location.longitude),
         LatLng(widget.pingMapState.destination.latitude,
             widget.pingMapState.destination.longitude));
-    setState(() {
-      distance = meter.floor();
-    });
+
+    distance = meter.floor();
   }
 
   @override
