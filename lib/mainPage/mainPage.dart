@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:mirae/article/article.dart';
 import 'package:mirae/home/home_page.dart';
+import 'package:mirae/map/map.dart';
 import 'package:mirae/profile/profile.dart';
 import 'package:mirae/ranking/ranking-page.dart';
 
@@ -93,7 +94,7 @@ class _MainPageState extends State<MainPage> {
           ],
           currentIndex: navController.selectedIndex,
           onTap: (index) => index == 2
-              ? Get.to(() => CameraPage(widget.cameras))
+              ? Get.to(() => MapPage())
               : navController.selectedIndex = index,
         ),
       ),

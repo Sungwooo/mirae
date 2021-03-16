@@ -22,6 +22,7 @@ class EditProfile extends StatelessWidget {
           },
         ),
       ),
+      resizeToAvoidBottomInset: false,
       body: MyEditPage(),
     );
   }
