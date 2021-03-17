@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:mirae/map/components/google_maps_service.dart';
@@ -229,7 +228,7 @@ class PingMapState extends State<PingMap> {
     // Custom Toast Position
     fToast.showToast(
         child: toast,
-        toastDuration: Duration(seconds: 1),
+        toastDuration: Duration(seconds: 2),
         positionedToastBuilder: (context, child) {
           return Align(
             alignment: Alignment.center,
