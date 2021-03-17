@@ -273,15 +273,16 @@ class _RankingPageState extends State<RankingPage> {
                 child: _renderHeaderContent(),
               ),
             ),
-            _renderHandlinedTitle(),
             Expanded(
               child: SizedBox(
                 height: 0.246 * height,
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
-                  itemCount: rankerList.length,
+                  itemCount: rankerList.length + 1,
                   itemBuilder: (context, index) {
-                    return _renderTypeItem(context, index);
+                    return index == 0
+                        ? _renderHandlinedTitle()
+                        : _renderTypeItem(context, index - 1);
                   },
                 ),
               ),

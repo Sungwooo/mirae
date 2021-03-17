@@ -14,10 +14,10 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
       transform: Matrix4.translationValues(0.0, -50.0, 0.0),
       child: Column(children: [
         CircleAvatar(
-          radius: width * 0.13,
+          radius: width * 0.12,
           backgroundColor: Colors.white,
           child: CircleAvatar(
-            radius: (width * 0.13) - 2,
+            radius: (width * 0.12) - 2,
             backgroundImage: AssetImage('assets/EditProfileImage.png'),
           ),
         ),

@@ -1,9 +1,11 @@
 import 'dart:ui';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mirae/article/argument.dart';
 import 'package:mirae/article/article_detail.dart';
+import 'package:mirae/home/challenge.dart';
 import 'package:web_scraper/web_scraper.dart';
 
 var now = DateFormat('y.MM.dd').format(DateTime.now());
@@ -234,92 +236,95 @@ class _ArticleState extends State<ArticlePage> {
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: 0.034 * width, vertical: 0.02 * height),
-            child: Container(
-                height: 0.08 * height,
-                decoration: BoxDecoration(
-                  color: Color(0xff36AE57).withOpacity(0.8),
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(54, 174, 87, 0.7),
-                      spreadRadius: 3,
-                      blurRadius: 3,
-                      offset: Offset(0, 1),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 0.04 * width),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              'assets/world.png',
-                              width: 0.1 * width,
-                            ),
-                            SizedBox(
-                              width: 0.04 * width,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  child: Text('E - Challenges',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily: 'GoogleSans')),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 2),
-                                  child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          'assets/check.png',
-                                          width: 0.037 * width,
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 0.013 * width),
-                                          child: Text('2',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily: 'GoogleSans')),
-                                        ),
-                                      ]),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+            child: InkWell(
+              onTap: () => Get.to(() => Challenge()),
+              child: Container(
+                  height: 0.08 * height,
+                  decoration: BoxDecoration(
+                    color: Color(0xff36AE57).withOpacity(0.8),
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0xff36AE57).withOpacity(0.5),
+                        spreadRadius: 3,
+                        blurRadius: 5,
+                        offset: Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 0.04 * width),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('Day 1',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 26,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'GoogleSans')),
                               Image.asset(
-                                "assets/underline.png",
-                                width: 0.184 * width,
-                                height: 0.007 * height,
-                                fit: BoxFit.fill,
+                                'assets/world.png',
+                                width: 0.1 * width,
                               ),
-                            ]),
-                      ]),
-                )),
+                              SizedBox(
+                                width: 0.04 * width,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    child: Text('E - Challenges',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: 'GoogleSans')),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 2),
+                                    child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'assets/check.png',
+                                            width: 0.037 * width,
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 0.013 * width),
+                                            child: Text('2',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: 'GoogleSans')),
+                                          ),
+                                        ]),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text('Day 1',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 26,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'GoogleSans')),
+                                Image.asset(
+                                  "assets/underline.png",
+                                  width: 0.184 * width,
+                                  height: 0.007 * height,
+                                  fit: BoxFit.fill,
+                                ),
+                              ]),
+                        ]),
+                  )),
+            ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 0.034 * width),
@@ -461,6 +466,9 @@ class _ArticleState extends State<ArticlePage> {
                     ),
                   ),
           ),
+          SizedBox(
+            height: height * 0.05,
+          )
         ]));
   }
 }

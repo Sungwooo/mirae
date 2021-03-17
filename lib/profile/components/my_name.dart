@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:mirae/login/firebase_provider.dart';
 import 'package:mirae/profile/edit_profile.dart';
 
-class ImageNameWidget extends StatelessWidget {
+class MyNameWidget extends StatelessWidget {
   FirebaseProvider fp;
-  ImageNameWidget({this.fp});
+  MyNameWidget({this.fp});
   FirebaseUser currentUser;
 
   @override
@@ -15,25 +15,15 @@ class ImageNameWidget extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      transform: Matrix4.translationValues(0.0, -50.0, 0.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        CircleAvatar(
-          radius: width * 0.13,
-          backgroundColor: Colors.white,
-          child: CircleAvatar(
-            radius: (width * 0.13) - 2,
-            backgroundImage: currentUser.photoUrl != null
-                ? NetworkImage(currentUser.photoUrl, scale: 2)
-                : AssetImage('assets/profileImage.png'),
-          ),
-        ),
-        SizedBox(
-          height: 0.006 * height,
-        ),
         InkWell(
           onTap: () => Get.to(() => EditProfile()),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                width: 0.037 * width,
+              ),
               Column(
                 children: [
                   Text(
@@ -43,12 +33,12 @@ class ImageNameWidget extends StatelessWidget {
                     style: TextStyle(
                         color: Color(0xff424242),
                         fontFamily: "GoogleSans",
-                        fontSize: 20,
+                        fontSize: 22,
                         fontWeight: FontWeight.w700),
                   ),
                   Image.asset(
                     "assets/underline.png",
-                    width: 0.24 * width,
+                    width: currentUser.displayName.length * width * 0.052,
                     height: 0.007 * height,
                     color: Color(0xff42B261),
                     fit: BoxFit.fill,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mirae/login/firebase_provider.dart';
-import 'package:mirae/profile/components/image_name.dart';
+import 'package:mirae/profile/components/my_image.dart';
 import 'package:mirae/profile/components/level_rank.dart';
+import 'package:mirae/profile/components/my_name.dart';
 import 'package:mirae/profile/components/my_ping_btn.dart';
 import 'package:mirae/profile/components/my_score_box.dart';
 import 'package:mirae/profile/components/progress_bar.dart';
@@ -22,20 +23,31 @@ class _MyInfoPageState extends State<MyInfoPage> {
     double height = MediaQuery.of(context).size.height;
     return Container(
       color: Color(0xffF5F4F4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: ListView(
         children: [
           Container(
-            height: 0.27 * height,
+            height: 0.22 * height,
             child: Stack(children: [
-              LevelRankWidget(),
+              LevelRankWidget(
+                fp: fp,
+              ),
               Positioned(
-                  left: width * 0.368,
-                  top: 0.165 * height,
-                  child: ImageNameWidget(
-                    fp: fp,
-                  )),
+                top: 0.165 * height,
+                left: 0.39 * width,
+                child: MyImageWidget(
+                  fp: fp,
+                ),
+              ),
             ]),
+          ),
+          SizedBox(
+            height: 0.009 * height,
+          ),
+          MyNameWidget(
+            fp: fp,
+          ),
+          SizedBox(
+            height: 0.009 * height,
           ),
           MyPingButtonWidget(),
           ProgressBarWidget(),

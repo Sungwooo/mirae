@@ -14,12 +14,16 @@ class _EditUserInfoState extends State<EditUserInfo> {
   Country selectedCountry;
   String userEmail = "";
   String userStartDate;
+  int challengeDay;
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context, listen: true);
     userStartDate =
         fp.getUser().metadata.creationTime.toString().substring(0, 10);
     userEmail = "${fp.getUser().email}";
+    challengeDay =
+        DateTime.now().difference(fp.getUser().metadata.creationTime).inDays +
+            2;
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -108,7 +112,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                   height: 0.01 * height,
                 ),
                 Text(
-                  "Day 17 / 32 challenges",
+                  "Day $challengeDay / 32 challenges",
                   style: TextStyle(
                       color: Color(0xff42B261),
                       fontFamily: "GoogleSans",

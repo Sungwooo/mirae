@@ -4,7 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:mirae/components/text_underline.dart';
 import 'package:mirae/home/challenge.dart';
+import 'package:mirae/login/firebase_provider.dart';
 import 'package:mirae/map/map.dart';
+import 'package:provider/provider.dart';
 
 var now = DateFormat('y.MM.dd').format(DateTime.now());
 
@@ -67,13 +69,15 @@ class GradientText1 extends StatelessWidget {
 
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  var _isCheck1 = false;
-  var _isCheck2 = false;
-  var _isCheck3 = false;
+class HomePageState extends State<HomePage> {
+  FirebaseProvider fp;
+  int challengeDay = 1;
+  var isCheck1 = false;
+  var isCheck2 = false;
+  var isCheck3 = false;
 
   final List<Color> _colors = [
     Color(0xffF4C623).withOpacity(0.8),
@@ -90,6 +94,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
+    challengeDay =
+        DateTime.now().difference(fp.getUser().metadata.creationTime).inDays +
+            2;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -123,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     GradientText(
-                      'Day 1',
+                      'Day $challengeDay',
                       gradient: LinearGradient(
                         colors: [
                           Color(0xff36AE57),
@@ -154,9 +162,9 @@ class _HomePageState extends State<HomePage> {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Color.fromRGBO(54, 174, 87, 0.7),
+                        color: Color(0xff36AE57).withOpacity(0.5),
                         spreadRadius: 3,
-                        blurRadius: 3,
+                        blurRadius: 5,
                         offset: Offset(0, 1),
                       ),
                     ],
@@ -207,9 +215,9 @@ class _HomePageState extends State<HomePage> {
                                 Column(children: [
                                   InkWell(
                                     onTap: () => setState(() {
-                                      _isCheck1 = !_isCheck1;
+                                      isCheck1 = !isCheck1;
                                     }),
-                                    child: _isCheck1
+                                    child: isCheck1
                                         ? Container(
                                             width: 0.15 * width,
                                             height: 0.05 * height,
@@ -268,9 +276,9 @@ class _HomePageState extends State<HomePage> {
                                 Column(children: [
                                   InkWell(
                                     onTap: () => setState(() {
-                                      _isCheck2 = !_isCheck2;
+                                      isCheck2 = !isCheck2;
                                     }),
-                                    child: _isCheck2
+                                    child: isCheck2
                                         ? Container(
                                             width: 0.15 * width,
                                             height: 0.05 * height,
@@ -329,9 +337,9 @@ class _HomePageState extends State<HomePage> {
                                 Column(children: [
                                   InkWell(
                                     onTap: () => setState(() {
-                                      _isCheck3 = !_isCheck3;
+                                      isCheck3 = !isCheck3;
                                     }),
-                                    child: _isCheck3
+                                    child: isCheck3
                                         ? Container(
                                             width: 0.15 * width,
                                             height: 0.05 * height,
@@ -462,50 +470,48 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6.0),
-              child: Container(
-                  height: 0.303 * height,
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: entries.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                            left: 0.032 * width, bottom: 0.02 * height),
-                        child: InkWell(
-                          child: Container(
-                            height: 0.283 * height,
-                            width: 0.504 * width,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/homeTab${entries[index]}.png'),
-                                  fit: BoxFit.fill),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: entries[index] == '1'
-                                      ? Color(0xff4DA8FC)
-                                      : entries[index] == '2'
-                                          ? Color(0xffB6730F)
-                                          : Color(0xff08BD61),
-                                  blurRadius: 3,
-                                  offset: Offset(0, 1),
-                                ),
-                              ],
-                            ),
+            Container(
+                height: 0.303 * height,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: entries.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          left: 0.032 * width,
+                          bottom: 0.01 * height,
+                          top: 0.005 * height),
+                      child: InkWell(
+                        child: Container(
+                          height: 0.283 * height,
+                          width: 0.504 * width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/homeTab${entries[index]}.png'),
+                                fit: BoxFit.fill),
+                            boxShadow: [
+                              BoxShadow(
+                                color: entries[index] == '1'
+                                    ? Color(0xff4DA8FC)
+                                    : entries[index] == '2'
+                                        ? Color(0xffB6730F)
+                                        : Color(0xff08BD61),
+                                blurRadius: 3,
+                                offset: Offset(0, 1),
+                              ),
+                            ],
                           ),
-                          onTap: null,
                         ),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(),
-                  )),
-            ),
+                        onTap: null,
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(),
+                )),
             SizedBox(
               height: 20,
             )

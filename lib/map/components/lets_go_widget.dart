@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
+import 'package:get/get.dart';
+import 'package:mirae/login/auth_page.dart';
 import 'package:mirae/map/components/ping_map.dart';
 
 class LetsGoWidget extends StatefulWidget {
@@ -261,8 +263,8 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                             Positioned(
                               bottom: 0,
                               right: 0,
-                              child: FlatButton(
-                                onPressed: null,
+                              child: TextButton(
+                                onPressed: () => Get.offAll(() => AuthPage()),
                                 child: Text("Next time",
                                     style: TextStyle(
                                         color: Color(0xffF3A932),

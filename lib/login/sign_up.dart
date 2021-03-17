@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mirae/login/firebase_provider.dart';
 import 'package:mirae/mainPage/mainPage.dart';
 import 'package:provider/provider.dart';

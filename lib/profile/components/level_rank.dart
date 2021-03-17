@@ -1,8 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mirae/login/firebase_provider.dart';
+import 'package:intl/intl.dart';
+
+var now = DateFormat('y.MM.dd').format(DateTime.now());
 
 class LevelRankWidget extends StatelessWidget {
+  FirebaseProvider fp;
+  LevelRankWidget({this.fp});
+  FirebaseUser currentUser;
   @override
   Widget build(BuildContext context) {
+    currentUser = fp.getUser();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
@@ -43,7 +52,7 @@ class LevelRankWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Day 17",
+                      "Day ${DateTime.now().difference(currentUser.metadata.creationTime).inDays + 2}",
                       style: TextStyle(
                           color: Colors.white,
                           fontFamily: "GoogleSans",

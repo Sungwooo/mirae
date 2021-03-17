@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
               color: Colors.transparent,
               elevation: 0.0,
             ),
-            splashColor: Colors.grey[700],
+            splashColor: Colors.grey[700].withOpacity(0),
           ),
           home: AuthPage(),
         ));

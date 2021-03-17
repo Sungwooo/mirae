@@ -56,7 +56,7 @@ class _EditUserNameState extends State<EditUserName> {
           transform: Matrix4.translationValues(0.0, -7.0, 0.0),
           child: Image.asset(
             "assets/underline.png",
-            width: 0.27 * width,
+            width: currentUser.displayName.length * width * 0.05,
             height: 0.007 * height,
             color: Color(0xff42B261),
             fit: BoxFit.fill,

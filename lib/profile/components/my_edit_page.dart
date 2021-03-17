@@ -27,20 +27,20 @@ class _MyEditPageState extends State<MyEditPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            height: 0.28 * height,
-            child: Stack(children: [
-              LevelRankWidget(),
-              Positioned(
-                  left: width * 0.368,
-                  top: 0.165 * height,
-                  child: EditImageNameWidget()),
-              Positioned(
-                left: width * 0.360,
-                top: 0.215 * height,
-                child: EditUserName(),
-              )
-            ]),
+            height: 0.22 * height,
+            child: Stack(
+              children: [
+                LevelRankWidget(
+                  fp: fp,
+                ),
+                Positioned(
+                    top: 0.165 * height,
+                    left: 0.39 * width,
+                    child: EditImageNameWidget()),
+              ],
+            ),
           ),
+          EditUserName(),
           SizedBox(
             height: 0.06 * height,
           ),

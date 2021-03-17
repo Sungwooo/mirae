@@ -32,7 +32,7 @@ class _BeforeChallWidgetState extends State<BeforeChallWidget> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 0.018 * height),
+              padding: EdgeInsets.symmetric(vertical: 0.01 * height),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -40,7 +40,7 @@ class _BeforeChallWidgetState extends State<BeforeChallWidget> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.black,
-                            fontSize: 20,
+                            fontSize: 24,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'GoogleSans')),
                   ]),

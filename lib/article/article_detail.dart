@@ -86,6 +86,7 @@ class ArticleDetailPage extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 fontFamily: 'GoogleSans'),
           ),
+          padding: EdgeInsetsDirectional.only(),
           leading: GestureDetector(
             child: Icon(
               CupertinoIcons.back,
@@ -214,12 +215,12 @@ class ArticleDetailPage extends StatelessWidget {
                       style: TextStyle(fontSize: 15),
                     ),
                   );
-                }
-                else {
+                } else {
                   return Padding(
                     padding: EdgeInsets.only(
-                      top: 0.019 * height, left: 0.032 * width, right: 0.032 * width
-                    ),
+                        top: 0.019 * height,
+                        left: 0.032 * width,
+                        right: 0.032 * width),
                     child: ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
@@ -227,7 +228,8 @@ class ArticleDetailPage extends StatelessWidget {
                         itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
-                            padding: const EdgeInsets.only(top:8.0, bottom: 8.0),
+                            padding:
+                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
                             child: Container(
                               width: 0.936 * width,
                               child: Text(snapshot.data[index],
@@ -245,4 +247,3 @@ class ArticleDetailPage extends StatelessWidget {
         ]));
   }
 }
-

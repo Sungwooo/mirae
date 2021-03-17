@@ -56,17 +56,21 @@ class _MainPageState extends State<MainPage> {
               fontFamily: "GoogleSans"),
           items: [
             BottomNavigationBarItem(
-              icon: ImageIcon(
-                  AssetImage("assets/icon/bottomNavigation/home.png")),
-              activeIcon: ImageIcon(
-                AssetImage("assets/icon/bottomNavigation/homeSelected.png"),
-                size: 26,
+              icon: Image.asset(
+                "assets/icon/bottomNavigation/home.png",
+                width: 30,
               ),
+              activeIcon: Image.asset(
+                  "assets/icon/bottomNavigation/homeSelected.png",
+                  width: 33),
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: ImageIcon(
-                  AssetImage("assets/icon/bottomNavigation/worldMap.png")),
+              icon: Image.asset("assets/icon/bottomNavigation/worldMap.png",
+                  width: 30),
+              activeIcon: Image.asset(
+                  "assets/icon/bottomNavigation/mapSelected.png",
+                  width: 33),
               label: "Map",
             ),
             BottomNavigationBarItem(
@@ -80,15 +84,19 @@ class _MainPageState extends State<MainPage> {
               label: "",
             ),
             BottomNavigationBarItem(
-              icon: ImageIcon(
-                  AssetImage("assets/icon/bottomNavigation/article.png")),
-              activeIcon: ImageIcon(AssetImage(
-                  "assets/icon/bottomNavigation/articleSelected.png")),
-              label: "Article",
+              icon: Image.asset("assets/icon/bottomNavigation/article.png",
+                  width: 30),
+              activeIcon: Image.asset(
+                  "assets/icon/bottomNavigation/articleSelected.png",
+                  width: 33),
+              label: "News",
             ),
             BottomNavigationBarItem(
-              icon: ImageIcon(
-                  AssetImage("assets/icon/bottomNavigation/profile.png")),
+              icon: Image.asset("assets/icon/bottomNavigation/profile.png",
+                  width: 30),
+              activeIcon: Image.asset(
+                  "assets/icon/bottomNavigation/profileSelected.png",
+                  width: 33),
               label: "My",
             ),
           ],
