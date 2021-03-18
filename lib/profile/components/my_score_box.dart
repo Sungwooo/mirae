@@ -15,7 +15,6 @@ class MyScoreBoxWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               child: Container(
                 width: 0.453 * width,
-                height: 0.11 * height,
                 color: Color(0xffCCf795).withOpacity(0.7),
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -42,7 +41,7 @@ class MyScoreBoxWidget extends StatelessWidget {
                             "15.2",
                             style: TextStyle(
                                 fontFamily: "GoogleSans",
-                                fontSize: 34,
+                                fontSize: 0.09 * width,
                                 fontWeight: FontWeight.w700,
                                 color: Color(0xff31AC53)),
                           )
@@ -55,7 +54,7 @@ class MyScoreBoxWidget extends StatelessWidget {
                         "years of earth age",
                         style: TextStyle(
                             fontFamily: "GoogleSans",
-                            fontSize: 16,
+                            fontSize: 0.042 * width,
                             fontWeight: FontWeight.w400,
                             color: Color(0xff31AC53)),
                       ),
@@ -71,7 +70,6 @@ class MyScoreBoxWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               child: Container(
                 width: 0.453 * width,
-                height: 0.11 * height,
                 color: Color(0xffFFDF6D).withOpacity(0.7),
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -98,7 +96,7 @@ class MyScoreBoxWidget extends StatelessWidget {
                             "4050",
                             style: TextStyle(
                                 fontFamily: "GoogleSans",
-                                fontSize: 34,
+                                fontSize: 0.09 * width,
                                 fontWeight: FontWeight.w700,
                                 color: Color(0xffFF8A00)),
                           )
@@ -111,7 +109,7 @@ class MyScoreBoxWidget extends StatelessWidget {
                         "burned calories",
                         style: TextStyle(
                             fontFamily: "GoogleSans",
-                            fontSize: 16,
+                            fontSize: 0.042 * width,
                             fontWeight: FontWeight.w400,
                             color: Color(0xffFF8A00)),
                       ),

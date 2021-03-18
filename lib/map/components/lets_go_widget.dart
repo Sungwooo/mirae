@@ -4,12 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
 import 'package:get/get.dart';
+import 'package:mirae/camera/camera.dart';
 import 'package:mirae/login/auth_page.dart';
+import 'package:mirae/main.dart';
 import 'package:mirae/map/components/ping_map.dart';
 
 class LetsGoWidget extends StatefulWidget {
   LetsGoWidget({this.pingMapState});
   final PingMapState pingMapState;
+
   @override
   _LetsGoWidgetState createState() => _LetsGoWidgetState();
 }
@@ -50,16 +53,16 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
       left: 0,
       bottom: (showBottomMenu
           ? (widget.pingMapState.isArrived
-              ? -(height / 9) + 30
-              : -(height * 5 / 21) + 30)
+              ? -(width * 0.24) + 30
+              : -(0.515 * width) + 30)
           : ((widget.pingMapState.isArrived)
-              ? -(height * 5 / 9) + 30
-              : -(height * 3 / 7) + 30)),
+              ? -(1.2 * width) + 30
+              : -(0.928 * width) + 30)),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(20)),
         child: Container(
           width: width,
-          height: height * 5 / 9,
+          height: 1.2 * width,
           color: Colors.white.withOpacity(0.7),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
@@ -95,7 +98,7 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                                   Text(
                                     "Today",
                                     style: TextStyle(
-                                        fontSize: 8,
+                                        fontSize: 0.021 * width,
                                         fontFamily: "GoogleSans",
                                         fontWeight: FontWeight.w700),
                                     textAlign: TextAlign.left,
@@ -113,7 +116,7 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                                 Text(
                                   "$markerNum",
                                   style: TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 0.032 * width,
                                       fontFamily: "GoogleSans",
                                       fontWeight: FontWeight.w400),
                                 )
@@ -140,7 +143,7 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                                         child: Text(
                                           "Arrived",
                                           style: TextStyle(
-                                              fontSize: 22,
+                                              fontSize: 0.058 * width,
                                               fontFamily: "GoogleSans",
                                               fontWeight: FontWeight.w700),
                                           textAlign: TextAlign.center,
@@ -181,7 +184,7 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                                         child: Text(
                                           "${widget.pingMapState.navigateMsg}",
                                           style: TextStyle(
-                                              fontSize: 22,
+                                              fontSize: 0.058 * width,
                                               fontFamily: "GoogleSans",
                                               fontWeight: FontWeight.w700),
                                           textAlign: TextAlign.center,
@@ -199,7 +202,7 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                       style: TextStyle(
                           fontFamily: "GoogleSans",
                           fontWeight: FontWeight.w500,
-                          fontSize: 12),
+                          fontSize: 0.032 * width),
                     ),
                   ),
                   Row(
@@ -235,7 +238,7 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                         Text(
                           "There are $trashNum trashes nearby",
                           style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 0.037 * width,
                               fontFamily: "GoogleSans",
                               fontWeight: FontWeight.w700),
                         )
@@ -251,8 +254,9 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 0.03 * height),
-                                child: FlatButton(
-                                  onPressed: null,
+                                child: TextButton(
+                                  onPressed: () =>
+                                      Get.to(() => CameraPage(cameras)),
                                   child: Image.asset(
                                     "assets/icon/map/arrivedCamera.png",
                                     width: 0.27 * width,
@@ -269,7 +273,7 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                                     style: TextStyle(
                                         color: Color(0xffF3A932),
                                         fontFamily: "GoogleSans",
-                                        fontSize: 16,
+                                        fontSize: 0.042 * width,
                                         fontWeight: FontWeight.w700)),
                               ),
                             ),
@@ -314,7 +318,7 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                     style: TextStyle(
                       color: fontColor,
                       fontFamily: "GoogleSans",
-                      fontSize: 13,
+                      fontSize: 0.034 * width,
                       fontWeight: FontWeight.w700,
                     ),
                     textAlign: TextAlign.center,

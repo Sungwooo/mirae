@@ -21,6 +21,8 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
   int _currentCarousel = 0;
 
   Widget _renderRecycleButton() {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Container(
       width: 150,
       padding: EdgeInsets.symmetric(vertical: 12.0),
@@ -35,7 +37,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
             Image.asset('assets/ic_recycle_white.png', width: 20, height: 20),
             Text("Recyclables",
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 0.042 * width,
                     color: Colors.white,
                     fontFamily: 'GoogleSans',
                     fontWeight: FontWeight.w600))
@@ -54,13 +56,15 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
   }
 
   Widget _renderHandlinedTitle(int type) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Container(
       width: 260,
       child: Column(
         children: [
           Text(getTrueTitle(type),
               style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 0.058 * width,
                   color: Colors.black,
                   fontFamily: 'GoogleSans',
                   fontWeight: FontWeight.w600)),
@@ -71,6 +75,8 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
   }
 
   Widget _renderHandleContainer0() {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 32, vertical: 18),
         margin: EdgeInsets.symmetric(horizontal: 12),
@@ -92,7 +98,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 0.045 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.w500)),
@@ -111,7 +117,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 0.045 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.w500)),
@@ -130,7 +136,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 0.045 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.w500)),
@@ -147,7 +153,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                   child: Text("Then it can be made into new paper",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 0.045 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.w500)),
@@ -175,6 +181,8 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
   }
 
   Widget _renderHandleContainer1() {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 32, vertical: 18),
         margin: EdgeInsets.symmetric(horizontal: 12),
@@ -186,7 +194,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
             _renderHandlinedTitle(_currentCarousel),
             Text("save up",
                 style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 0.04 * width,
                     color: Colors.black,
                     fontFamily: 'GoogleSans',
                     fontWeight: FontWeight.w500)),
@@ -202,7 +210,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 0.053 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.w600)),
@@ -221,7 +229,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 0.053 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.w600)),
@@ -240,7 +248,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 0.053 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.w600)),
@@ -259,7 +267,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 0.053 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.w600)),
@@ -287,6 +295,8 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
   }
 
   Widget _renderHandleCarousel() {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     List<Widget> carouselComponentList = [
       _renderHandleContainer0(),
       _renderHandleContainer1(),
@@ -307,6 +317,8 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
   }
 
   Widget _renderPointButton() {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Padding(
         padding: EdgeInsets.only(left: 12, right: 12, bottom: 24),
         child: SizedBox(
@@ -325,7 +337,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                 children: [
                   Text("+ 40 poinsts",
                       style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 0.064 * width,
                           color: Colors.white,
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.w600)),
@@ -337,6 +349,8 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
   }
 
   Widget _renderContent() {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(vertical: 24.0),
       child: Column(
@@ -346,7 +360,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
             child: Text('PAPER',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 0.085 * width,
                     color: Colors.white,
                     fontFamily: 'GoogleSans',
                     fontWeight: FontWeight.w600)),
@@ -363,7 +377,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
             child: Text('You saved the world 10 years',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 0.053 * width,
                     color: Colors.white,
                     fontFamily: 'GoogleSans',
                     fontWeight: FontWeight.w600)),
@@ -376,6 +390,8 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
             title: Text('PING',

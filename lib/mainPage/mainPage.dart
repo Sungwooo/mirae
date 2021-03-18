@@ -34,6 +34,8 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Obx(
         () => Center(
@@ -47,11 +49,11 @@ class _MainPageState extends State<MainPage> {
           selectedItemColor: Color(0xff31AC53),
           type: BottomNavigationBarType.fixed,
           selectedLabelStyle: TextStyle(
-              fontSize: 9,
+              fontSize: 0.024 * width,
               fontWeight: FontWeight.w700,
               fontFamily: "GoogleSans"),
           unselectedLabelStyle: TextStyle(
-              fontSize: 9,
+              fontSize: 0.024 * width,
               fontWeight: FontWeight.w400,
               fontFamily: "GoogleSans"),
           items: [

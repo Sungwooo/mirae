@@ -12,6 +12,7 @@ class LetsGoMapPage extends StatelessWidget {
           "MAP",
           style: TextStyle(color: Color(0xff31AC53), fontFamily: 'GoogleSans'),
         ),
+        padding: EdgeInsetsDirectional.only(),
         leading: GestureDetector(
           child: Icon(
             CupertinoIcons.back,

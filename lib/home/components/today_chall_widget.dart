@@ -39,7 +39,7 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: 0.053 * width,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'GoogleSans')),
                   ]),
@@ -83,7 +83,7 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
                                         "+ 20 points",
                                         style: TextStyle(
                                             fontFamily: "GoogleSans",
-                                            fontSize: 8,
+                                            fontSize: 0.021 * width,
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700),
                                       )
@@ -142,7 +142,7 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
                                         "+ 20 points",
                                         style: TextStyle(
                                             fontFamily: "GoogleSans",
-                                            fontSize: 8,
+                                            fontSize: 0.021 * width,
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700),
                                       )
@@ -201,7 +201,7 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
                                         "+ 20 points",
                                         style: TextStyle(
                                             fontFamily: "GoogleSans",
-                                            fontSize: 8,
+                                            fontSize: 0.021 * width,
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700),
                                       )

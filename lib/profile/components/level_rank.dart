@@ -15,7 +15,7 @@ class LevelRankWidget extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      height: 0.16 * height,
+      height: 0.346 * width,
       decoration: BoxDecoration(
         color: Color(0xff36AE57).withOpacity(0.8),
         borderRadius: BorderRadius.only(
@@ -56,7 +56,7 @@ class LevelRankWidget extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.white,
                           fontFamily: "GoogleSans",
-                          fontSize: 30,
+                          fontSize: 0.08 * width,
                           fontWeight: FontWeight.w700),
                     ),
                     Image.asset(
@@ -79,7 +79,7 @@ class LevelRankWidget extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.white,
                           fontFamily: "GoogleSans",
-                          fontSize: 14,
+                          fontSize: 0.037 * width,
                           fontWeight: FontWeight.w400),
                     ),
                     SizedBox(width: 0.02 * width),
@@ -88,7 +88,7 @@ class LevelRankWidget extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.white,
                           fontFamily: "GoogleSans",
-                          fontSize: 20,
+                          fontSize: 0.053 * width,
                           fontWeight: FontWeight.w700),
                     )
                   ],
@@ -101,7 +101,7 @@ class LevelRankWidget extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.white,
                           fontFamily: "GoogleSans",
-                          fontSize: 14,
+                          fontSize: 0.037 * width,
                           fontWeight: FontWeight.w400),
                     ),
                     SizedBox(width: 0.02 * width),
@@ -110,7 +110,7 @@ class LevelRankWidget extends StatelessWidget {
                       style: TextStyle(
                           color: Color(0xffFCE596),
                           fontFamily: "GoogleSans",
-                          fontSize: 22,
+                          fontSize: 0.058 * width,
                           fontWeight: FontWeight.w700),
                     )
                   ],

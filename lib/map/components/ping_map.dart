@@ -145,6 +145,8 @@ class PingMapState extends State<PingMap> {
 /* ------------------------------------ */
 
   _showToast() {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     Widget toast = Container(
       child: Column(
         children: [
@@ -169,7 +171,7 @@ class PingMapState extends State<PingMap> {
                   "+ 20 points",
                   style: TextStyle(
                       fontFamily: "GoogleSans",
-                      fontSize: 10,
+                      fontSize: 0.027 * width,
                       fontWeight: FontWeight.w700,
                       color: Colors.white),
                 ),
@@ -208,7 +210,7 @@ class PingMapState extends State<PingMap> {
                   "PING added",
                   style: TextStyle(
                       fontFamily: "GoogleSans",
-                      fontSize: 14,
+                      fontSize: 0.037 * width,
                       fontWeight: FontWeight.w700,
                       color: Colors.white),
                 ),
@@ -345,7 +347,18 @@ class PingMapState extends State<PingMap> {
                       LetsGoWidget(pingMapState: this),
                 ),
               ])
-            : Center(child: Text("Loading...")),
+            : Container(
+                height: height * 0.6,
+                child: Center(
+                  child: Container(
+                      width: width * 0.2,
+                      height: width * 0.2,
+                      child: CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Color(0xff36A257)),
+                      )),
+                ),
+              ),
         floatingActionButton: FloatingActionButton(
             heroTag: 'one',
             mini: true,

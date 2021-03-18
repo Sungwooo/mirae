@@ -23,18 +23,17 @@ class _MyEditPageState extends State<MyEditPage> {
     double height = MediaQuery.of(context).size.height;
     return Container(
       color: Color(0xffF5F4F4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: ListView(
         children: [
           Container(
-            height: 0.22 * height,
+            height: 0.476 * width,
             child: Stack(
               children: [
                 LevelRankWidget(
                   fp: fp,
                 ),
                 Positioned(
-                    top: 0.165 * height,
+                    top: 0.357 * width,
                     left: 0.39 * width,
                     child: EditImageNameWidget()),
               ],
@@ -57,7 +56,7 @@ class _MyEditPageState extends State<MyEditPage> {
                   style: TextStyle(
                       color: Color(0xffFF4646),
                       fontFamily: "GoogleSans",
-                      fontSize: 18,
+                      fontSize: 0.048 * width,
                       fontWeight: FontWeight.w600)))
         ],
       ),

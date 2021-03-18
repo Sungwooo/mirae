@@ -8,6 +8,7 @@ import 'package:mirae/camera/trash_info_can.dart';
 import 'package:mirae/camera/trash_info_glass.dart';
 import 'package:mirae/camera/trash_info_paper.dart';
 import 'package:mirae/camera/trash_info_plastic.dart';
+import 'package:mirae/map/map_splash.dart';
 import 'package:tflite/tflite.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../map/map.dart';
@@ -111,7 +112,7 @@ class _CameraPageState extends State<CameraPage> {
       await _initializeControllerFuture;
 
       final image = await _controller.takePicture();
-      if (selectedTypeIndex == 1) {
+      /* if (selectedTypeIndex == 1) {
         Get.to(() => TrashInfoPaper(widget.cameras, image.path));
         return;
       }
@@ -128,14 +129,15 @@ class _CameraPageState extends State<CameraPage> {
         return;
       }
 
-      Get.to(() => TrashInfoPlastic(widget.cameras, image.path));
+      Get.to(() => TrashInfoPlastic(widget.cameras, image.path)); */
+      Get.to(() => TrashInfoCan(widget.cameras, image.path));
     } on CameraException catch (e) {
       print(e.toString());
     }
   }
 
   void _onPingPress() {
-    Get.to(() => MapPage());
+    Get.to(() => MapSplash());
   }
 
   _launchHelpURL() async {
@@ -148,6 +150,8 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Widget _renderTypeItem(BuildContext context, index) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 4.0),
         child: GestureDetector(
@@ -158,7 +162,7 @@ class _CameraPageState extends State<CameraPage> {
               children: [
                 Text(typeList[index].title,
                     style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 0.037 * width,
                         color: index == selectedTypeIndex
                             ? Color.fromRGBO(54, 174, 87, 1)
                             : Colors.white,
@@ -271,6 +275,8 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Widget _renderTopContainer(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Container(
         width: double.infinity,
         height: 80.0,
@@ -282,7 +288,8 @@ class _CameraPageState extends State<CameraPage> {
             GestureDetector(
               onTap: () => _launchHelpURL(),
               child: Text('?',
-                  style: TextStyle(color: Colors.white, fontSize: 24)),
+                  style:
+                      TextStyle(color: Colors.white, fontSize: 0.064 * width)),
             ),
             GestureDetector(
                 onTap: () => Navigator.pop(context),

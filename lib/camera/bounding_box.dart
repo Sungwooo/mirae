@@ -18,6 +18,8 @@ class BoundingBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     List<Widget> _renderBox() {
       return results.map((re) {
         var _x = re["rect"]["x"];
@@ -65,7 +67,7 @@ class BoundingBox extends StatelessWidget {
               "${(re["confidenceInClass"] * 100).toStringAsFixed(0)}%", // "${re["detectedClass"]} ${(re["confidenceInClass"] * 100).toStringAsFixed(0)}%",
               style: TextStyle(
                 color: Color.fromRGBO(49, 172, 83, 1.0),
-                fontSize: 18.0,
+                fontSize: 0.048 * width,
                 fontWeight: FontWeight.bold,
               ),
             )),

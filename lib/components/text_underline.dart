@@ -21,7 +21,7 @@ class TextUnderline extends StatelessWidget {
               color: color,
               fontFamily: "GoogleSans",
               fontWeight: FontWeight.w700,
-              fontSize: 18),
+              fontSize: 0.048 * width),
         ),
         Image.asset(
           "assets/underline.png",

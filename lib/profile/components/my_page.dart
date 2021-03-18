@@ -26,13 +26,13 @@ class _MyInfoPageState extends State<MyInfoPage> {
       child: ListView(
         children: [
           Container(
-            height: 0.22 * height,
+            height: 0.476 * width,
             child: Stack(children: [
               LevelRankWidget(
                 fp: fp,
               ),
               Positioned(
-                top: 0.165 * height,
+                top: 0.357 * width,
                 left: 0.39 * width,
                 child: MyImageWidget(
                   fp: fp,
@@ -52,6 +52,9 @@ class _MyInfoPageState extends State<MyInfoPage> {
           MyPingButtonWidget(),
           ProgressBarWidget(),
           MyScoreBoxWidget(),
+          SizedBox(
+            height: 0.015 * height,
+          )
         ],
       ),
     );

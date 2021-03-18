@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mirae/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'constants/material_color.dart';
 import 'login/auth_page.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
             ),
             splashColor: Colors.grey[700].withOpacity(0),
           ),
-          home: AuthPage(),
+          home: SplashScreen(),
         ));
   }
 }

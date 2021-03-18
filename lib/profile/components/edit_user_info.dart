@@ -44,7 +44,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                   style: TextStyle(
                       color: Color(0xff47B261),
                       fontFamily: "GoogleSans",
-                      fontSize: 16,
+                      fontSize: 0.042 * width,
                       fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
@@ -62,13 +62,13 @@ class _EditUserInfoState extends State<EditUserInfo> {
                   child: selectedCountry != null
                       ? Text(
                           countryCodeToEmoji(selectedCountry.countryCode),
-                          style: TextStyle(fontSize: 25),
+                          style: TextStyle(fontSize: 0.067 * width),
                         )
                       : Text("Tap to Select",
                           style: TextStyle(
                               color: Color(0xff424242),
                               fontFamily: "GoogleSans",
-                              fontSize: 13,
+                              fontSize: 0.034 * width,
                               fontWeight: FontWeight.w700)),
                 )
               ],
@@ -81,7 +81,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                   style: TextStyle(
                       color: Color(0xff525252),
                       fontFamily: "GoogleSans",
-                      fontSize: 16,
+                      fontSize: 0.042 * width,
                       fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
@@ -92,7 +92,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                   style: TextStyle(
                       color: Color(0xff42B261),
                       fontFamily: "GoogleSans",
-                      fontSize: 16,
+                      fontSize: 0.042 * width,
                       fontWeight: FontWeight.w700),
                 ),
               ],
@@ -105,7 +105,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                   style: TextStyle(
                       color: Color(0xff525252),
                       fontFamily: "GoogleSans",
-                      fontSize: 16,
+                      fontSize: 0.042 * width,
                       fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
@@ -116,7 +116,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                   style: TextStyle(
                       color: Color(0xff42B261),
                       fontFamily: "GoogleSans",
-                      fontSize: 16,
+                      fontSize: 0.042 * width,
                       fontWeight: FontWeight.w700),
                 ),
               ],
@@ -129,7 +129,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                   style: TextStyle(
                       color: Color(0xff525252),
                       fontFamily: "GoogleSans",
-                      fontSize: 16,
+                      fontSize: 0.042 * width,
                       fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
@@ -140,7 +140,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                   style: TextStyle(
                       color: Color(0xff42B261),
                       fontFamily: "GoogleSans",
-                      fontSize: 16,
+                      fontSize: 0.042 * width,
                       fontWeight: FontWeight.w700),
                 ),
               ],

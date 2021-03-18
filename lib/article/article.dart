@@ -81,7 +81,7 @@ class ResultItem extends StatelessWidget {
                                       : title,
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      fontSize: 0.042 * width,
                                       fontWeight: FontWeight.w700,
                                       fontFamily: 'GoogleSans')),
                             )
@@ -101,7 +101,7 @@ class ResultItem extends StatelessWidget {
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       color: Colors.lightBlueAccent,
-                                      fontSize: 12,
+                                      fontSize: 0.032 * width,
                                       fontWeight: FontWeight.w700,
                                       fontFamily: 'GoogleSans')),
                             ]),
@@ -127,6 +127,8 @@ class GradientText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return ShaderMask(
       shaderCallback: (bounds) => gradient.createShader(
         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
@@ -137,7 +139,7 @@ class GradientText extends StatelessWidget {
             fontFamily: 'GoogleSans',
             // The color must be set to white for this to work
             color: Colors.white,
-            fontSize: 30,
+            fontSize: 0.08 * width,
             fontWeight: FontWeight.w700),
       ),
     );
@@ -275,7 +277,7 @@ class _ArticleState extends State<ArticlePage> {
                                     child: Text('E - Challenges',
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 18,
+                                            fontSize: 0.048 * width,
                                             fontWeight: FontWeight.w700,
                                             fontFamily: 'GoogleSans')),
                                   ),
@@ -295,7 +297,7 @@ class _ArticleState extends State<ArticlePage> {
                                             child: Text('2',
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontSize: 14,
+                                                    fontSize: 0.037 * width,
                                                     fontWeight: FontWeight.w400,
                                                     fontFamily: 'GoogleSans')),
                                           ),
@@ -312,7 +314,7 @@ class _ArticleState extends State<ArticlePage> {
                                 Text('Day 1',
                                     style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 26,
+                                        fontSize: 0.069 * width,
                                         fontWeight: FontWeight.w700,
                                         fontFamily: 'GoogleSans')),
                                 Image.asset(
@@ -345,7 +347,7 @@ class _ArticleState extends State<ArticlePage> {
                           textAlign: TextAlign.right,
                           style: TextStyle(
                               color: Color(0xff4B4B4B),
-                              fontSize: 14,
+                              fontSize: 0.037 * width,
                               fontWeight: FontWeight.w700,
                               fontFamily: 'GoogleSans')),
                       SizedBox(
@@ -433,7 +435,7 @@ class _ArticleState extends State<ArticlePage> {
                                                   resultList[0].title,
                                                   style: TextStyle(
                                                       color: Colors.white,
-                                                      fontSize: 24,
+                                                      fontSize: 0.064 * width,
                                                       fontWeight:
                                                           FontWeight.w700,
                                                       fontFamily: 'GoogleSans'),
@@ -457,8 +459,8 @@ class _ArticleState extends State<ArticlePage> {
                     height: height * 0.6,
                     child: Center(
                       child: Container(
-                          width: width * 0.3,
-                          height: width * 0.3,
+                          width: width * 0.2,
+                          height: width * 0.2,
                           child: CircularProgressIndicator(
                             valueColor: AlwaysStoppedAnimation<Color>(
                                 Color(0xff36A257)),

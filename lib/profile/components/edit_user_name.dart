@@ -30,7 +30,7 @@ class _EditUserNameState extends State<EditUserName> {
               hintStyle: TextStyle(
                   color: Color(0xffC4C4C4),
                   fontFamily: "GoogleSans",
-                  fontSize: 20,
+                  fontSize: 0.053 * width,
                   fontWeight: FontWeight.w700),
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
@@ -56,7 +56,7 @@ class _EditUserNameState extends State<EditUserName> {
           transform: Matrix4.translationValues(0.0, -7.0, 0.0),
           child: Image.asset(
             "assets/underline.png",
-            width: currentUser.displayName.length * width * 0.05,
+            width: currentUser.displayName.length * width * 0.058,
             height: 0.007 * height,
             color: Color(0xff42B261),
             fit: BoxFit.fill,

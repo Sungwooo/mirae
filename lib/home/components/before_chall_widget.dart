@@ -40,7 +40,7 @@ class _BeforeChallWidgetState extends State<BeforeChallWidget> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.black,
-                            fontSize: 24,
+                            fontSize: 0.064 * width,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'GoogleSans')),
                   ]),

@@ -16,6 +16,8 @@ class GradientText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return ShaderMask(
       shaderCallback: (bounds) => gradient.createShader(
         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
@@ -26,7 +28,7 @@ class GradientText extends StatelessWidget {
           fontFamily: 'GoogleSans',
           // The color must be set to white for this to work
           color: Colors.white,
-          fontSize: 30,
+          fontSize: 0.08 * width,
         ),
       ),
     );
@@ -122,7 +124,7 @@ class ArticleDetailPage extends StatelessWidget {
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   color: Colors.lightBlueAccent,
-                                  fontSize: 12,
+                                  fontSize: 0.032 * width,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'GoogleSans')),
                         ]),
@@ -130,7 +132,7 @@ class ArticleDetailPage extends StatelessWidget {
                             textAlign: TextAlign.right,
                             style: TextStyle(
                                 color: Color(0xff4B4B4B),
-                                fontSize: 14,
+                                fontSize: 0.037 * width,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'GoogleSans'))
                       ]),
@@ -145,7 +147,7 @@ class ArticleDetailPage extends StatelessWidget {
                   child: Text(arguments.title,
                       style: TextStyle(
                           color: Color(0xff000000),
-                          fontSize: 24,
+                          fontSize: 0.064 * width,
                           fontWeight: FontWeight.w700,
                           fontFamily: 'GoogleSans')),
                 ),
@@ -171,7 +173,7 @@ class ArticleDetailPage extends StatelessWidget {
                   child: Text(arguments.writer,
                       style: TextStyle(
                           color: Color(0xff8A8A8A),
-                          fontSize: 12,
+                          fontSize: 0.032 * width,
                           fontWeight: FontWeight.w700,
                           fontFamily: 'GoogleSans')),
                 ),
@@ -194,7 +196,7 @@ class ArticleDetailPage extends StatelessWidget {
                     child: Text(arguments.attract.trim(),
                         style: TextStyle(
                             color: Color(0xffF8F8F8),
-                            fontSize: 16,
+                            fontSize: 0.042 * width,
                             fontWeight: FontWeight.w600,
                             fontFamily: 'GoogleSans')),
                   ),
@@ -212,7 +214,7 @@ class ArticleDetailPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       'Error: ${snapshot.error}',
-                      style: TextStyle(fontSize: 15),
+                      style: TextStyle(fontSize: 0.04 * width),
                     ),
                   );
                 } else {
@@ -235,7 +237,7 @@ class ArticleDetailPage extends StatelessWidget {
                               child: Text(snapshot.data[index],
                                   style: TextStyle(
                                       color: Color(0xff363636),
-                                      fontSize: 16,
+                                      fontSize: 0.042 * width,
                                       fontWeight: FontWeight.w400,
                                       fontFamily: 'GoogleSans')),
                             ),

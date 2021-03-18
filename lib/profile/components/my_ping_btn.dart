@@ -9,7 +9,6 @@ class MyPingButtonWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(
           horizontal: width * 0.03, vertical: 0.009 * height),
       child: Container(
-        height: 0.1 * height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           image: DecorationImage(
@@ -35,13 +34,16 @@ class MyPingButtonWidget extends StatelessWidget {
                       "assets/discardIcon.png",
                       width: 0.16 * width,
                     ),
-                    Text(
-                      "DISCARD",
-                      style: TextStyle(
-                          color: Color(0xff393939),
-                          fontFamily: "GoogleSans",
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400),
+                    Container(
+                      transform: Matrix4.translationValues(0.0, -5.0, 0.0),
+                      child: Text(
+                        "DISCARD",
+                        style: TextStyle(
+                            color: Color(0xff393939),
+                            fontFamily: "GoogleSans",
+                            fontSize: 0.032 * width,
+                            fontWeight: FontWeight.w500),
+                      ),
                     )
                   ],
                 ),
@@ -53,7 +55,7 @@ class MyPingButtonWidget extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.black,
                       fontFamily: "GoogleSans",
-                      fontSize: 24,
+                      fontSize: 0.064 * width,
                       fontWeight: FontWeight.w700),
                 ),
               ],
@@ -67,13 +69,16 @@ class MyPingButtonWidget extends StatelessWidget {
                       "assets/myPingIcon.png",
                       width: 0.16 * width,
                     ),
-                    Text(
-                      "PING",
-                      style: TextStyle(
-                          color: Color(0xff393939),
-                          fontFamily: "GoogleSans",
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400),
+                    Container(
+                      transform: Matrix4.translationValues(0.0, -5.0, 0.0),
+                      child: Text(
+                        "PING",
+                        style: TextStyle(
+                            color: Color(0xff393939),
+                            fontFamily: "GoogleSans",
+                            fontSize: 0.032 * width,
+                            fontWeight: FontWeight.w500),
+                      ),
                     )
                   ],
                 ),
@@ -85,7 +90,7 @@ class MyPingButtonWidget extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.black,
                       fontFamily: "GoogleSans",
-                      fontSize: 24,
+                      fontSize: 0.064 * width,
                       fontWeight: FontWeight.w700),
                 ),
               ],

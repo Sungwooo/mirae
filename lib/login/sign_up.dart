@@ -39,8 +39,8 @@ class SignUpPageState extends State<SignUpPage> {
     if (fp == null) {
       fp = Provider.of<FirebaseProvider>(context);
     }
+    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
     return Scaffold(
         resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
@@ -82,7 +82,7 @@ class SignUpPageState extends State<SignUpPage> {
                           Text('E-mail',
                               style: TextStyle(
                                   color: Color(0xff7D7D7D),
-                                  fontSize: 14,
+                                  fontSize: 0.037 * width,
                                   fontFamily: 'GoogleSans')),
                           TextFormField(
                             controller: _mailCon,
@@ -97,7 +97,7 @@ class SignUpPageState extends State<SignUpPage> {
                           Text('Name',
                               style: TextStyle(
                                   color: Color(0xff7D7D7D),
-                                  fontSize: 14,
+                                  fontSize: 0.037 * width,
                                   fontFamily: 'GoogleSans')),
                           TextFormField(
                             controller: _nameCon,
@@ -112,7 +112,7 @@ class SignUpPageState extends State<SignUpPage> {
                           Text('Password',
                               style: TextStyle(
                                   color: Color(0xff7D7D7D),
-                                  fontSize: 14,
+                                  fontSize: 0.037 * width,
                                   fontFamily: 'GoogleSans')),
                           TextFormField(
                             controller: _pwCon,
@@ -128,7 +128,7 @@ class SignUpPageState extends State<SignUpPage> {
                           Text('Repeat Password',
                               style: TextStyle(
                                   color: Color(0xff7D7D7D),
-                                  fontSize: 14,
+                                  fontSize: 0.037 * width,
                                   fontFamily: 'GoogleSans')),
                           TextFormField(
                             controller: _pwChkCon,
@@ -195,7 +195,7 @@ class SignUpPageState extends State<SignUpPage> {
                         child: Text('Log in',
                             style: TextStyle(
                                 color: Color(0xff31AC53),
-                                fontSize: 16,
+                                fontSize: 0.042 * width,
                                 fontFamily: 'GoogleSans')),
                       ),
                     ),

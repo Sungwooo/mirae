@@ -39,12 +39,12 @@ class _MenuWidgetState extends State<MenuWidget> {
       curve: Curves.easeInOut,
       duration: Duration(milliseconds: 200),
       left: 0,
-      bottom: (showBottomMenu) ? -60 : -(height * 4 / 9) + 35,
+      bottom: (showBottomMenu) ? -60 : -(width * 0.962) + 35,
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(20)),
         child: Container(
           width: width,
-          height: (height * 4 / 9) + 25,
+          height: (width * 0.962) + 25,
           color: Colors.white.withOpacity(0.7),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -75,7 +75,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                     style: TextStyle(
                         fontFamily: "GoogleSans",
                         fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                        fontSize: 0.053 * width),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 5),
@@ -84,7 +84,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                       style: TextStyle(
                           fontFamily: "GoogleSans",
                           fontWeight: FontWeight.w500,
-                          fontSize: 12),
+                          fontSize: 0.032 * width),
                     ),
                   ),
                   Row(
@@ -115,7 +115,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                         fontFamily: "GoogleSans",
                         fontWeight: FontWeight.w500,
                         color: Color(0xff31AC53),
-                        fontSize: 12,
+                        fontSize: 0.032 * width,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -147,7 +147,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                             style: TextStyle(
                                 color: Color(0xffF3A932),
                                 fontFamily: "GoogleSans",
-                                fontSize: 16,
+                                fontSize: 0.042 * width,
                                 fontWeight: FontWeight.w700)),
                       ),
                     ),
@@ -190,7 +190,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                     style: TextStyle(
                       color: fontColor,
                       fontFamily: "GoogleSans",
-                      fontSize: 13,
+                      fontSize: 0.034 * width,
                       fontWeight: FontWeight.w700,
                     ),
                     textAlign: TextAlign.center,

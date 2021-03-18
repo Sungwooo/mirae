@@ -73,8 +73,8 @@ class ChallengeState extends State<Challenge> {
                         bottom: 0.032 * height,
                         right: 0.138 * width),
                     child: Container(
-                      width: 0.3 * width,
-                      height: 0.3 * width,
+                      width: 0.14 * height,
+                      height: 0.14 * height,
                       decoration: new BoxDecoration(
                         image: new DecorationImage(
                           image: new AssetImage('assets/earth.png'),
@@ -91,7 +91,7 @@ class ChallengeState extends State<Challenge> {
                           "Day $day",
                           style: TextStyle(
                               color: Color(0xffFFFFFF),
-                              fontSize: 28,
+                              fontSize: 0.074 * width,
                               fontWeight: FontWeight.w700,
                               fontFamily: 'GoogleSans'),
                         ),
@@ -102,7 +102,7 @@ class ChallengeState extends State<Challenge> {
                             "Today you can burn",
                             style: TextStyle(
                                 color: Color(0xffFCE490),
-                                fontSize: 16,
+                                fontSize: 0.042 * width,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'GoogleSans'),
                           ),
@@ -136,7 +136,7 @@ class ChallengeState extends State<Challenge> {
                                         style: TextStyle(
                                             color: Color(0xffFF8A00),
                                             fontWeight: FontWeight.w700,
-                                            fontSize: 24,
+                                            fontSize: 0.064 * width,
                                             fontFamily: 'GoogleSans'),
                                       ),
                                     ),
@@ -149,7 +149,7 @@ class ChallengeState extends State<Challenge> {
                                     style: TextStyle(
                                         color: Color(0xffFF8A00),
                                         fontWeight: FontWeight.w500,
-                                        fontSize: 16,
+                                        fontSize: 0.042 * width,
                                         fontFamily: 'GoogleSans'),
                                   ),
                                 ),
@@ -202,7 +202,8 @@ class ChallengeState extends State<Challenge> {
                                                         style: TextStyle(
                                                             color: Color(
                                                                 0xff000000),
-                                                            fontSize: 14,
+                                                            fontSize:
+                                                                0.037 * width,
                                                             fontFamily:
                                                                 'GoogleSans')),
                                                     SizedBox(
@@ -242,7 +243,8 @@ class ChallengeState extends State<Challenge> {
                                                       "Day",
                                                       style: TextStyle(
                                                           color: Colors.white,
-                                                          fontSize: 14,
+                                                          fontSize:
+                                                              0.037 * width,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                           fontFamily:
@@ -254,7 +256,8 @@ class ChallengeState extends State<Challenge> {
                                                       "${index + 1}",
                                                       style: TextStyle(
                                                           color: Colors.white,
-                                                          fontSize: 18,
+                                                          fontSize:
+                                                              0.048 * width,
                                                           fontWeight:
                                                               FontWeight.w700,
                                                           fontFamily:
@@ -295,7 +298,8 @@ class ChallengeState extends State<Challenge> {
                                                         "Day",
                                                         style: TextStyle(
                                                             color: Colors.white,
-                                                            fontSize: 14,
+                                                            fontSize:
+                                                                0.037 * width,
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                             fontFamily:
@@ -307,7 +311,8 @@ class ChallengeState extends State<Challenge> {
                                                         "$day",
                                                         style: TextStyle(
                                                             color: Colors.white,
-                                                            fontSize: 18,
+                                                            fontSize:
+                                                                0.048 * width,
                                                             fontWeight:
                                                                 FontWeight.w700,
                                                             fontFamily:
@@ -338,7 +343,8 @@ class ChallengeState extends State<Challenge> {
                                                         style: TextStyle(
                                                             color: Color(
                                                                 0xff42B261),
-                                                            fontSize: 14,
+                                                            fontSize:
+                                                                0.037 * width,
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                             fontFamily:
@@ -351,7 +357,8 @@ class ChallengeState extends State<Challenge> {
                                                         style: TextStyle(
                                                             color: Color(
                                                                 0xff42B261),
-                                                            fontSize: 18,
+                                                            fontSize:
+                                                                0.048 * width,
                                                             fontWeight:
                                                                 FontWeight.w700,
                                                             fontFamily:
@@ -397,7 +404,7 @@ class ChallengeState extends State<Challenge> {
                                         Text("Day ${day + index + 1}",
                                             style: TextStyle(
                                                 color: Color(0xff000000),
-                                                fontSize: 14,
+                                                fontSize: 0.037 * width,
                                                 fontFamily: 'GoogleSans')),
                                         SizedBox(
                                           height: 0.006 * height,

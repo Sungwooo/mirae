@@ -16,13 +16,13 @@ class _ProgressBarWidgetState extends State<ProgressBarWidget> {
       padding: EdgeInsets.symmetric(
           horizontal: width * 0.03, vertical: 0.009 * height),
       child: Container(
-        height: 0.2 * height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           color: Color(0xffB1ECFF),
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 0.06 * width),
+          padding: EdgeInsets.symmetric(
+              horizontal: 0.06 * width, vertical: 0.02 * height),
           child: Column(
             children: [
               Container(
@@ -67,7 +67,7 @@ class _ProgressBarWidgetState extends State<ProgressBarWidget> {
                   "$points pts",
                   style: TextStyle(
                       fontFamily: "GoogleSans",
-                      fontSize: 12,
+                      fontSize: 0.032 * width,
                       fontWeight: FontWeight.w400),
                   textAlign: TextAlign.left,
                 ),

@@ -97,13 +97,13 @@ class _RankingPageState extends State<RankingPage> {
             Text(rankerList[index].name,
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 20,
+                    fontSize: 0.053 * width,
                     fontFamily: 'GoogleSans',
                     fontWeight: FontWeight.w700)),
             Text("${rankerList[index].points} pts",
                 style: TextStyle(
                     color: Color.fromRGBO(66, 178, 97, 1),
-                    fontSize: 14,
+                    fontSize: 0.037 * width,
                     fontFamily: 'GoogleSans',
                     fontWeight: FontWeight.w400)),
           ],
@@ -126,7 +126,7 @@ class _RankingPageState extends State<RankingPage> {
                 Text("${index + 1}",
                     style: TextStyle(
                         color: Colors.black,
-                        fontSize: 20,
+                        fontSize: 0.053 * width,
                         fontFamily: 'GoogleSans',
                         fontWeight: FontWeight.w700)),
                 _renderProfile(context, index),
@@ -134,14 +134,14 @@ class _RankingPageState extends State<RankingPage> {
                 Text('${rankerList[index].discardCount}',
                     style: TextStyle(
                         color: Color.fromRGBO(66, 178, 97, 1),
-                        fontSize: 16,
+                        fontSize: 0.042 * width,
                         fontFamily: 'GoogleSans',
                         fontWeight: FontWeight.w700)),
                 Image.asset('assets/ic_loc_ping.png', width: 0.14 * width),
                 Text('${rankerList[index].pingCount}',
                     style: TextStyle(
                         color: Color.fromRGBO(244, 198, 35, 1),
-                        fontSize: 16,
+                        fontSize: 0.042 * width,
                         fontFamily: 'GoogleSans',
                         fontWeight: FontWeight.w700)),
               ],
@@ -162,7 +162,7 @@ class _RankingPageState extends State<RankingPage> {
                 child: Text('DISCARD',
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 0.053 * width,
                         fontFamily: 'GoogleSans',
                         fontWeight: FontWeight.w700))),
             Padding(
@@ -173,7 +173,7 @@ class _RankingPageState extends State<RankingPage> {
                   Text('3050',
                       style: TextStyle(
                           color: Color.fromRGBO(66, 178, 97, 1),
-                          fontSize: 28,
+                          fontSize: 0.074 * width,
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.w700))
                 ],
@@ -190,7 +190,7 @@ class _RankingPageState extends State<RankingPage> {
                 child: Text('PING',
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 0.053 * width,
                         fontFamily: 'GoogleSans',
                         fontWeight: FontWeight.w600))),
             Row(
@@ -199,7 +199,7 @@ class _RankingPageState extends State<RankingPage> {
                 Text('10208',
                     style: TextStyle(
                         color: Color.fromRGBO(244, 198, 35, 1),
-                        fontSize: 28,
+                        fontSize: 0.074 * width,
                         fontFamily: 'GoogleSans',
                         fontWeight: FontWeight.w600))
               ],
@@ -220,7 +220,7 @@ class _RankingPageState extends State<RankingPage> {
         children: [
           Text("World Ranking",
               style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 0.074 * width,
                   color: Color.fromRGBO(66, 178, 97, 1),
                   fontFamily: 'GoogleSans',
                   fontWeight: FontWeight.w700)),

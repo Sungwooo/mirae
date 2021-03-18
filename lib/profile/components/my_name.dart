@@ -33,12 +33,12 @@ class MyNameWidget extends StatelessWidget {
                     style: TextStyle(
                         color: Color(0xff424242),
                         fontFamily: "GoogleSans",
-                        fontSize: 22,
+                        fontSize: 0.058 * width,
                         fontWeight: FontWeight.w700),
                   ),
                   Image.asset(
                     "assets/underline.png",
-                    width: currentUser.displayName.length * width * 0.052,
+                    width: currentUser.displayName.length * width * 0.058,
                     height: 0.007 * height,
                     color: Color(0xff42B261),
                     fit: BoxFit.fill,
