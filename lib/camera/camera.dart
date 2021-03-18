@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mirae/camera/trash_info_can.dart';
 import 'package:mirae/camera/trash_info_glass.dart';
@@ -15,8 +16,9 @@ import 'bounding_box.dart';
 
 class TrashType {
   String title;
+  String iconPath;
 
-  TrashType({this.title});
+  TrashType({this.title, this.iconPath});
 }
 
 class CameraPage extends StatefulWidget {
@@ -83,13 +85,20 @@ class _CameraPageState extends State<CameraPage> {
   void initState() {
     super.initState();
 
-    _cameraInitialize();
+    typeList.add(
+        TrashType(title: "Auto", iconPath: "assets/ic_type_unselected.png"));
+    typeList
+        .add(TrashType(title: "Paper", iconPath: "assets/ic_type_paper.png"));
+    typeList.add(TrashType(title: "Can", iconPath: "assets/ic_type_can.png"));
+    typeList.add(
+        TrashType(title: "Plastic", iconPath: "assets/ic_type_plastic.png"));
+    typeList
+        .add(TrashType(title: "Glass", iconPath: "assets/ic_type_glass.png"));
+    typeList.add(
+        TrashType(title: "Plastic bag", iconPath: "assets/ic_type_pbag.png"));
+    typeList.add(TrashType(title: "Food", iconPath: "assets/ic_type_food.png"));
 
-    typeList.add(TrashType(title: "Auto"));
-    typeList.add(TrashType(title: "Paper"));
-    typeList.add(TrashType(title: "Can"));
-    typeList.add(TrashType(title: "Plastic"));
-    typeList.add(TrashType(title: "Glass"));
+    _cameraInitialize();
 
     loadTfModel();
   }
@@ -100,8 +109,62 @@ class _CameraPageState extends State<CameraPage> {
     super.dispose();
   }
 
+  Future<void> _handleAutoRouting(String imagePath) async {
+    var objectName = _recognitions.reduce((current, next) =>
+        current['confidenceInClass'] > next['confidenceInClass']
+            ? current
+            : next)["detectedClass"];
+    if (objectName == 'Can') {
+      Get.to(() => TrashInfoCan(widget.cameras, imagePath));
+      return;
+    }
+    if (objectName == 'Plastic') {
+      Get.to(() => TrashInfoPlastic(widget.cameras, imagePath));
+      return;
+    }
+    if (objectName == 'Glass') {
+      Get.to(() => TrashInfoGlass(widget.cameras, imagePath));
+      return;
+    }
+    if (objectName == 'Paper') {
+      Get.to(() => TrashInfoPaper(widget.cameras, imagePath));
+      return;
+    }
+
+    Fluttertoast.showToast(msg: "Unkown trash type");
+
+    _controller.startImageStream((CameraImage img) {
+      if (!isDetecting) {
+        isDetecting = true;
+        Tflite.detectObjectOnFrame(
+          bytesList: img.planes.map((plane) {
+            return plane.bytes;
+          }).toList(),
+          model: "SSDMobileNet",
+          imageHeight: img.height,
+          imageWidth: img.width,
+          imageMean: 127.5,
+          imageStd: 127.5,
+          numResultsPerClass: 1,
+          threshold: 0.4,
+        ).then((recognitions) {
+          setState(() {
+            _recognitions = recognitions;
+            _imageHeight = img.height;
+            _imageWidth = img.width;
+          });
+          isDetecting = false;
+        });
+      }
+    });
+  }
+
   Future<void> _onDiscardPress() async {
     if (!_controller.value.isInitialized) {
+      return;
+    }
+    if (_recognitions == null || _recognitions.isEmpty) {
+      Fluttertoast.showToast(msg: "No object detected");
       return;
     }
 
@@ -128,13 +191,18 @@ class _CameraPageState extends State<CameraPage> {
         return;
       }
 
-      Get.to(() => TrashInfoPlastic(widget.cameras, image.path));
+      _handleAutoRouting(image.path);
     } on CameraException catch (e) {
       print(e.toString());
     }
   }
 
   void _onPingPress() {
+    if (_recognitions == null || _recognitions.isEmpty) {
+      Fluttertoast.showToast(msg: "No object detected");
+      return;
+    }
+
     Get.to(() => MapPage());
   }
 
@@ -148,6 +216,26 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Widget _renderTypeItem(BuildContext context, index) {
+    Widget _renderTypeWithIcon(index) {
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          Image.asset(
+            index == selectedTypeIndex
+                ? 'assets/ic_type_selected.png'
+                : 'assets/ic_type_unselected.png',
+            width: 55.0,
+            height: 70.0,
+          ),
+          Image.asset(
+            typeList[index].iconPath,
+            width: 30.0,
+            height: 30.0,
+          )
+        ],
+      );
+    }
+
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 4.0),
         child: GestureDetector(
@@ -164,13 +252,7 @@ class _CameraPageState extends State<CameraPage> {
                             : Colors.white,
                         fontFamily: 'GoogleSans',
                         fontWeight: FontWeight.w500)),
-                Image.asset(
-                  index == selectedTypeIndex
-                      ? 'assets/ic_type_selected.png'
-                      : 'assets/ic_type_unselected.png',
-                  width: 55.0,
-                  height: 70.0,
-                ),
+                _renderTypeWithIcon(index),
               ],
             )));
   }
@@ -188,67 +270,91 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Widget _renderButtons(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              borderRadius: BorderRadius.all(Radius.circular(50.0)),
-              child: Padding(
-                padding: EdgeInsets.all(4.0),
-                child: GestureDetector(
-                  onTap: _onPingPress,
-                  child: Image.asset(
-                    'assets/ic_ping.png',
-                    width: 100.0,
-                    height: 100.0,
+    String getValidCenter() {
+      if (selectedTypeIndex == 5) {
+        return 'assets/ic_landfill.png';
+      }
+      if (selectedTypeIndex == 6) {
+        return 'assets/ic_compostables.png';
+      }
+
+      return 'assets/ic_recycle.png';
+    }
+
+    List<double> getValidCenterSize() {
+      if (selectedTypeIndex == 5) {
+        return [60.0, 100.0];
+      }
+      if (selectedTypeIndex == 6) {
+        return [110.0, 100.0];
+      }
+
+      return [90.0, 100.0];
+    }
+
+    return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24.0),
+        child: Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                  child: Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: GestureDetector(
+                      onTap: _onPingPress,
+                      child: Image.asset(
+                        'assets/ic_ping.png',
+                        width: 100.0,
+                        height: 100.0,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.center,
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              borderRadius: BorderRadius.all(Radius.circular(50.0)),
-              child: Container(
-                padding: EdgeInsets.all(4.0),
-                child: Image.asset(
-                  'assets/ic_recycle.png',
-                  width: 90.0,
-                  height: 100.0,
-                ),
-              ),
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              borderRadius: BorderRadius.all(Radius.circular(50.0)),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 4.0),
-                child: GestureDetector(
-                  onTap: _onDiscardPress,
-                  child: Image.asset(
-                    'assets/ic_discard.png',
-                    width: 100.0,
-                    height: 100.0,
+            Align(
+              alignment: Alignment.center,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                  child: Container(
+                    padding: EdgeInsets.all(4.0),
+                    child: Image.asset(
+                      getValidCenter(),
+                      width: getValidCenterSize()[0],
+                      height: getValidCenterSize()[1],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ),
-      ],
-    );
+            Align(
+              alignment: Alignment.centerRight,
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 4.0),
+                    child: GestureDetector(
+                      onTap: _onDiscardPress,
+                      child: Image.asset(
+                        'assets/ic_discard.png',
+                        width: 100.0,
+                        height: 100.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 
   Widget _renderCurrentType(BuildContext context) {
@@ -299,7 +405,7 @@ class _CameraPageState extends State<CameraPage> {
     return Container(
       width: double.infinity,
       height: 240.0,
-      padding: EdgeInsets.all(20.0),
+      padding: EdgeInsets.symmetric(vertical: 20.0),
       color: Color.fromRGBO(0, 0, 0, 0.5),
       child: Column(
         children: [
