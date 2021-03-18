@@ -41,7 +41,7 @@ class FirebaseProvider with ChangeNotifier {
     print("user : ${user.displayName}");
   }
 
-  Future<bool> signInWithGoogleAccount() async {
+  Future<String> signInWithGoogleAccount() async {
     try {
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleAuth =
@@ -58,39 +58,13 @@ class FirebaseProvider with ChangeNotifier {
       final FirebaseUser currentUser = await fAuth.currentUser();
       assert(user.uid == currentUser.uid);
       setUser(user);
-      return true;
+      return '$user';
     } on Exception catch (e) {
       List<String> result = e.toString().split(", ");
       setLastFBMessage(result[1]);
-      return false;
+      return null;
     }
   }
-
-
-  // ignore: missing_return
-  Future<String> signInWithGoogle() async {
-    setUser(null);
-
-    FirebaseAuth auth = FirebaseAuth.instance;
-    GoogleSignIn googleSignIn = _googleSignIn;
-    GoogleSignInAccount account = await googleSignIn.signIn();
-    GoogleSignInAuthentication authentication = await account.authentication;
-    AuthCredential credential = GoogleAuthProvider.getCredential(
-        idToken: authentication.idToken, accessToken: authentication.accessToken);
-    AuthResult authResult = await auth.signInWithCredential(credential);
-
-    final FirebaseUser user = authResult.user;
-
-    if (user != null) {
-
-      print('signInWithGoogle succeeded: $user');
-      print("user : ${user.uid}");
-      print("user : ${user.displayName}");
-
-      return '$user';
-    }
-  }
-
   // ignore: missing_return, non_constant_identifier_names
   Future<bool> signUpWithEmail(
       String email, String password, String name) async {

@@ -131,7 +131,7 @@ class LogInState extends State<LogIn> {
           GestureDetector(
             onTap: () {
               try {
-                fp.signInWithGoogle().then((result) {
+                fp.signInWithGoogleAccount().then((result) {
                   if (result != null) {
                     Navigator.of(context).push(
                       MaterialPageRoute(

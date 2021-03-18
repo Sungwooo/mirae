@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mirae/login/firebase_provider.dart';
 import 'package:mirae/mainPage/mainPage.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +23,7 @@ class SignUpPageState extends State<SignUpPage> {
   TextEditingController _pwChkCon = TextEditingController();
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   FirebaseProvider fp;
 
   @override
@@ -52,7 +52,7 @@ class SignUpPageState extends State<SignUpPage> {
                 children: <Widget>[
                   //Header
                   Padding(
-                    padding: const EdgeInsets.only(top: 79),
+                    padding: const EdgeInsets.only(top: 40),
                     child: Container(
                       child: Column(
                         children: [
@@ -76,78 +76,80 @@ class SignUpPageState extends State<SignUpPage> {
                     padding:
                         const EdgeInsets.only(top: 58, left: 46, right: 46),
                     child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('E-mail',
-                              style: TextStyle(
-                                  color: Color(0xff7D7D7D),
-                                  fontSize: 0.037 * width,
-                                  fontFamily: 'GoogleSans')),
-                          TextFormField(
-                            controller: _mailCon,
-                            onSaved: (value) => _mailCon.text = value.trim(),
-                            cursorColor: Colors.red,
-                            cursorWidth: 4.0,
-                            maxLength: 20,
-                            onChanged: (text) {
-                              print(text);
-                            },
-                          ),
-                          Text('Name',
-                              style: TextStyle(
-                                  color: Color(0xff7D7D7D),
-                                  fontSize: 0.037 * width,
-                                  fontFamily: 'GoogleSans')),
-                          TextFormField(
-                            controller: _nameCon,
-                            onSaved: (value) => _nameCon.text = value.trim(),
-                            cursorColor: Colors.red,
-                            cursorWidth: 4.0,
-                            maxLength: 20,
-                            onChanged: (text) {
-                              print(text);
-                            },
-                          ),
-                          Text('Password',
-                              style: TextStyle(
-                                  color: Color(0xff7D7D7D),
-                                  fontSize: 0.037 * width,
-                                  fontFamily: 'GoogleSans')),
-                          TextFormField(
-                            controller: _pwCon,
-                            onSaved: (value) => _pwCon.text = value.trim(),
-                            cursorColor: Colors.red,
-                            cursorWidth: 4.0,
-                            maxLength: 20,
-                            obscureText: true,
-                            onChanged: (text) {
-                              print(text);
-                            },
-                          ),
-                          Text('Repeat Password',
-                              style: TextStyle(
-                                  color: Color(0xff7D7D7D),
-                                  fontSize: 0.037 * width,
-                                  fontFamily: 'GoogleSans')),
-                          TextFormField(
-                            controller: _pwChkCon,
-                            validator: (val) {
-                              if (val.isEmpty) return 'Empty';
-                              if (val != _pwCon.text) return 'Not Match';
-                              return null;
-                            },
-                            cursorColor: Colors.red,
-                            cursorWidth: 4.0,
-                            maxLength: 20,
-                            obscureText: true,
-                            onChanged: (text) {
-                              print(text);
-                            },
-                          ),
-                        ].map((c) {
-                          return c;
-                        }).toList(),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('E-mail',
+                                style: TextStyle(
+                                    color: Color(0xff7D7D7D),
+                                    fontSize: 0.037 * width,
+                                    fontFamily: 'GoogleSans')),
+                            TextFormField(
+                              controller: _mailCon,
+                              onSaved: (value) => _mailCon.text = value.trim(),
+                              cursorColor: Colors.red,
+                              cursorWidth: 4.0,
+                              maxLength: 20,
+                              onChanged: (text) {
+                                print(text);
+                              },
+                            ),
+                            Text('Name',
+                                style: TextStyle(
+                                    color: Color(0xff7D7D7D),
+                                    fontSize: 0.037 * width,
+                                    fontFamily: 'GoogleSans')),
+                            TextFormField(
+                              controller: _nameCon,
+                              onSaved: (value) => _nameCon.text = value.trim(),
+                              cursorColor: Colors.red,
+                              cursorWidth: 4.0,
+                              maxLength: 20,
+                              onChanged: (text) {
+                                print(text);
+                              },
+                            ),
+                            Text('Password',
+                                style: TextStyle(
+                                    color: Color(0xff7D7D7D),
+                                    fontSize: 0.037 * width,
+                                    fontFamily: 'GoogleSans')),
+                            TextFormField(
+                              controller: _pwCon,
+                              onSaved: (value) => _pwCon.text = value.trim(),
+                              cursorColor: Colors.red,
+                              cursorWidth: 4.0,
+                              maxLength: 20,
+                              //obscureText: true,
+                              onChanged: (text) {
+                                print(text);
+                              },
+                            ),
+                            Text('Repeat Password',
+                                style: TextStyle(
+                                    color: Color(0xff7D7D7D),
+                                    fontSize: 0.037 * width,
+                                    fontFamily: 'GoogleSans')),
+                            TextFormField(
+                              controller: _pwChkCon,
+                              onSaved: (value) => _pwChkCon.text = value.trim(),
+                              validator: (value) {
+                                if (value.isEmpty) return 'Empty';
+                                if (value != _pwCon.text) return 'Not Match';
+                                return null;
+                              },
+                              cursorColor: Colors.red,
+                              cursorWidth: 4.0,
+                              maxLength: 20,
+                              //obscureText: true,
+                              onChanged: (text) {
+                                print(text);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -165,9 +167,14 @@ class SignUpPageState extends State<SignUpPage> {
                       padding: EdgeInsets.symmetric(horizontal: 0.03 * height),
                       child: GestureDetector(
                         onTap: () {
+                          if(_pwChkCon.text!=_pwCon.text){
+                            showNotMatchPassword();
+                          }
+                          else{
                           FocusScope.of(context)
                               .requestFocus(new FocusNode()); // 키보드 감춤
                           _signUp();
+                          }
                         },
                         child: Container(
                           width: 100,
@@ -205,7 +212,7 @@ class SignUpPageState extends State<SignUpPage> {
             ),
             GestureDetector(
               onTap: () {
-                fp.signInWithGoogle().then((result) {
+                fp.signInWithGoogleAccount().then((result) {
                   if (result != null) {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -261,6 +268,23 @@ class SignUpPageState extends State<SignUpPage> {
         backgroundColor: Colors.red[400],
         duration: Duration(seconds: 10),
         content: Text(fp.getLastFBMessage()),
+        action: SnackBarAction(
+          label: "Done",
+          textColor: Colors.white,
+          onPressed: () {},
+        ),
+      ));
+  }
+
+  showNotMatchPassword() {
+    _scaffoldKey.currentState
+    // ignore: deprecated_member_use
+      ..hideCurrentSnackBar()
+    // ignore: deprecated_member_use
+      ..showSnackBar(SnackBar(
+        backgroundColor: Colors.red[400],
+        duration: Duration(seconds: 10),
+        content: Text('Password Not Match'),
         action: SnackBarAction(
           label: "Done",
           textColor: Colors.white,
