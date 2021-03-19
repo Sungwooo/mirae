@@ -23,7 +23,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
     userEmail = "${fp.getUser().email}";
     challengeDay =
         DateTime.now().difference(fp.getUser().metadata.creationTime).inDays +
-            2;
+            1;
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;

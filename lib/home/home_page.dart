@@ -101,7 +101,7 @@ class HomePageState extends State<HomePage> {
     fp = Provider.of<FirebaseProvider>(context);
     challengeDay = fp != null
         ? DateTime.now().difference(fp.getUser().metadata.creationTime).inDays +
-            2
+            1
         : 5;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;

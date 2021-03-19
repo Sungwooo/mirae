@@ -2,7 +2,9 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:camera/camera.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../mainPage/mainPage.dart';
 
 final List<int> carouselList = [0, 1];
@@ -23,25 +25,26 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
   Widget _renderRecycleButton() {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Container(
-      width: 150,
-      padding: EdgeInsets.symmetric(vertical: 12.0),
-      child: FlatButton(
-        onPressed: () => {},
-        color: Color.fromRGBO(72, 167, 255, 0.8),
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Image.asset('assets/ic_recycle_white.png', width: 20, height: 20),
-            Text("Recyclables",
-                style: TextStyle(
-                    fontSize: 0.042 * width,
-                    color: Colors.white,
-                    fontFamily: 'GoogleSans',
-                    fontWeight: FontWeight.w600))
-          ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 0.256 * width),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          height: 0.1 * width,
+          color: Color.fromRGBO(72, 167, 255, 0.8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Image.asset('assets/ic_recycle_white.png',
+                  width: 0.064 * width, height: 0.064 * width),
+              Text("Recyclables",
+                  style: TextStyle(
+                      fontSize: 0.048 * width,
+                      color: Colors.white,
+                      fontFamily: 'GoogleSans',
+                      fontWeight: FontWeight.w700))
+            ],
+          ),
         ),
       ),
     );
@@ -59,16 +62,21 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      width: 260,
+      width: 0.693 * width,
       child: Column(
         children: [
           Text(getTrueTitle(type),
               style: TextStyle(
-                  fontSize: 0.058 * width,
+                  fontSize: 0.053 * width,
                   color: Colors.black,
                   fontFamily: 'GoogleSans',
                   fontWeight: FontWeight.w600)),
-          Image.asset('assets/handline_green.png', height: 10),
+          Image.asset(
+            'assets/handline_green.png',
+            width: getTrueTitle(type).length * 0.03 * width,
+            height: 0.01 * width,
+            fit: BoxFit.fill,
+          ),
         ],
       ),
     );
@@ -78,82 +86,83 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 18),
-        margin: EdgeInsets.symmetric(horizontal: 12),
+        padding: EdgeInsets.symmetric(
+            horizontal: 0.053 * width, vertical: 0.014 * height),
+        margin: EdgeInsets.symmetric(horizontal: 0.045 * width),
         decoration: BoxDecoration(
             color: Color.fromRGBO(255, 255, 255, 0.8),
             borderRadius: BorderRadius.circular(10.0)),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _renderHandlinedTitle(_currentCarousel),
-            SizedBox(height: 20),
             Row(
               children: [
-                Image.asset('assets/ic_number_1.png', width: 30, height: 30),
+                Image.asset(
+                  'assets/ic_number_1.png',
+                  width: 0.08 * width,
+                  height: 0.08 * width,
+                ),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.only(left: 12),
+                  padding: EdgeInsets.only(left: 0.032 * width),
                   child: Text(
                       "Involves mixing used/old paper with water and chemicals to break it down",
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
+                      maxLines: 4,
                       style: TextStyle(
-                          fontSize: 0.045 * width,
+                          fontSize: 0.042 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.w500)),
                 )),
               ],
             ),
-            SizedBox(height: 14),
             Row(
               children: [
-                Image.asset('assets/ic_number_1.png', width: 30, height: 30),
+                Image.asset('assets/ic_number_2.png',
+                    width: 0.08 * width, height: 0.08 * width),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.only(left: 12),
+                  padding: EdgeInsets.only(left: 0.032 * width),
                   child: Text(
                       "Chopped up and heated, which breaks it down further into strands of cellulose",
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
+                      maxLines: 4,
                       style: TextStyle(
-                          fontSize: 0.045 * width,
+                          fontSize: 0.042 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.w500)),
                 )),
               ],
             ),
-            SizedBox(height: 14),
             Row(
               children: [
-                Image.asset('assets/ic_number_1.png', width: 30, height: 30),
+                Image.asset('assets/ic_number_3.png',
+                    width: 0.08 * width, height: 0.08 * width),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.only(left: 12),
+                  padding: EdgeInsets.only(left: 0.032 * width),
                   child: Text(
                       "Remove any remaining plastic and ink from the mixture",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                      maxLines: 4,
                       style: TextStyle(
-                          fontSize: 0.045 * width,
+                          fontSize: 0.042 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.w500)),
                 )),
               ],
             ),
-            SizedBox(height: 14),
             Row(
               children: [
-                Image.asset('assets/ic_number_1.png', width: 30, height: 30),
+                Image.asset('assets/ic_number_4.png',
+                    width: 0.08 * width, height: 0.08 * width),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.only(left: 12),
+                  padding: EdgeInsets.only(left: 0.032 * width),
                   child: Text("Then it can be made into new paper",
-                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          fontSize: 0.045 * width,
+                          fontSize: 0.042 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.w500)),
@@ -164,9 +173,9 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: carouselList.map((i) {
                 return Container(
-                  width: 8.0,
-                  height: 8.0,
-                  margin: EdgeInsets.only(top: 14, left: 2, right: 2),
+                  width: 0.021 * width,
+                  height: 0.021 * width,
+                  margin: EdgeInsets.symmetric(horizontal: 0.006 * width),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: _currentCarousel == i
@@ -184,93 +193,97 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 18),
-        margin: EdgeInsets.symmetric(horizontal: 12),
+        padding: EdgeInsets.symmetric(
+            horizontal: 0.053 * width, vertical: 0.014 * height),
+        margin: EdgeInsets.symmetric(horizontal: 0.045 * width),
         decoration: BoxDecoration(
             color: Color.fromRGBO(255, 255, 255, 0.8),
             borderRadius: BorderRadius.circular(10.0)),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _renderHandlinedTitle(_currentCarousel),
-            Text("save up",
-                style: TextStyle(
-                    fontSize: 0.04 * width,
-                    color: Colors.black,
-                    fontFamily: 'GoogleSans',
-                    fontWeight: FontWeight.w500)),
-            SizedBox(height: 24),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Column(
               children: [
-                Image.asset('assets/ic_number_1.png', width: 30, height: 30),
+                _renderHandlinedTitle(_currentCarousel),
+                SizedBox(
+                  height: 3,
+                ),
+                Text("save up",
+                    style: TextStyle(
+                        fontSize: 0.04 * width,
+                        color: Colors.black,
+                        fontFamily: 'GoogleSans',
+                        fontWeight: FontWeight.w500)),
+              ],
+            ),
+            Row(
+              children: [
+                Image.asset(
+                  'assets/ic_number_1.png',
+                  width: 0.08 * width,
+                  height: 0.08 * width,
+                ),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.only(left: 12),
+                  padding: EdgeInsets.only(left: 0.032 * width),
                   child: Text("17 trees born in 30 years old",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                      maxLines: 4,
                       style: TextStyle(
-                          fontSize: 0.053 * width,
+                          fontSize: 0.048 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w600)),
+                          fontWeight: FontWeight.w700)),
                 )),
               ],
             ),
-            SizedBox(height: 24),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset('assets/ic_number_1.png', width: 30, height: 30),
+                Image.asset('assets/ic_number_2.png',
+                    width: 0.08 * width, height: 0.08 * width),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.only(left: 12),
+                  padding: EdgeInsets.only(left: 0.032 * width),
                   child: Text("4,200kW of electricity",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                      maxLines: 4,
                       style: TextStyle(
-                          fontSize: 0.053 * width,
+                          fontSize: 0.048 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w600)),
+                          fontWeight: FontWeight.w700)),
                 )),
               ],
             ),
-            SizedBox(height: 24),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset('assets/ic_number_1.png', width: 30, height: 30),
+                Image.asset('assets/ic_number_3.png',
+                    width: 0.08 * width, height: 0.08 * width),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.only(left: 12),
+                  padding: EdgeInsets.only(left: 0.032 * width),
                   child: Text("1,500ℓ of oil",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                      maxLines: 4,
                       style: TextStyle(
-                          fontSize: 0.053 * width,
+                          fontSize: 0.048 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w600)),
+                          fontWeight: FontWeight.w700)),
                 )),
               ],
             ),
-            SizedBox(height: 24),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset('assets/ic_number_1.png', width: 30, height: 30),
+                Image.asset('assets/ic_number_4.png',
+                    width: 0.08 * width, height: 0.08 * width),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.only(left: 12),
+                  padding: EdgeInsets.only(left: 0.032 * width),
                   child: Text("28 tons of water",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                      maxLines: 4,
                       style: TextStyle(
-                          fontSize: 0.053 * width,
+                          fontSize: 0.048 * width,
                           color: Colors.black,
                           fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w600)),
+                          fontWeight: FontWeight.w700)),
                 )),
               ],
             ),
@@ -278,9 +291,9 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: carouselList.map((i) {
                 return Container(
-                  width: 8.0,
-                  height: 8.0,
-                  margin: EdgeInsets.only(top: 32, left: 2, right: 2),
+                  width: 0.021 * width,
+                  height: 0.021 * width,
+                  margin: EdgeInsets.symmetric(horizontal: 0.006 * width),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: _currentCarousel == i
@@ -305,7 +318,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
     return CarouselSlider(
       items: carouselComponentList,
       options: CarouselOptions(
-          height: 360,
+          height: 0.8 * width,
           viewportFraction: 1,
           enableInfiniteScroll: false,
           onPageChanged: (index, reason) {
@@ -320,7 +333,7 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Padding(
-        padding: EdgeInsets.only(left: 12, right: 12, bottom: 24),
+        padding: EdgeInsets.symmetric(horizontal: 0.045 * width),
         child: SizedBox(
             width: double.infinity,
             child: FlatButton(
@@ -335,14 +348,18 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
                   borderRadius: BorderRadius.circular(10)),
               child: Column(
                 children: [
-                  Text("+ 40 poinsts",
+                  Text("+ 40 points",
                       style: TextStyle(
-                          fontSize: 0.064 * width,
+                          fontSize: 0.058 * width,
                           color: Colors.white,
                           fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w600)),
-                  Image.asset('assets/handline_white.png',
-                      width: double.infinity, height: 10)
+                          fontWeight: FontWeight.w700)),
+                  Image.asset(
+                    'assets/handline_white.png',
+                    width: 0.309 * width,
+                    height: 0.016 * width,
+                    fit: BoxFit.fill,
+                  )
                 ],
               ),
             )));
@@ -351,40 +368,65 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
   Widget _renderContent() {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(vertical: 24.0),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 12.0),
-            child: Text('PAPER',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 0.085 * width,
-                    color: Colors.white,
-                    fontFamily: 'GoogleSans',
-                    fontWeight: FontWeight.w600)),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Text('PAPER',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 0.085 * width,
+                color: Colors.white,
+                fontFamily: 'GoogleSans',
+                fontWeight: FontWeight.w600)),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: Container(
+            color: Color(0xff3CAE5B),
+            width: 0.4 * width,
+            height: 0.4 * width,
+            child: Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.file(File(widget.imagePath),
+                    width: 0.4 * width - 4,
+                    height: 0.4 * width - 4,
+                    fit: BoxFit.cover),
+              ),
+            ),
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: Image.file(File(widget.imagePath),
-                width: 150.0, height: 150.0, fit: BoxFit.cover),
-          ),
-          _renderRecycleButton(),
-          _renderHandleCarousel(),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 20),
-            child: Text('You saved the world 10 years',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 0.053 * width,
-                    color: Colors.white,
-                    fontFamily: 'GoogleSans',
-                    fontWeight: FontWeight.w600)),
-          ),
-          _renderPointButton(),
-        ],
-      ),
+        ),
+        _renderRecycleButton(),
+        Column(
+          children: [
+            _renderHandleCarousel(),
+            Padding(
+                padding: EdgeInsets.only(top: 0.01 * width),
+                child: Container(
+                  width: width * 0.9,
+                  child: RichText(
+                    textAlign: TextAlign.end,
+                    text: TextSpan(
+                        text: "source from ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 0.032 * width,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: "wikipedia",
+                            style: TextStyle(
+                                color: Color(0xff67FF92),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 0.032 * width),
+                          )
+                        ]),
+                  ),
+                )),
+          ],
+        ),
+        _renderPointButton(),
+      ],
     );
   }
 
@@ -393,18 +435,36 @@ class _TrashInfoPaperState extends State<TrashInfoPaper> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-        appBar: AppBar(
-            title: Text('PING',
-                style: TextStyle(
-                    color: Color.fromRGBO(49, 172, 131, 1),
-                    fontFamily: 'GoogleSans',
-                    fontWeight: FontWeight.w600)),
-            centerTitle: true),
+        appBar: CupertinoNavigationBar(
+          border: Border(
+            bottom: BorderSide(
+              color: Colors.white,
+              width: 0.0, // One physical pixel.
+              style: BorderStyle.none,
+            ),
+          ),
+          middle: Text(
+            "TRASH",
+            style: TextStyle(
+                color: Color(0xff31AC53),
+                fontWeight: FontWeight.w700,
+                fontFamily: 'GoogleSans'),
+          ),
+          padding: EdgeInsetsDirectional.only(),
+          leading: GestureDetector(
+            child: Icon(
+              CupertinoIcons.back,
+              color: Color(0xff31AC53),
+            ),
+            onTap: () {
+              Get.back();
+            },
+          ),
+        ),
         body: Container(
-          constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: new AssetImage('assets/bg_can.png'),
+                  image: new AssetImage('assets/bg_paper.png'),
                   fit: BoxFit.cover)),
           child: ClipRRect(
             child: BackdropFilter(

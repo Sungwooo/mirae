@@ -45,121 +45,199 @@ class SignUpPageState extends State<SignUpPage> {
         resizeToAvoidBottomInset: false,
         key: _scaffoldKey,
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-              child: Column(
-                children: <Widget>[
-                  //Header
-                  Padding(
-                    padding: const EdgeInsets.only(top: 40),
-                    child: Container(
+            Padding(
+              padding: EdgeInsets.only(top: width * 0.1),
+              child: Container(
+                width: 0.187 * width,
+                height: 0.187 * width,
+                decoration: new BoxDecoration(
+                  image: new DecorationImage(
+                    image: new AssetImage('assets/mirae_logo.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            Column(
+              children: <Widget>[
+                // Input Area
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 0.122 * width),
+                  child: Container(
+                    child: Form(
+                      key: _formKey,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            width: 70,
-                            height: 70,
-                            decoration: new BoxDecoration(
-                              image: new DecorationImage(
-                                image: new AssetImage('assets/mirae_logo.png'),
-                                fit: BoxFit.cover,
+                          Text('E-mail',
+                              style: TextStyle(
+                                  color: Color(0xff7D7D7D),
+                                  fontSize: 0.037 * width,
+                                  fontFamily: 'GoogleSans')),
+                          TextFormField(
+                            controller: _mailCon,
+                            onSaved: (value) => _mailCon.text = value.trim(),
+                            cursorColor: Color(0xff42B261),
+                            cursorWidth: 0.005 * width,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              contentPadding: EdgeInsets.only(
+                                left: 0.008 * width,
                               ),
+                            ),
+                            onChanged: (text) {
+                              print(text);
+                            },
+                          ),
+                          Container(
+                            transform:
+                                Matrix4.translationValues(0.0, -10.0, 0.0),
+                            child: Image.asset(
+                              "assets/underline.png",
+                              width: 0.756 * width,
+                              height: 0.007 * height,
+                              color: Color(0xff42B261),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0.05 * width,
+                          ),
+                          Text('Name',
+                              style: TextStyle(
+                                  color: Color(0xff7D7D7D),
+                                  fontSize: 0.037 * width,
+                                  fontFamily: 'GoogleSans')),
+                          TextFormField(
+                            controller: _nameCon,
+                            onSaved: (value) => _nameCon.text = value.trim(),
+                            cursorColor: Color(0xff42B261),
+                            cursorWidth: 0.005 * width,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              contentPadding: EdgeInsets.only(
+                                left: 0.008 * width,
+                              ),
+                            ),
+                            onChanged: (text) {
+                              print(text);
+                            },
+                          ),
+                          Container(
+                            transform:
+                                Matrix4.translationValues(0.0, -10.0, 0.0),
+                            child: Image.asset(
+                              "assets/underline.png",
+                              width: 0.756 * width,
+                              height: 0.007 * height,
+                              color: Color(0xff42B261),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0.05 * width,
+                          ),
+                          Text('Password',
+                              style: TextStyle(
+                                  color: Color(0xff7D7D7D),
+                                  fontSize: 0.037 * width,
+                                  fontFamily: 'GoogleSans')),
+                          TextFormField(
+                            controller: _pwCon,
+                            onSaved: (value) => _pwCon.text = value.trim(),
+                            cursorColor: Color(0xff42B261),
+                            cursorWidth: 0.005 * width,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              contentPadding: EdgeInsets.only(
+                                left: 0.008 * width,
+                              ),
+                            ),
+                            //obscureText: true,
+                            onChanged: (text) {
+                              print(text);
+                            },
+                          ),
+                          Container(
+                            transform:
+                                Matrix4.translationValues(0.0, -10.0, 0.0),
+                            child: Image.asset(
+                              "assets/underline.png",
+                              width: 0.756 * width,
+                              height: 0.007 * height,
+                              color: Color(0xff42B261),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0.05 * width,
+                          ),
+                          Text('Repeat Password',
+                              style: TextStyle(
+                                  color: Color(0xff7D7D7D),
+                                  fontSize: 0.037 * width,
+                                  fontFamily: 'GoogleSans')),
+                          TextFormField(
+                            controller: _pwChkCon,
+                            onSaved: (value) => _pwChkCon.text = value.trim(),
+                            validator: (value) {
+                              if (value.isEmpty) return 'Empty';
+                              if (value != _pwCon.text) return 'Not Match';
+                              return null;
+                            },
+                            cursorColor: Color(0xff42B261),
+                            cursorWidth: 0.005 * width,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              disabledBorder: InputBorder.none,
+                              contentPadding: EdgeInsets.only(
+                                left: 0.008 * width,
+                              ),
+                            ),
+                            //obscureText: true,
+                            onChanged: (text) {
+                              print(text);
+                            },
+                          ),
+                          Container(
+                            transform:
+                                Matrix4.translationValues(0.0, -10.0, 0.0),
+                            child: Image.asset(
+                              "assets/underline.png",
+                              width: 0.756 * width,
+                              height: 0.007 * height,
+                              color: Color(0xff42B261),
+                              fit: BoxFit.fill,
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
-
-                  // Input Area
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: 58, left: 46, right: 46),
-                    child: Container(
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('E-mail',
-                                style: TextStyle(
-                                    color: Color(0xff7D7D7D),
-                                    fontSize: 0.037 * width,
-                                    fontFamily: 'GoogleSans')),
-                            TextFormField(
-                              controller: _mailCon,
-                              onSaved: (value) => _mailCon.text = value.trim(),
-                              cursorColor: Colors.red,
-                              cursorWidth: 4.0,
-                              maxLength: 20,
-                              onChanged: (text) {
-                                print(text);
-                              },
-                            ),
-                            Text('Name',
-                                style: TextStyle(
-                                    color: Color(0xff7D7D7D),
-                                    fontSize: 0.037 * width,
-                                    fontFamily: 'GoogleSans')),
-                            TextFormField(
-                              controller: _nameCon,
-                              onSaved: (value) => _nameCon.text = value.trim(),
-                              cursorColor: Colors.red,
-                              cursorWidth: 4.0,
-                              maxLength: 20,
-                              onChanged: (text) {
-                                print(text);
-                              },
-                            ),
-                            Text('Password',
-                                style: TextStyle(
-                                    color: Color(0xff7D7D7D),
-                                    fontSize: 0.037 * width,
-                                    fontFamily: 'GoogleSans')),
-                            TextFormField(
-                              controller: _pwCon,
-                              onSaved: (value) => _pwCon.text = value.trim(),
-                              cursorColor: Colors.red,
-                              cursorWidth: 4.0,
-                              maxLength: 20,
-                              //obscureText: true,
-                              onChanged: (text) {
-                                print(text);
-                              },
-                            ),
-                            Text('Repeat Password',
-                                style: TextStyle(
-                                    color: Color(0xff7D7D7D),
-                                    fontSize: 0.037 * width,
-                                    fontFamily: 'GoogleSans')),
-                            TextFormField(
-                              controller: _pwChkCon,
-                              onSaved: (value) => _pwChkCon.text = value.trim(),
-                              validator: (value) {
-                                if (value.isEmpty) return 'Empty';
-                                if (value != _pwCon.text) return 'Not Match';
-                                return null;
-                              },
-                              cursorColor: Colors.red,
-                              cursorWidth: 4.0,
-                              maxLength: 20,
-                              //obscureText: true,
-                              onChanged: (text) {
-                                print(text);
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 46),
+              padding: EdgeInsets.symmetric(horizontal: 0.122 * width),
               child: Container(
-                height: 140,
+                height: 0.373 * width,
                 child: Stack(children: [
                   Align(
                     alignment: Alignment.center,
@@ -167,18 +245,17 @@ class SignUpPageState extends State<SignUpPage> {
                       padding: EdgeInsets.symmetric(horizontal: 0.03 * height),
                       child: GestureDetector(
                         onTap: () {
-                          if(_pwChkCon.text!=_pwCon.text){
+                          if (_pwChkCon.text != _pwCon.text) {
                             showNotMatchPassword();
-                          }
-                          else{
-                          FocusScope.of(context)
-                              .requestFocus(new FocusNode()); // 키보드 감춤
-                          _signUp();
+                          } else {
+                            FocusScope.of(context)
+                                .requestFocus(new FocusNode()); // 키보드 감춤
+                            _signUp();
                           }
                         },
                         child: Container(
-                          width: 100,
-                          height: 100,
+                          width: 0.267 * width,
+                          height: 0.267 * width,
                           decoration: new BoxDecoration(
                             image: new DecorationImage(
                               image: new AssetImage('assets/btsignup.png'),
@@ -197,12 +274,13 @@ class SignUpPageState extends State<SignUpPage> {
                         LogIn();
                       },
                       child: Container(
-                        width: 50,
-                        height: 50,
+                        width: 0.133 * width,
+                        height: 0.133 * width,
                         child: Text('Log in',
                             style: TextStyle(
                                 color: Color(0xff31AC53),
                                 fontSize: 0.042 * width,
+                                fontWeight: FontWeight.w700,
                                 fontFamily: 'GoogleSans')),
                       ),
                     ),
@@ -226,7 +304,7 @@ class SignUpPageState extends State<SignUpPage> {
               },
               child: Image.asset(
                 'assets/signwithgg.png',
-                width: 300,
+                width: 0.8 * width,
                 fit: BoxFit.contain,
               ),
             ),
@@ -278,9 +356,9 @@ class SignUpPageState extends State<SignUpPage> {
 
   showNotMatchPassword() {
     _scaffoldKey.currentState
-    // ignore: deprecated_member_use
+      // ignore: deprecated_member_use
       ..hideCurrentSnackBar()
-    // ignore: deprecated_member_use
+      // ignore: deprecated_member_use
       ..showSnackBar(SnackBar(
         backgroundColor: Colors.red[400],
         duration: Duration(seconds: 10),

@@ -36,13 +36,13 @@ class LogInState extends State<LogIn> {
             padding: EdgeInsets.only(top: height * 0.09),
             child: Image.asset(
               'assets/mirae_logo.png',
-              width: 100,
+              width: 0.27 * width,
             ),
           ),
           Column(
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 46),
+                padding: EdgeInsets.symmetric(horizontal: 0.122 * width),
                 child: Container(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,32 +51,75 @@ class LogInState extends State<LogIn> {
                           style: TextStyle(
                               color: Color(0xff7D7D7D),
                               fontSize: 0.037 * width,
+                              fontWeight: FontWeight.w500,
                               fontFamily: 'GoogleSans')),
                       TextFormField(
                         controller: _mailCon,
                         onSaved: (value) => _mailCon.text = value.trim(),
-                        cursorColor: Colors.red,
-                        cursorWidth: 4.0,
-                        maxLength: 20,
+                        cursorColor: Color(0xff42B261),
+                        cursorWidth: 0.005 * width,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.only(
+                            left: 0.008 * width,
+                          ),
+                        ),
                         onChanged: (text) {
                           print(text);
                         },
+                      ),
+                      Container(
+                        transform: Matrix4.translationValues(0.0, -10.0, 0.0),
+                        child: Image.asset(
+                          "assets/underline.png",
+                          width: 0.756 * width,
+                          height: 0.007 * height,
+                          color: Color(0xff42B261),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      SizedBox(
+                        height: width * 0.05,
                       ),
                       Text('Password',
                           style: TextStyle(
                               color: Color(0xff7D7D7D),
                               fontSize: 0.037 * width,
+                              fontWeight: FontWeight.w500,
                               fontFamily: 'GoogleSans')),
                       TextFormField(
                         controller: _pwCon,
                         onSaved: (value) => _pwCon.text = value.trim(),
-                        cursorColor: Colors.red,
-                        cursorWidth: 4.0,
-                        maxLength: 20,
+                        cursorColor: Color(0xff42B261),
+                        cursorWidth: 0.005 * width,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.only(
+                            left: 0.008 * width,
+                          ),
+                        ),
                         obscureText: true,
                         onChanged: (text) {
                           print(text);
                         },
+                      ),
+                      Container(
+                        transform: Matrix4.translationValues(0.0, -10.0, 0.0),
+                        child: Image.asset(
+                          "assets/underline.png",
+                          width: 0.756 * width,
+                          height: 0.007 * height,
+                          color: Color(0xff42B261),
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ].map((c) {
                       return c;
@@ -88,7 +131,7 @@ class LogInState extends State<LogIn> {
                 height: height * 0.03,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 46),
+                padding: EdgeInsets.symmetric(horizontal: 0.122 * width),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -100,8 +143,8 @@ class LogInState extends State<LogIn> {
                                 builder: (context) => SignUpPage()));
                       },
                       child: Container(
-                        width: 100,
-                        height: 100,
+                        width: 0.27 * width,
+                        height: 0.27 * width,
                         decoration: new BoxDecoration(
                           image: new DecorationImage(
                             image: new AssetImage('assets/btsignup.png'),
@@ -113,8 +156,8 @@ class LogInState extends State<LogIn> {
                     GestureDetector(
                       onTap: () async => _signIn(),
                       child: Container(
-                        width: 100,
-                        height: 100,
+                        width: 0.27 * width,
+                        height: 0.27 * width,
                         decoration: new BoxDecoration(
                           image: new DecorationImage(
                             image: new AssetImage('assets/btlogin.png'),
@@ -148,7 +191,7 @@ class LogInState extends State<LogIn> {
             },
             child: Image.asset(
               'assets/signwithgg.png',
-              width: 300,
+              width: 0.8 * width,
               fit: BoxFit.contain,
             ),
           ),
