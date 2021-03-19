@@ -4,6 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+
+import '../../login/firebase_provider.dart';
 
 class EditImageNameWidget extends StatefulWidget {
   @override
@@ -12,25 +15,22 @@ class EditImageNameWidget extends StatefulWidget {
 
 class _EditImageNameWidgetState extends State<EditImageNameWidget> {
 
-  Image profileImage;
-  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  FirebaseProvider fp;
   FirebaseUser _user;
+
+  Image profileImage;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
-  String _profileImageURL = "";
 
   void initState() {
     super.initState();
-    _prepareService();
   }
 
-  void _prepareService() async {
-    _user = await _firebaseAuth.currentUser();
-    profileImage= (NetworkImage(_user.uid)) as Image;
-  }
 
 
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context, listen: true);
     double width = MediaQuery.of(context).size.width;
+    _user=fp.getUser();
     return Container(
       transform: Matrix4.translationValues(0.0, -50.0, 0.0),
       child: Column(children: [
@@ -61,9 +61,9 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
     StorageUploadTask storageUploadTask = storageReference.putFile(image);
 
     String downloadURL = await storageReference.getDownloadURL();
-    setState(() {
-      _profileImageURL = downloadURL;
-    });
+    UserUpdateInfo userUpdateInfo = UserUpdateInfo();
+    userUpdateInfo.photoUrl=downloadURL;
+    await _user.updateProfile(userUpdateInfo);
 
     await storageUploadTask.onComplete;
 
