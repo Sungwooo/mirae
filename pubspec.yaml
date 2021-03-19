@@ -33,6 +33,9 @@ dependencies:
     shared_preferences: ^0.5.3+4
     logger: ^0.7.0+2
     webview_flutter: ^0.3.19+9
+    firebase_storage: ^3.0.10
+    image_picker: ^0.6.2+2
+
 
 dev_dependencies:
     flutter_test:

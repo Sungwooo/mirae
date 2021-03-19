@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "487448226641-7ohsm0vuf24jjscl8955ab788cri2u1p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.miraeApp.flutter_app",
+            "certificate_hash": "e1aea323fef80902e88d83a0e00c296d2bfb3692"
+          }
+        },
+        {
+          "client_id": "487448226641-kn93a2bitdobocjgf8cq1ha7muu7lr7b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.miraeApp.flutter_app",
+            "certificate_hash": "77b3d024aa4df2f9102067644eadb0a0d20964a9"
+          }
+        },
+        {
           "client_id": "487448226641-puq287bsq58376h2lc0qsrbt898up06o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

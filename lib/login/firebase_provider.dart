@@ -90,8 +90,7 @@ class FirebaseProvider with ChangeNotifier {
 
   Future<bool> signInWithEmail(String email, String password) async {
     try {
-      signOut();
-      var result = await fAuth.signInWithEmailAndPassword(
+            var result = await fAuth.signInWithEmailAndPassword(
           email: email, password: password);
       if (result != null) {
         setUser(result.user);
