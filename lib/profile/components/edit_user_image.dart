@@ -18,7 +18,6 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
   FirebaseProvider fp;
   FirebaseUser _user;
 
-  Image profileImage;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
   void initState() {
@@ -41,7 +40,7 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
                 backgroundColor: Colors.white,
                 child: CircleAvatar(
                   radius: (width * 0.12) - 2,
-                  backgroundImage:  (profileImage != null) ? profileImage : NetworkImage(""),
+                  backgroundImage:  (_user.photoUrl != null) ? NetworkImage(_user.photoUrl) : NetworkImage(""),
                 ),
               ),
           ),
@@ -60,7 +59,8 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
 
     StorageUploadTask storageUploadTask = storageReference.putFile(image);
 
-    String downloadURL = await storageReference.getDownloadURL();
+    String downloadURL = await storageReference.getDownloadURL().toString();
+    print(downloadURL);
     UserUpdateInfo userUpdateInfo = UserUpdateInfo();
     userUpdateInfo.photoUrl=downloadURL;
     await _user.updateProfile(userUpdateInfo);
