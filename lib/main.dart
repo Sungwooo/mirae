@@ -33,6 +33,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: white,
+            focusColor: Colors.white.withOpacity(0),
+            hoverColor: Colors.white.withOpacity(0),
+            highlightColor: Colors.white.withOpacity(0),
             appBarTheme: AppBarTheme(
               color: Colors.transparent,
               elevation: 0.0,

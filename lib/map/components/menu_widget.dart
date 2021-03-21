@@ -126,7 +126,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                       child: Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 0.03 * height),
-                        child: FlatButton(
+                        child: TextButton(
                             child: Image.asset(
                               "assets/icon/map/letsGoBtn.png",
                               width: width * 0.3,

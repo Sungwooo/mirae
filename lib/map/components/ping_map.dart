@@ -301,12 +301,11 @@ class PingMapState extends State<PingMap> {
     loading = true;
     toggleBtn = true;
     isArrived = false;
-
+    setCustomMapPin();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getCurrentLocation();
     });
     _markers = Set.from([]);
-    setCustomMapPin();
     loadTrashs().then((trashlist) {
       for (Trash trash in trashlist) {
         _markers.add(Marker(
