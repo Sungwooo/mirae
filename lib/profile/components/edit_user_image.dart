@@ -17,10 +17,7 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
   FirebaseProvider fp;
   FirebaseUser _user;
 
-<<<<<<< HEAD
   String _userPhotoUrl;
-=======
->>>>>>> 78e463084e21b77781f58d6b915780037aa9dcfc
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
   void initState() {
@@ -34,7 +31,6 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
     return Container(
       transform: Matrix4.translationValues(0.0, -50.0, 0.0),
       child: Column(children: [
-<<<<<<< HEAD
         InkWell(
           onTap: () {
             _uploadImageToStorage(ImageSource.gallery);
@@ -53,7 +49,6 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
                     : _user.photoUrl != null
                         ? NetworkImage(_user.photoUrl)
                         : Image.asset("assets/EditProfileImage.png")),
-
           ),
         ),
       ]),
