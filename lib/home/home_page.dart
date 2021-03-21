@@ -412,7 +412,7 @@ class HomePageState extends State<HomePage> {
                   padding: EdgeInsets.symmetric(
                       horizontal: width * 0.03, vertical: 0.025 * height),
                   child: InkWell(
-                    onTap: () => Get.to(() => MapPage()),
+                    onTap: () => Get.to(() => MapPage(false)),
                     child: Container(
                       height: 0.1 * height,
                       decoration: BoxDecoration(
