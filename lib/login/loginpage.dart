@@ -154,7 +154,20 @@ class LogInState extends State<LogIn> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () async => _signIn(),
+                      onTap: () {
+                        try {
+                          _signIn().then((result) {
+                            if (result != null) {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                                return MainPage(cameras);
+                                },
+                                ),
+                                );}
+                          });
+                        } catch (error) {
+                          print("error");
+                        }
+                      },
                       child: Container(
                         width: 0.27 * width,
                         height: 0.27 * width,
@@ -200,7 +213,7 @@ class LogInState extends State<LogIn> {
     );
   }
 
-  Future<void> _signIn() async {
+  Future<bool> _signIn() async {
 
     _scaffoldKey.currentState
       // ignore: deprecated_member_use
@@ -221,6 +234,8 @@ class LogInState extends State<LogIn> {
     // ignore: deprecated_member_use
     _scaffoldKey.currentState.hideCurrentSnackBar();
     if (!result) showLastFBMessage();
+
+    return result;
   }
 
   showLastFBMessage() {
