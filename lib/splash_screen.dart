@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   startTime() async {
     var _duration = new Duration(seconds: 2);
     return new Timer(_duration,
-        () => Get.offAll(() => AuthPage(), transition: Transition.cupertino));
+        () => Get.offAll(() => AuthPage(), transition: Transition.fade));
   }
 
   @override

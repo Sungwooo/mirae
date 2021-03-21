@@ -1,23 +1,41 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mirae/login/firebase_provider.dart';
 import 'package:mirae/profile/edit_profile.dart';
 
-class MyNameWidget extends StatelessWidget {
+class MyNameWidget extends StatefulWidget {
   FirebaseProvider fp;
   MyNameWidget({this.fp});
+
+  @override
+  _MyNameWidgetState createState() => _MyNameWidgetState();
+}
+
+class _MyNameWidgetState extends State<MyNameWidget> {
   FirebaseUser currentUser;
+  int id = 0;
+
+  void refreshData() {
+    id++;
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    refreshData();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    currentUser = fp.getUser();
+    currentUser = widget.fp.getUser();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
       child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
         InkWell(
-          onTap: () => Get.to(() => EditProfile()),
+          onTap: () => Get.to(() => EditProfile()).then(onGoBack),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
