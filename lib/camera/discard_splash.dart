@@ -10,7 +10,7 @@ class DiscardSplash extends StatefulWidget {
 
 class _DiscardSplashState extends State<DiscardSplash> {
   startTime() async {
-    var _duration = new Duration(milliseconds: 150);
+    var _duration = new Duration(milliseconds: 1500);
     return new Timer(_duration,
         () => Get.offAll(() => AuthPage(), transition: Transition.fade));
   }

@@ -48,7 +48,7 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
                     ? NetworkImage(_userPhotoUrl)
                     : _user.photoUrl != null
                         ? NetworkImage(_user.photoUrl)
-                        : Image.asset("assets/EditProfileImage.png")),
+                        : AssetImage("assets/EditProfileImage.png")),
           ),
         ),
       ]),
@@ -71,8 +71,8 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
     UserUpdateInfo userUpdateInfo = UserUpdateInfo();
     userUpdateInfo.photoUrl = downloadURL;
     await _user.updateProfile(userUpdateInfo);
-    print(fp.getUser().photoUrl);
 
     await storageUploadTask.onComplete;
+    print(fp.getUser().photoUrl);
   }
 }

@@ -10,7 +10,7 @@ class MapSplash extends StatefulWidget {
 
 class _MapSplashState extends State<MapSplash> {
   startTime() async {
-    var _duration = new Duration(milliseconds: 150);
+    var _duration = new Duration(milliseconds: 1500);
     return new Timer(_duration,
         () => Get.offAll(() => MapPage(true), transition: Transition.fade));
   }
