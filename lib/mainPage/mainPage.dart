@@ -66,6 +66,7 @@ class _MainPageState extends State<MainPage> {
                   "assets/icon/bottomNavigation/homeSelected.png",
                   width: 33),
               label: "Home",
+              tooltip: "",
             ),
             BottomNavigationBarItem(
               icon: Image.asset("assets/icon/bottomNavigation/worldMap.png",
@@ -74,6 +75,7 @@ class _MainPageState extends State<MainPage> {
                   "assets/icon/bottomNavigation/mapSelected.png",
                   width: 33),
               label: "Map",
+              tooltip: "",
             ),
             BottomNavigationBarItem(
               icon: Container(
@@ -84,6 +86,7 @@ class _MainPageState extends State<MainPage> {
                 transform: Matrix4.translationValues(0.0, -20.0, 0.0),
               ),
               label: "",
+              tooltip: "",
             ),
             BottomNavigationBarItem(
               icon: Image.asset("assets/icon/bottomNavigation/article.png",
@@ -92,6 +95,7 @@ class _MainPageState extends State<MainPage> {
                   "assets/icon/bottomNavigation/articleSelected.png",
                   width: 33),
               label: "News",
+              tooltip: "",
             ),
             BottomNavigationBarItem(
               icon: Image.asset("assets/icon/bottomNavigation/profile.png",
@@ -100,6 +104,7 @@ class _MainPageState extends State<MainPage> {
                   "assets/icon/bottomNavigation/profileSelected.png",
                   width: 33),
               label: "My",
+              tooltip: "",
             ),
           ],
           currentIndex: navController.selectedIndex,

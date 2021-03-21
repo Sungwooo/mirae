@@ -89,9 +89,9 @@ class WorldMapState extends State<WorldMap> {
   void initState() {
     super.initState();
     loading = true;
+    setCustomMapPin();
     getCurrentLocation();
     _markers = Set.from([]);
-    setCustomMapPin();
     loadTrashs().then((trashlist) {
       for (Trash trash in trashlist) {
         _markers.add(Marker(
