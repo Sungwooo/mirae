@@ -157,7 +157,7 @@ class LogInState extends State<LogIn> {
                       onTap: () {
                         try {
                           _signIn().then((result) {
-                            if (result != null) {
+                            if (result) {
                               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
                                 return MainPage(cameras);
                                 },
