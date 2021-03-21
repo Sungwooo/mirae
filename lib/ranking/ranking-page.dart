@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mirae/map/map.dart';
+import 'package:mirae/map/world_map.dart';
 
 class RankerType {
   String name;
@@ -251,7 +252,7 @@ class _RankingPageState extends State<RankingPage> {
         body: Column(
           children: [
             InkWell(
-              onTap: () => Get.to(MapPage(false)),
+              onTap: () => Get.to(() => WorldMap()),
               child: Container(
                 height: 0.35 * height,
                 decoration: BoxDecoration(

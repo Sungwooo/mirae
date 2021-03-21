@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:mirae/home/components/before_chall_widget.dart';
 import 'package:mirae/home/components/today_chall_widget.dart';
 import 'package:mirae/home/components/expand_section.dart';
+import 'package:mirae/login/firebase_provider.dart';
+import 'package:provider/provider.dart';
 
 class Challenge extends StatefulWidget {
   @override
@@ -11,6 +13,8 @@ class Challenge extends StatefulWidget {
 }
 
 class ChallengeState extends State<Challenge> {
+  FirebaseProvider fp;
+
   bool isBeforeExpanded = false;
   bool isTodayExpanded = false;
   int selectedDay = 0;
@@ -19,6 +23,14 @@ class ChallengeState extends State<Challenge> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    fp = Provider.of<FirebaseProvider>(context);
+    day = fp != null
+        ? DateTime(DateTime.now().year, DateTime.now().month,
+                    DateTime.now().day)
+                .difference(fp.getUser().metadata.creationTime)
+                .inDays +
+            1
+        : 5;
     List<int> fourList = [1, 1, 1, 1];
     List<int> fiveList = [1, 1, 1, 1, 1];
     return Scaffold(
@@ -183,14 +195,14 @@ class ChallengeState extends State<Challenge> {
                                       return InkWell(
                                         onTap: () => setState(() {
                                           isTodayExpanded = false;
-                                          selectedDay == index + 1
+                                          selectedDay == day - 4 + index
                                               ? selectedDay = 0
-                                              : selectedDay = index + 1;
+                                              : selectedDay = day - 4 + index;
                                           selectedDay == 0
                                               ? isBeforeExpanded = false
                                               : isBeforeExpanded = true;
                                         }),
-                                        child: (selectedDay != index + 1
+                                        child: (selectedDay != day - 4 + index
                                             ? Container(
                                                 width: 0.187 * width,
                                                 height: 0.187 * width,
@@ -198,7 +210,8 @@ class ChallengeState extends State<Challenge> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    Text("Day ${index + 1}",
+                                                    Text(
+                                                        "Day ${day - 4 + index}",
                                                         style: TextStyle(
                                                             color: Color(
                                                                 0xff000000),
@@ -253,7 +266,7 @@ class ChallengeState extends State<Challenge> {
                                                           TextAlign.center,
                                                     ),
                                                     Text(
-                                                      "${index + 1}",
+                                                      "${day - 4 + index}",
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontSize:

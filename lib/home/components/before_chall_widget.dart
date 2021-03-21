@@ -10,15 +10,44 @@ class BeforeChallWidget extends StatefulWidget {
 }
 
 class _BeforeChallWidgetState extends State<BeforeChallWidget> {
+  List challengeList = [
+    [
+      "Unplug unused products",
+      "Reduce using hot water",
+      "Don't use disposables"
+    ],
+    [
+      "Don’t use a dryer",
+      "Trade used without buying",
+      "Taking a walk(no cars)",
+    ],
+    [
+      "Seperate collection",
+      "Collecting the laundry",
+      "Finding the origin of food",
+    ],
+    [
+      "Do not deliver",
+      "Growing plants",
+      "Shower in 5 minutes",
+    ],
+    [
+      "Using a tumbler",
+      "Donate items you don\'t use",
+      'Using public transportation',
+    ]
+  ];
+
   var _isCheck1 = true;
   var _isCheck2 = true;
-  var _isCheck3 = false;
+  var _isCheck3 = true;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: 12),
+      padding: EdgeInsets.symmetric(
+          horizontal: width * 0.03, vertical: 0.032 * width),
       child: AnimatedContainer(
         duration: Duration(milliseconds: 120),
         width: 0.93 * width,
@@ -36,7 +65,10 @@ class _BeforeChallWidgetState extends State<BeforeChallWidget> {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Day ${widget.challengeState.selectedDay}',
+                    Text(
+                        widget.challengeState.selectedDay == 0
+                            ? ""
+                            : 'Day ${widget.challengeState.selectedDay}',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.black,
@@ -62,7 +94,8 @@ class _BeforeChallWidgetState extends State<BeforeChallWidget> {
                       Container(
                           width: 0.65 * width,
                           child: TextUnderline(
-                            message: "Using a tumbler",
+                            message:
+                                "${challengeList[widget.challengeState.selectedDay % 5][0]}",
                             color: _isCheck1
                                 ? Color(0xff42B261)
                                 : Color(0xff797979),
@@ -111,7 +144,8 @@ class _BeforeChallWidgetState extends State<BeforeChallWidget> {
                       Container(
                           width: 0.65 * width,
                           child: TextUnderline(
-                            message: "Donate items you don\'t use",
+                            message:
+                                "${challengeList[widget.challengeState.selectedDay % 5][1]}",
                             color: _isCheck2
                                 ? Color(0xff42B261)
                                 : Color(0xff797979),
@@ -160,7 +194,8 @@ class _BeforeChallWidgetState extends State<BeforeChallWidget> {
                       Container(
                         width: 0.65 * width,
                         child: TextUnderline(
-                          message: 'Using public transportation',
+                          message:
+                              "${challengeList[widget.challengeState.selectedDay % 5][2]}",
                           color:
                               _isCheck3 ? Color(0xff42B261) : Color(0xff797979),
                         ),

@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mirae/camera/discard_splash.dart';
 import '../mainPage/mainPage.dart';
 
 final List<int> carouselList = [0, 1];
@@ -307,11 +308,7 @@ class _TrashInfoGlassState extends State<TrashInfoGlass> {
         child: SizedBox(
             width: double.infinity,
             child: FlatButton(
-              onPressed: () => Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => MainPage(widget.cameras)),
-              ),
+              onPressed: () => Get.to(() => DiscardSplash()),
               color: Color.fromRGBO(54, 174, 87, 0.9),
               padding: EdgeInsets.all(10.0),
               shape: RoundedRectangleBorder(

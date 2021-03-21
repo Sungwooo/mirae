@@ -10,6 +10,34 @@ class ChallengeWidget extends StatefulWidget {
 }
 
 class _ChallengeWidgetState extends State<ChallengeWidget> {
+  List challengeList = [
+    [
+      "Unplug unused products",
+      "Reduce using hot water",
+      "Don't use disposables"
+    ],
+    [
+      "Don’t use a dryer",
+      "Trade used without buying",
+      "Taking a walk(no cars)",
+    ],
+    [
+      "Seperate collection",
+      "Collecting the laundry",
+      "Finding the origin of food",
+    ],
+    [
+      "Don\'t get delivered",
+      "Growing plants",
+      "Shower in 5 minutes",
+    ],
+    [
+      "Using a tumbler",
+      "Donate items you don\'t use",
+      'Using public transportation',
+    ]
+  ];
+
   var _isCheck1 = false;
   var _isCheck2 = false;
   var _isCheck3 = false;
@@ -18,13 +46,14 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: 12),
+      padding: EdgeInsets.symmetric(
+          horizontal: width * 0.03, vertical: 0.032 * width),
       child: AnimatedContainer(
         duration: Duration(milliseconds: 120),
         width: 0.93 * width,
         height: 0.29 * height,
         decoration: BoxDecoration(
-          color: Color(0xff36AE57),
+          color: Color(0xff36AE57).withOpacity(0.7),
           borderRadius: BorderRadius.circular(10),
           // boxShadow
         ),
@@ -35,11 +64,14 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Day ${widget.challengeState.day}',
+                    Text(
+                        widget.challengeState.day == 0
+                            ? ''
+                            : 'Day ${widget.challengeState.day}',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 0.053 * width,
+                            fontSize: 0.064 * width,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'GoogleSans')),
                   ]),
@@ -59,7 +91,8 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
                       Container(
                           width: 0.65 * width,
                           child: TextUnderline(
-                            message: "Using a tumbler",
+                            message:
+                                "${challengeList[widget.challengeState.day % 5][0]}",
                           )),
                       Column(children: [
                         InkWell(
@@ -118,7 +151,8 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
                       Container(
                           width: 0.65 * width,
                           child: TextUnderline(
-                            message: "Donate items you don\'t use",
+                            message:
+                                "${challengeList[widget.challengeState.day % 5][1]}",
                           )),
                       Column(children: [
                         InkWell(
@@ -177,7 +211,8 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
                       Container(
                         width: 0.65 * width,
                         child: TextUnderline(
-                            message: 'Using public transportation'),
+                            message:
+                                "${challengeList[widget.challengeState.day % 5][2]}"),
                       ),
                       Column(children: [
                         InkWell(

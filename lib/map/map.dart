@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mirae/login/auth_page.dart';
 
 import 'components/ping_map.dart';
 
@@ -24,13 +25,12 @@ class MapPage extends StatelessWidget {
             color: Color(0xff31AC53),
           ),
           onTap: () {
-            Get.back();
+            Get.offAll(() => AuthPage());
           },
         ),
       ),
       body: PingMap(
         isPingWidget: true,
-        getPoints: getPoints,
       ),
     );
   }

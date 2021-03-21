@@ -100,7 +100,10 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
     challengeDay = fp != null
-        ? DateTime.now().difference(fp.getUser().metadata.creationTime).inDays +
+        ? DateTime(DateTime.now().year, DateTime.now().month,
+                    DateTime.now().day)
+                .difference(fp.getUser().metadata.creationTime)
+                .inDays +
             1
         : 5;
     double width = MediaQuery.of(context).size.width;

@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mirae/map/map.dart';
+import 'package:mirae/login/auth_page.dart';
 
-class MapSplash extends StatefulWidget {
+class DiscardSplash extends StatefulWidget {
   @override
-  _MapSplashState createState() => new _MapSplashState();
+  _DiscardSplashState createState() => new _DiscardSplashState();
 }
 
-class _MapSplashState extends State<MapSplash> {
+class _DiscardSplashState extends State<DiscardSplash> {
   startTime() async {
     var _duration = new Duration(milliseconds: 150);
     return new Timer(_duration,
-        () => Get.offAll(() => MapPage(true), transition: Transition.fade));
+        () => Get.offAll(() => AuthPage(), transition: Transition.fade));
   }
 
   @override
@@ -34,7 +34,7 @@ class _MapSplashState extends State<MapSplash> {
             Column(
               children: [
                 Text(
-                  "Thank you for PING",
+                  "Thank you for DISCARD",
                   style: TextStyle(
                       fontSize: 0.074 * width,
                       fontWeight: FontWeight.w700,
@@ -52,7 +52,7 @@ class _MapSplashState extends State<MapSplash> {
                   height: 16,
                 ),
                 Text(
-                  "+ 20 points",
+                  "+ 40 points",
                   style: TextStyle(
                       fontSize: 0.048 * width,
                       fontWeight: FontWeight.w700,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,16 +7,57 @@ import 'package:flutter/services.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:location/location.dart';
 import 'package:mirae/map/components/google_maps_service.dart';
 import 'package:mirae/map/components/menu_widget.dart';
-
 import 'lets_go_widget.dart';
+
+class Trash {
+  double latitude;
+  double longitude;
+
+  Trash({this.latitude, this.longitude});
+
+  factory Trash.fromJson(Map<String, dynamic> parsedJson) {
+    return Trash(
+      latitude: parsedJson['latitude'],
+      longitude: parsedJson['longitude'],
+    );
+  }
+}
+
+class TrashsList {
+  final List<Trash> trashs;
+
+  TrashsList({
+    this.trashs,
+  });
+  factory TrashsList.fromJson(List<dynamic> parsedJson) {
+    List<Trash> trashs = new List<Trash>();
+    trashs = parsedJson.map((i) => Trash.fromJson(i)).toList();
+
+    return new TrashsList(
+      trashs: trashs,
+    );
+  }
+}
+
+Future<String> _loadTrashAsset() async {
+  return await rootBundle.loadString('assets/data/trash_list.json');
+}
+
+Future loadTrashs() async {
+  String jsonString = await _loadTrashAsset();
+  final jsonResponse = json.decode(jsonString);
+  TrashsList trashs = new TrashsList.fromJson(jsonResponse);
+  return trashs.trashs;
+}
 
 class PingMap extends StatefulWidget {
   final bool isPingWidget;
-  final bool getPoints;
-  const PingMap({this.isPingWidget, this.getPoints, Key key}) : super(key: key);
+
+  const PingMap({this.isPingWidget, Key key}) : super(key: key);
   @override
   PingMapState createState() => PingMapState();
 }
@@ -31,6 +73,8 @@ class PingMapState extends State<PingMap> {
   bool isArrived;
   bool getPoints;
 
+  Future<List> trashList;
+
   StreamSubscription _locationSubscription;
   Location _locationTracker = Location();
   Marker marker;
@@ -43,7 +87,7 @@ class PingMapState extends State<PingMap> {
 
   String navigateMsg = "";
 
-  LatLng destination = LatLng(37.33186, -122.03045);
+  LatLng destination = LatLng(37.3746, -122.0733);
 
 /* ------------------------------------ */
   final Set<Polyline> _polyLines = {};
@@ -138,8 +182,6 @@ class PingMapState extends State<PingMap> {
 
     for (var i = 2; i < lList.length; i++) lList[i] += lList[i - 2];
 
-/*     print(lList.toString());
- */
     return lList;
   }
 
@@ -147,7 +189,7 @@ class PingMapState extends State<PingMap> {
 
 /* ------------------------------------ */
 
-  _showToast() {
+  /* _showToast() {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     Widget toast = Container(
@@ -224,13 +266,8 @@ class PingMapState extends State<PingMap> {
       ),
     );
 
-    /* fToast.showToast(
-        child: toast,
-        gravity: ToastGravity.CENTER,
-        toastDuration: Duration(seconds: 1),
-    ); */
 
-    // Custom Toast Position
+
     fToast.showToast(
         child: toast,
         toastDuration: Duration(seconds: 2),
@@ -240,7 +277,7 @@ class PingMapState extends State<PingMap> {
             child: Container(margin: EdgeInsets.only(top: 400), child: child),
           );
         });
-  }
+  } */
 /* ------------------------------------ */
 
   @override
@@ -263,34 +300,28 @@ class PingMapState extends State<PingMap> {
     super.initState();
     loading = true;
     toggleBtn = true;
-    isArrived = true;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (getPoints) {
-        fToast = FToast();
-        fToast.init(context);
-        _showToast();
-      }
-      getCurrentLocation();
-    });
+    isArrived = false;
 
-    _markers = Set.from([]);
-    setCustomMapPin();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getCurrentLocation();
+      _markers = Set.from([]);
+      setCustomMapPin();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     isPingWidget = widget.isPingWidget;
-    getPoints = widget.getPoints;
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    LatLng pinPosition = LatLng(35.149310, 129.063990);
     LatLng myPosition = location != null
         ? LatLng(location.latitude, location.longitude)
         : LatLng(35.149310, 129.063990);
 
-/*     var threshold = 100;
- */
+    LatLng pinPosition = LatLng(35.149310, 129.063990);
+
     return Scaffold(
         body: loading == false
             ? Stack(children: <Widget>[
@@ -301,7 +332,7 @@ class PingMapState extends State<PingMap> {
                     polylines: polyLines,
                     initialCameraPosition: CameraPosition(
                       target: myPosition,
-                      zoom: 18,
+                      zoom: 14,
                     ),
                     compassEnabled: false,
                     myLocationButtonEnabled: false,
@@ -310,8 +341,29 @@ class PingMapState extends State<PingMap> {
                         : _markers,
                     onMapCreated: (GoogleMapController controller) {
                       _controller = controller;
-                      setState(() {
-                        _markers.add(Marker(
+                      loadTrashs().then((trashlist) {
+                        var distance =
+                            (location.latitude - destination.latitude).abs() +
+                                (location.longitude - destination.longitude)
+                                    .abs();
+                        for (Trash trash in trashlist) {
+                          _markers.add(Marker(
+                              markerId: MarkerId('<MARKER_1>'),
+                              position: LatLng(trash.latitude, trash.longitude),
+                              icon: pinLocationIcon));
+                          var newDistance =
+                              (location.latitude - trash.latitude).abs() +
+                                  (location.longitude - trash.longitude).abs();
+                          if (distance > newDistance) {
+                            setState(() {
+                              destination =
+                                  LatLng(trash.latitude, trash.longitude);
+                            });
+                          }
+                        }
+                      });
+
+                      /* _markers.add(Marker(
                             markerId: MarkerId('<MARKER_1>'),
                             position: pinPosition,
                             icon: pinLocationIcon));
@@ -322,25 +374,10 @@ class PingMapState extends State<PingMap> {
                         _markers.add(Marker(
                             markerId: MarkerId('<MARKER_3>'),
                             position: LatLng(37.33186, -122.03045),
-                            icon: pinLocationIcon));
-                      });
+                            icon: pinLocationIcon)); */
                     },
                   ),
                 ),
-                /* GestureDetector(
-                    onPanEnd: (details) {
-                      if (details.velocity.pixelsPerSecond.dy > threshold) {
-                        this.setState(() {
-                          showBottomMenu = false;
-                        });
-                      } else if (details.velocity.pixelsPerSecond.dy <
-                          -threshold) {
-                        this.setState(() {
-                          showBottomMenu = true;
-                        });
-                      }
-                    },
-                    child:  */
                 Conditional.single(
                   context: context,
                   conditionBuilder: (BuildContext context) =>
