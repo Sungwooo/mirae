@@ -14,7 +14,8 @@ import 'lets_go_widget.dart';
 
 class PingMap extends StatefulWidget {
   final bool isPingWidget;
-  PingMap({this.isPingWidget, Key key}) : super(key: key);
+  final bool getPoints;
+  const PingMap({this.isPingWidget, this.getPoints, Key key}) : super(key: key);
   @override
   PingMapState createState() => PingMapState();
 }
@@ -28,6 +29,7 @@ class PingMapState extends State<PingMap> {
 
   bool isPingWidget;
   bool isArrived;
+  bool getPoints;
 
   StreamSubscription _locationSubscription;
   Location _locationTracker = Location();
@@ -42,6 +44,7 @@ class PingMapState extends State<PingMap> {
   String navigateMsg = "";
 
   LatLng destination = LatLng(37.33186, -122.03045);
+
 /* ------------------------------------ */
   final Set<Polyline> _polyLines = {};
   GoogleMapsServices _googleMapsServices = GoogleMapsServices();
@@ -262,7 +265,7 @@ class PingMapState extends State<PingMap> {
     toggleBtn = true;
     isArrived = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (isPingWidget) {
+      if (getPoints) {
         fToast = FToast();
         fToast.init(context);
         _showToast();
@@ -277,6 +280,7 @@ class PingMapState extends State<PingMap> {
   @override
   Widget build(BuildContext context) {
     isPingWidget = widget.isPingWidget;
+    getPoints = widget.getPoints;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 

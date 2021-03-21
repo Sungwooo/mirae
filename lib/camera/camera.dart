@@ -462,12 +462,6 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CupertinoNavigationBar(
-        middle: Text(
-          "CAMERA",
-          style: TextStyle(color: Color(0xff31AC53), fontFamily: 'GoogleSans'),
-        ),
-      ),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {

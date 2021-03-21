@@ -5,8 +5,12 @@ import 'package:get/get.dart';
 import 'components/ping_map.dart';
 
 class MapPage extends StatelessWidget {
+  final bool getPoints;
+  const MapPage(this.getPoints);
+
   @override
   Widget build(BuildContext context) {
+    print(getPoints);
     return Scaffold(
       appBar: CupertinoNavigationBar(
         middle: Text(
@@ -26,6 +30,7 @@ class MapPage extends StatelessWidget {
       ),
       body: PingMap(
         isPingWidget: true,
+        getPoints: getPoints,
       ),
     );
   }

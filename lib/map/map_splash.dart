@@ -11,8 +11,10 @@ class MapSplash extends StatefulWidget {
 class _MapSplashState extends State<MapSplash> {
   startTime() async {
     var _duration = new Duration(seconds: 2);
-    return new Timer(_duration,
-        () => Get.offAll(() => MapPage(), transition: Transition.cupertino));
+    return new Timer(
+        _duration,
+        () =>
+            Get.offAll(() => MapPage(true), transition: Transition.cupertino));
   }
 
   @override

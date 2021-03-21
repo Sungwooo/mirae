@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +27,7 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
     fp = Provider.of<FirebaseProvider>(context, listen: true);
     double width = MediaQuery.of(context).size.width;
     _user = fp.getUser();
+    _userPhotoUrl = _user.photoUrl;
     return Container(
       transform: Matrix4.translationValues(0.0, -50.0, 0.0),
       child: Column(children: [
