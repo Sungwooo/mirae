@@ -23,10 +23,7 @@ class MyImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     currentUser = fp.getUser();
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double width = MediaQuery.of(context).size.width;
     return Container(
       transform: Matrix4.translationValues(0.0, -50.0, 0.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [

@@ -1,11 +1,11 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mirae/map/map.dart';
 import 'package:mirae/map/world_map.dart';
 
 class RankerType {
-  String name;
+  String uid;
   String imageUrl;
   String flag;
   int points;
@@ -13,12 +13,31 @@ class RankerType {
   int pingCount;
 
   RankerType(
-      {this.name,
+      {this.uid,
       this.imageUrl,
       this.flag,
       this.points,
       this.discardCount,
       this.pingCount});
+
+  RankerType.fromSnapshot(DataSnapshot snapshot)
+      : uid = snapshot.value["uid"],
+        imageUrl = snapshot.value["imageUrl"],
+        flag = snapshot.value["country"],
+        points = snapshot.value["point"],
+        discardCount = snapshot.value["discard"],
+        pingCount = snapshot.value["ping"];
+
+  toJson() {
+    return {
+      "imageUrl": imageUrl,
+      "uid": uid,
+      "country": flag,
+      "point": points,
+      "discardCount": discardCount,
+      "ping": pingCount
+    };
+  }
 }
 
 class RankingPage extends StatefulWidget {
@@ -27,52 +46,17 @@ class RankingPage extends StatefulWidget {
 }
 
 class _RankingPageState extends State<RankingPage> {
-  List<RankerType> rankerList = new List();
+  List<RankerType> rankerList = [];
+  final dbRef = FirebaseDatabase.instance.reference();
 
   @override
   void initState() {
     super.initState();
-
-    rankerList.add(RankerType(
-        name: 'Mad Max',
-        imageUrl: 'https://source.unsplash.com/Yui5vfKHuzs/640x404',
-        flag: '',
-        points: 1003009,
-        discardCount: 512,
-        pingCount: 1412));
-    rankerList.add(RankerType(
-        name: 'Mad Max',
-        imageUrl: 'https://source.unsplash.com/Yui5vfKHuzs/640x404',
-        flag: '',
-        points: 1003009,
-        discardCount: 512,
-        pingCount: 1412));
-    rankerList.add(RankerType(
-        name: 'Mad Max',
-        imageUrl: 'https://source.unsplash.com/Yui5vfKHuzs/640x404',
-        flag: '',
-        points: 1003009,
-        discardCount: 512,
-        pingCount: 1412));
-    rankerList.add(RankerType(
-        name: 'Mad Max',
-        imageUrl: 'https://source.unsplash.com/Yui5vfKHuzs/640x404',
-        flag: '',
-        points: 1003009,
-        discardCount: 512,
-        pingCount: 1412));
-    rankerList.add(RankerType(
-        name: 'Mad Max',
-        imageUrl: 'https://source.unsplash.com/Yui5vfKHuzs/640x404',
-        flag: '',
-        points: 1003009,
-        discardCount: 512,
-        pingCount: 1412));
   }
 
   Widget _renderProfile(BuildContext context, index) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    //double height = MediaQuery.of(context).size.height;
     return Row(
       children: [
         Padding(
@@ -95,7 +79,7 @@ class _RankingPageState extends State<RankingPage> {
         ),
         Column(
           children: [
-            Text(rankerList[index].name,
+            Text(rankerList[index].uid,
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 0.053 * width,
@@ -239,7 +223,7 @@ class _RankingPageState extends State<RankingPage> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    //double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: CupertinoNavigationBar(
@@ -249,46 +233,64 @@ class _RankingPageState extends State<RankingPage> {
                 TextStyle(color: Color(0xff31AC53), fontFamily: 'GoogleSans'),
           ),
         ),
-        body: Column(
-          children: [
-            InkWell(
-              onTap: () => Get.to(() => WorldMap()),
-              child: Container(
-                height: 0.35 * height,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/bg_ranking.png'),
-                      fit: BoxFit.cover),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.25),
-                      spreadRadius: 3,
-                      blurRadius: 3,
-                      offset: Offset(0, 1),
-                    ),
-                  ],
-                ),
-                child: _renderHeaderContent(),
+        body: ListView(children: [
+          InkWell(
+            onTap: () => Get.to(() => WorldMap()),
+            child: Container(
+              height: 0.35 * height,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/bg_ranking.png'),
+                    fit: BoxFit.cover),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.25),
+                    spreadRadius: 3,
+                    blurRadius: 3,
+                    offset: Offset(0, 1),
+                  ),
+                ],
               ),
+              child: _renderHeaderContent(),
             ),
-            Expanded(
-              child: SizedBox(
-                height: 0.246 * height,
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: rankerList.length + 1,
-                  itemBuilder: (context, index) {
-                    return index == 0
-                        ? _renderHandlinedTitle()
-                        : _renderTypeItem(context, index - 1);
-                  },
-                ),
-              ),
-            ),
-          ],
-        ));
+          ),
+          FutureBuilder(
+              future: dbRef.child("user").orderByChild("point").once(),
+              builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+                if (snapshot.hasData) {
+                  rankerList.clear();
+                  Map<dynamic, dynamic> values = snapshot.data.value;
+                  print(values);
+                  values.forEach((key, values) {
+                    print(values);
+                    rankerList.add(RankerType(
+                        uid: values["uid"],
+                        imageUrl: values["ImageUrl"],
+                        flag: values["country"],
+                        discardCount: values["discard"],
+                        pingCount: values["ping"],
+                        points: values["point"]));
+                  });
+                  Comparator<RankerType> pointComparator = (a, b) => b.points.compareTo(a.points);
+                  rankerList.sort(pointComparator);
+                  print(rankerList.length);
+                  return new ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: rankerList.length+1,
+                      itemBuilder: (BuildContext context, index) {
+                        return index == 0
+                            ? _renderHandlinedTitle()
+                            : _renderTypeItem(context, index - 1);
+                      });
+
+                }
+                return CircularProgressIndicator();
+              }),
+        ]));
   }
 }
