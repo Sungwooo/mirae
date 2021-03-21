@@ -271,7 +271,12 @@ class SignUpPageState extends State<SignUpPage> {
                     right: 0,
                     child: GestureDetector(
                       onTap: () {
-                        LogIn();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LogIn(),
+                          ),
+                        );
                       },
                       child: Container(
                         width: 0.133 * width,

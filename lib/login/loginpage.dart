@@ -201,7 +201,6 @@ class LogInState extends State<LogIn> {
   }
 
   Future<void> _signIn() async {
-    print(fp.getUser());
 
     _scaffoldKey.currentState
       // ignore: deprecated_member_use
@@ -221,7 +220,7 @@ class LogInState extends State<LogIn> {
 
     // ignore: deprecated_member_use
     _scaffoldKey.currentState.hideCurrentSnackBar();
-    if (result == null) showLastFBMessage();
+    if (!result) showLastFBMessage();
   }
 
   showLastFBMessage() {
@@ -233,6 +232,23 @@ class LogInState extends State<LogIn> {
         backgroundColor: Colors.red[400],
         duration: Duration(seconds: 10),
         content: Text(fp.getLastFBMessage()),
+        action: SnackBarAction(
+          label: "Done",
+          textColor: Colors.white,
+          onPressed: () {},
+        ),
+      ));
+  }
+
+  showNotMatchPassword() {
+    _scaffoldKey.currentState
+    // ignore: deprecated_member_use
+      ..hideCurrentSnackBar()
+    // ignore: deprecated_member_use
+      ..showSnackBar(SnackBar(
+        backgroundColor: Colors.red[400],
+        duration: Duration(seconds: 10),
+        content: Text('Password Not Match'),
         action: SnackBarAction(
           label: "Done",
           textColor: Colors.white,
