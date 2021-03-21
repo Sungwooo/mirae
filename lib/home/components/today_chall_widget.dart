@@ -55,6 +55,14 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
         decoration: BoxDecoration(
           color: Color(0xff36AE57).withOpacity(0.7),
           borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xff36AE57).withOpacity(0.5),
+              spreadRadius: 3,
+              blurRadius: 5,
+              offset: Offset(0, 1),
+            ),
+          ],
           // boxShadow
         ),
         child: Column(

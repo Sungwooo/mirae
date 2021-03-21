@@ -304,8 +304,16 @@ class PingMapState extends State<PingMap> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getCurrentLocation();
-      _markers = Set.from([]);
-      setCustomMapPin();
+    });
+    _markers = Set.from([]);
+    setCustomMapPin();
+    loadTrashs().then((trashlist) {
+      for (Trash trash in trashlist) {
+        _markers.add(Marker(
+            markerId: MarkerId('<MARKER_1>'),
+            position: LatLng(trash.latitude, trash.longitude),
+            icon: pinLocationIcon));
+      }
     });
   }
 
@@ -347,10 +355,6 @@ class PingMapState extends State<PingMap> {
                                 (location.longitude - destination.longitude)
                                     .abs();
                         for (Trash trash in trashlist) {
-                          _markers.add(Marker(
-                              markerId: MarkerId('<MARKER_1>'),
-                              position: LatLng(trash.latitude, trash.longitude),
-                              icon: pinLocationIcon));
                           var newDistance =
                               (location.latitude - trash.latitude).abs() +
                                   (location.longitude - trash.longitude).abs();
