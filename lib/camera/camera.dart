@@ -438,13 +438,15 @@ class _CameraPageState extends State<CameraPage> {
     return Container(
       child: Stack(
         children: <Widget>[
-          Center(
-              child: Transform.scale(
-                  scale: _controller.value.aspectRatio / deviceRatio,
-                  child: new AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: new CameraPreview(_controller),
-                  ))),
+          Transform.scale(
+            scale: 1,
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: deviceRatio,
+                child: CameraPreview(_controller),
+              ),
+            ),
+          ),
           BoundingBox(
             _recognitions == null || _recognitions.isEmpty
                 ? []
