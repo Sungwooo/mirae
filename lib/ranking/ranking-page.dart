@@ -82,6 +82,7 @@ class _RankingPageState extends State<RankingPage> {
         Container(
           width: 0.245 * width,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(rankerList[index].name,
                   style: TextStyle(
