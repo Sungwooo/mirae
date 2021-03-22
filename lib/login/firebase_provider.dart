@@ -41,6 +41,16 @@ class FirebaseProvider with ChangeNotifier {
     print("user : ${user.displayName}");
   }
 
+  changePhotoUrl(String text) async {
+    FirebaseUser user = await fAuth.currentUser();
+    UserUpdateInfo newPhotoUrl = new UserUpdateInfo();
+    newPhotoUrl.photoUrl = "$text";
+    await user.updateProfile(newPhotoUrl);
+    user = await fAuth.currentUser();
+    setUser(user);
+    print("user : ${user.photoUrl}");
+  }
+
   Future<String> signInWithGoogleAccount() async {
     try {
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
@@ -75,6 +85,7 @@ class FirebaseProvider with ChangeNotifier {
 
       UserUpdateInfo updateInfo = UserUpdateInfo();
       updateInfo.displayName = name;
+      updateInfo.photoUrl = 'https://source.unsplash.com/Yui5vfKHuzs/640x404';
       user.updateProfile(updateInfo);
       print('USERNAME IS: ${user.displayName}');
       if (result.user != null) {
