@@ -306,14 +306,6 @@ class PingMapState extends State<PingMap> {
       getCurrentLocation();
     });
     _markers = Set.from([]);
-    loadTrashs().then((trashlist) {
-      for (Trash trash in trashlist) {
-        _markers.add(Marker(
-            markerId: MarkerId('<MARKER_1>'),
-            position: LatLng(trash.latitude, trash.longitude),
-            icon: pinLocationIcon));
-      }
-    });
   }
 
   @override
@@ -348,6 +340,14 @@ class PingMapState extends State<PingMap> {
                         : _markers,
                     onMapCreated: (GoogleMapController controller) {
                       _controller = controller;
+                      loadTrashs().then((trashlist) {
+                        trashlist.asMap().forEach((index, Trash trash) {
+                          _markers.add(Marker(
+                              markerId: MarkerId('<MARKER_$index>'),
+                              position: LatLng(trash.latitude, trash.longitude),
+                              icon: pinLocationIcon));
+                        });
+                      });
                       loadTrashs().then((trashlist) {
                         var distance =
                             (location.latitude - destination.latitude).abs() +

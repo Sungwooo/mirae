@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:mirae/login/firebase_provider.dart';
 
 Future<String> downloadURL(String uid) async {
-
   StorageReference ref = FirebaseStorage.instance.ref().child("profile/$uid");
   String url = (await ref.getDownloadURL()).toString();
   print(url);
@@ -29,7 +28,15 @@ class MyImageWidget extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           print(snapshot);
           if (snapshot.hasData == false) {
-            return CircularProgressIndicator();
+            return Center(
+              child: Container(
+                  width: width * 0.2,
+                  height: width * 0.2,
+                  child: CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(Color(0xff36A257)),
+                  )),
+            );
           } else if (snapshot.hasError) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -39,7 +46,7 @@ class MyImageWidget extends StatelessWidget {
               ),
             );
           } else {
-            String url=snapshot.data;
+            String url = snapshot.data;
             return CircleAvatar(
               radius: width * 0.12,
               backgroundColor: Colors.white,

@@ -40,7 +40,7 @@ class _BeforeChallWidgetState extends State<BeforeChallWidget> {
 
   var _isCheck1 = true;
   var _isCheck2 = true;
-  var _isCheck3 = true;
+  var _isCheck3 = false;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;

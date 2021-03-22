@@ -33,7 +33,7 @@ class _MyEditPageState extends State<MyEditPage> {
                   fp: fp,
                 ),
                 Positioned(
-                    top: 0.357 * width,
+                    top: 0.23 * width,
                     left: 0.39 * width,
                     child: EditImageNameWidget()),
               ],

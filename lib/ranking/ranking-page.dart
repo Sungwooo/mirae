@@ -233,64 +233,70 @@ class _RankingPageState extends State<RankingPage> {
                 TextStyle(color: Color(0xff31AC53), fontFamily: 'GoogleSans'),
           ),
         ),
-        body: ListView(children: [
-          InkWell(
-            onTap: () => Get.to(() => WorldMap()),
-            child: Container(
-              height: 0.35 * height,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/bg_ranking.png'),
-                    fit: BoxFit.cover),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.25),
-                    spreadRadius: 3,
-                    blurRadius: 3,
-                    offset: Offset(0, 1),
-                  ),
-                ],
+        body: Column(
+          children: [
+            InkWell(
+              onTap: () => Get.to(() => WorldMap()),
+              child: Container(
+                height: 0.35 * height,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/bg_ranking.png'),
+                      fit: BoxFit.cover),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.25),
+                      spreadRadius: 3,
+                      blurRadius: 3,
+                      offset: Offset(0, 1),
+                    ),
+                  ],
+                ),
+                child: _renderHeaderContent(),
               ),
-              child: _renderHeaderContent(),
             ),
-          ),
-          FutureBuilder(
-              future: dbRef.child("user").orderByChild("point").once(),
-              builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
-                if (snapshot.hasData) {
-                  rankerList.clear();
-                  Map<dynamic, dynamic> values = snapshot.data.value;
-                  print(values);
-                  values.forEach((key, values) {
-                    print(values);
-                    rankerList.add(RankerType(
-                        uid: values["uid"],
-                        imageUrl: values["ImageUrl"],
-                        flag: values["country"],
-                        discardCount: values["discard"],
-                        pingCount: values["ping"],
-                        points: values["point"]));
-                  });
-                  Comparator<RankerType> pointComparator = (a, b) => b.points.compareTo(a.points);
-                  rankerList.sort(pointComparator);
-                  print(rankerList.length);
-                  return new ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: rankerList.length+1,
-                      itemBuilder: (BuildContext context, index) {
-                        return index == 0
-                            ? _renderHandlinedTitle()
-                            : _renderTypeItem(context, index - 1);
-                      });
-
-                }
-                return CircularProgressIndicator();
-              }),
-        ]));
+            Expanded(
+              child: ListView(children: [
+                FutureBuilder(
+                    future: dbRef.child("user").orderByChild("point").once(),
+                    builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+                      if (snapshot.hasData) {
+                        rankerList.clear();
+                        Map<dynamic, dynamic> values = snapshot.data.value;
+                        print(values);
+                        values.forEach((key, values) {
+                          print(values);
+                          rankerList.add(RankerType(
+                              uid: values["uid"],
+                              imageUrl: values["ImageUrl"],
+                              flag: values["country"],
+                              discardCount: values["discard"],
+                              pingCount: values["ping"],
+                              points: values["point"]));
+                        });
+                        Comparator<RankerType> pointComparator =
+                            (a, b) => b.points.compareTo(a.points);
+                        rankerList.sort(pointComparator);
+                        print(rankerList.length);
+                        return new ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: rankerList.length + 1,
+                            itemBuilder: (BuildContext context, index) {
+                              return index == 0
+                                  ? _renderHandlinedTitle()
+                                  : _renderTypeItem(context, index - 1);
+                            });
+                      }
+                      return CircularProgressIndicator();
+                    }),
+              ]),
+            ),
+          ],
+        ));
   }
 }

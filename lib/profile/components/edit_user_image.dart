@@ -7,6 +7,14 @@ import 'package:provider/provider.dart';
 
 import '../../login/firebase_provider.dart';
 
+Future<String> downloadURL(String uid) async {
+  StorageReference ref = FirebaseStorage.instance.ref().child("profile/$uid");
+  String url = (await ref.getDownloadURL()).toString();
+  print(url);
+
+  return url;
+}
+
 class EditImageNameWidget extends StatefulWidget {
   @override
   _EditImageNameWidgetState createState() => _EditImageNameWidgetState();
@@ -16,7 +24,6 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
   FirebaseProvider fp;
   FirebaseUser _user;
 
-  String _userPhotoUrl;
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
   void initState() {
@@ -27,32 +34,47 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
     fp = Provider.of<FirebaseProvider>(context, listen: true);
     double width = MediaQuery.of(context).size.width;
     _user = fp.getUser();
-    _userPhotoUrl = _user.photoUrl;
-    return Container(
-      transform: Matrix4.translationValues(0.0, -50.0, 0.0),
-      child: Column(children: [
-        InkWell(
-          onTap: () {
-            _uploadImageToStorage(ImageSource.gallery);
-            setState(() {
-              _user = fp.getUser();
-              _userPhotoUrl = _user.photoUrl;
-            });
-          },
-          child: CircleAvatar(
-            radius: width * 0.12,
-            backgroundColor: Colors.white,
-            child: CircleAvatar(
-                radius: (width * 0.12) - 2,
-                backgroundImage: _userPhotoUrl != null
-                    ? NetworkImage(_userPhotoUrl)
-                    : _user.photoUrl != null
-                        ? NetworkImage(_user.photoUrl)
-                        : AssetImage("assets/EditProfileImage.png")),
-          ),
-        ),
-      ]),
-    );
+    return FutureBuilder(
+        future: downloadURL(_user.uid),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          print(snapshot);
+          if (snapshot.hasData == false) {
+            return Center(
+              child: Container(
+                  width: width * 0.2,
+                  height: width * 0.2,
+                  child: CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(Color(0xff36A257)),
+                  )),
+            );
+          } else if (snapshot.hasError) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Error: ${snapshot.error}',
+                style: TextStyle(fontSize: 0.04 * width),
+              ),
+            );
+          } else {
+            String url = snapshot.data;
+            return InkWell(
+              onTap: () {
+                _uploadImageToStorage(ImageSource.gallery);
+              },
+              child: CircleAvatar(
+                radius: width * 0.12,
+                backgroundColor: Colors.white,
+                child: CircleAvatar(
+                  radius: (width * 0.12) - 2,
+                  backgroundImage: url != null
+                      ? NetworkImage('$url', scale: 2)
+                      : AssetImage('assets/profileImage.png'),
+                ),
+              ),
+            );
+          }
+        });
   }
 
   void _uploadImageToStorage(ImageSource source) async {
@@ -66,11 +88,11 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
 
     StorageUploadTask storageUploadTask = storageReference.putFile(image);
 
-    String downloadURL = await storageReference.getDownloadURL().toString();
-    print(downloadURL);
+    await storageUploadTask.onComplete;
+    String downloadURL = storageReference.getDownloadURL().toString();
+
     fp.changePhotoUrl(downloadURL);
 
-    await storageUploadTask.onComplete;
     print(fp.getUser().photoUrl);
   }
 }

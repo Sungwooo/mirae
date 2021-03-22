@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:mirae/article/argument.dart';
 import 'package:mirae/article/article_detail.dart';
 import 'package:mirae/home/challenge.dart';
+import 'package:mirae/home/home_page.dart';
 import 'package:web_scraper/web_scraper.dart';
 
 var now = DateFormat('y.MM.dd').format(DateTime.now());
