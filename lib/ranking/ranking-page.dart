@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mirae/map/world_map.dart';
+import 'package:country_picker/country_picker.dart';
 
 class RankerType {
   String name;
@@ -48,6 +49,7 @@ class RankingPage extends StatefulWidget {
 class _RankingPageState extends State<RankingPage> {
   List<RankerType> rankerList = [];
   final dbRef = FirebaseDatabase.instance.reference();
+  Country selectedCountry;
 
   @override
   void initState() {
@@ -87,12 +89,20 @@ class _RankingPageState extends State<RankingPage> {
                       fontSize: 0.053 * width,
                       fontFamily: 'GoogleSans',
                       fontWeight: FontWeight.w700)),
-              Text("${rankerList[index].points} pts",
-                  style: TextStyle(
-                      color: Color.fromRGBO(66, 178, 97, 1),
-                      fontSize: 0.037 * width,
-                      fontFamily: 'GoogleSans',
-                      fontWeight: FontWeight.w400)),
+              Row(
+                children: [
+                  Text(
+                    countryCodeToEmoji(rankerList[index].flag),
+                    style: TextStyle(fontSize: 0.037 * width),
+                  ),
+                  Text("  ${rankerList[index].points} pts",
+                      style: TextStyle(
+                          color: Color.fromRGBO(66, 178, 97, 1),
+                          fontSize: 0.037 * width,
+                          fontFamily: 'GoogleSans',
+                          fontWeight: FontWeight.w400)),
+                ],
+              ),
             ],
           ),
         ),
@@ -301,5 +311,17 @@ class _RankingPageState extends State<RankingPage> {
             ),
           ],
         ));
+  }
+
+  static String countryCodeToEmoji(String countryCode) {
+    // 0x41 is Letter A
+    // 0x1F1E6 is Regional Indicator Symbol Letter A
+    // Example :
+    // firstLetter U => 20 + 0x1F1E6
+    // secondLetter S => 18 + 0x1F1E6
+    // See: https://en.wikipedia.org/wiki/Regional_Indicator_Symbol
+    final int firstLetter = countryCode.codeUnitAt(0) - 0x41 + 0x1F1E6;
+    final int secondLetter = countryCode.codeUnitAt(1) - 0x41 + 0x1F1E6;
+    return String.fromCharCode(firstLetter) + String.fromCharCode(secondLetter);
   }
 }
