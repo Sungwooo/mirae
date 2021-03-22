@@ -47,6 +47,7 @@ class MyImageWidget extends StatelessWidget {
             );
           } else {
             String url = snapshot.data;
+            print(url);
             return CircleAvatar(
               radius: width * 0.12,
               backgroundColor: Colors.white,

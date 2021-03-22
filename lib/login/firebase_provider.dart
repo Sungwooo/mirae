@@ -83,10 +83,14 @@ class FirebaseProvider with ChangeNotifier {
           email: email, password: password);
       FirebaseUser user = await fAuth.currentUser();
 
-      UserUpdateInfo updateInfo = UserUpdateInfo();
+      UserUpdateInfo updateInfo = new UserUpdateInfo();
       updateInfo.displayName = name;
-      updateInfo.photoUrl = 'https://source.unsplash.com/Yui5vfKHuzs/640x404';
-      user.updateProfile(updateInfo);
+      await user.updateProfile(updateInfo);
+
+      UserUpdateInfo newPhotoUrl = new UserUpdateInfo();
+      newPhotoUrl.photoUrl = 'https://source.unsplash.com/Yui5vfKHuzs/640x404';
+      await user.updateProfile(newPhotoUrl);
+
       print('USERNAME IS: ${user.displayName}');
       if (result.user != null) {
         signOut();

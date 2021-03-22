@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:mirae/map/world_map.dart';
 
 class RankerType {
-  String uid;
+  String name;
   String imageUrl;
   String flag;
   int points;
@@ -13,7 +13,7 @@ class RankerType {
   int pingCount;
 
   RankerType(
-      {this.uid,
+      {this.name,
       this.imageUrl,
       this.flag,
       this.points,
@@ -21,7 +21,7 @@ class RankerType {
       this.pingCount});
 
   RankerType.fromSnapshot(DataSnapshot snapshot)
-      : uid = snapshot.value["uid"],
+      : name = snapshot.value["name"],
         imageUrl = snapshot.value["imageUrl"],
         flag = snapshot.value["country"],
         points = snapshot.value["point"],
@@ -30,8 +30,8 @@ class RankerType {
 
   toJson() {
     return {
+      "name": name,
       "imageUrl": imageUrl,
-      "uid": uid,
       "country": flag,
       "point": points,
       "discardCount": discardCount,
@@ -77,22 +77,25 @@ class _RankingPageState extends State<RankingPage> {
             ),
           ),
         ),
-        Column(
-          children: [
-            Text(rankerList[index].uid,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 0.053 * width,
-                    fontFamily: 'GoogleSans',
-                    fontWeight: FontWeight.w700)),
-            Text("${rankerList[index].points} pts",
-                style: TextStyle(
-                    color: Color.fromRGBO(66, 178, 97, 1),
-                    fontSize: 0.037 * width,
-                    fontFamily: 'GoogleSans',
-                    fontWeight: FontWeight.w400)),
-          ],
-        )
+        Container(
+          width: 0.245 * width,
+          child: Column(
+            children: [
+              Text(rankerList[index].name,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 0.053 * width,
+                      fontFamily: 'GoogleSans',
+                      fontWeight: FontWeight.w700)),
+              Text("${rankerList[index].points} pts",
+                  style: TextStyle(
+                      color: Color.fromRGBO(66, 178, 97, 1),
+                      fontSize: 0.037 * width,
+                      fontFamily: 'GoogleSans',
+                      fontWeight: FontWeight.w400)),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -270,7 +273,7 @@ class _RankingPageState extends State<RankingPage> {
                         values.forEach((key, values) {
                           print(values);
                           rankerList.add(RankerType(
-                              uid: values["uid"],
+                              name: values["name"],
                               imageUrl: values["ImageUrl"],
                               flag: values["country"],
                               discardCount: values["discard"],
