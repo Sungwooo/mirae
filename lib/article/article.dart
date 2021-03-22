@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:mirae/article/argument.dart';
 import 'package:mirae/article/article_detail.dart';
 import 'package:mirae/home/challenge.dart';
+import 'package:mirae/home/controller/challenge_controller.dart';
 import 'package:mirae/home/home_page.dart';
+import 'package:mirae/login/firebase_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:web_scraper/web_scraper.dart';
 
 var now = DateFormat('y.MM.dd').format(DateTime.now());
@@ -160,6 +163,9 @@ class _ArticleState extends State<ArticlePage> {
   bool loaded = false;
   // ignore: deprecated_member_use
   List<ResultItem> resultList = List();
+  FirebaseProvider fp;
+  final ChallengeController challengeController =
+      Get.put(ChallengeController());
 
   @override
   void initState() {
@@ -218,6 +224,7 @@ class _ArticleState extends State<ArticlePage> {
   }
 
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -295,7 +302,8 @@ class _ArticleState extends State<ArticlePage> {
                                           Padding(
                                             padding: EdgeInsets.only(
                                                 left: 0.013 * width),
-                                            child: Text('2',
+                                            child: Text(
+                                                '${challengeController.checksNum}',
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 0.037 * width,
@@ -312,7 +320,8 @@ class _ArticleState extends State<ArticlePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text('Day 1',
+                                Text(
+                                    'Day ${DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).difference(fp.getUser().metadata.creationTime).inDays + 1}',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 0.069 * width,

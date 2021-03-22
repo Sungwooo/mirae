@@ -438,13 +438,15 @@ class _CameraPageState extends State<CameraPage> {
     return Container(
       child: Stack(
         children: <Widget>[
-          Center(
-              child: Transform.scale(
-                  scale: _controller.value.aspectRatio / deviceRatio,
-                  child: new AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: new CameraPreview(_controller),
-                  ))),
+          Transform.scale(
+            scale: 1,
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: deviceRatio,
+                child: CameraPreview(_controller),
+              ),
+            ),
+          ),
           BoundingBox(
             _recognitions == null || _recognitions.isEmpty
                 ? []
@@ -479,6 +481,23 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CupertinoNavigationBar(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.white,
+            width: 0.0, // One physical pixel.
+            style: BorderStyle.none,
+          ),
+        ),
+        middle: Text(
+          "CAMERA",
+          style: TextStyle(
+              color: Color(0xff31AC53),
+              fontWeight: FontWeight.w700,
+              fontFamily: 'GoogleSans'),
+        ),
+        padding: EdgeInsetsDirectional.only(),
+      ),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
