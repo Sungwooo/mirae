@@ -203,6 +203,14 @@ class _CameraPageState extends State<CameraPage> {
       Fluttertoast.showToast(msg: "No object detected");
       return;
     }
+    var objectName = _recognitions.reduce((current, next) =>
+        current['confidenceInClass'] > next['confidenceInClass']
+            ? current
+            : next)["detectedClass"];
+    if (objectName == 'unknown') {
+      Fluttertoast.showToast(msg: "No object detected");
+      return;
+    }
 
     Get.to(() => MapSplash());
   }
@@ -363,10 +371,12 @@ class _CameraPageState extends State<CameraPage> {
   Widget _renderCurrentType(BuildContext context) {
     var objectName = _recognitions == null || _recognitions.isEmpty
         ? typeList[selectedTypeIndex].title
-        : _recognitions.reduce((current, next) =>
-            current['confidenceInClass'] > next['confidenceInClass']
-                ? current
-                : next)["detectedClass"];
+        : selectedTypeIndex != 0
+            ? typeList[selectedTypeIndex].title
+            : _recognitions.reduce((current, next) =>
+                current['confidenceInClass'] > next['confidenceInClass']
+                    ? current
+                    : next)["detectedClass"];
     return Padding(
       padding: EdgeInsets.only(bottom: 12),
       child: FlatButton(
@@ -423,11 +433,18 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Widget _renderCameraView(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
+    final Size screen = MediaQuery.of(context).size;
+    final deviceRatio = screen.width / screen.height;
     return Container(
       child: Stack(
         children: <Widget>[
-          CameraPreview(_controller),
+          Center(
+              child: Transform.scale(
+                  scale: _controller.value.aspectRatio / deviceRatio,
+                  child: new AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: new CameraPreview(_controller),
+                  ))),
           BoundingBox(
             _recognitions == null || _recognitions.isEmpty
                 ? []
