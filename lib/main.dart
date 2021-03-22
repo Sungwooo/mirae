@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:mirae/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'constants/material_color.dart';
-import 'login/auth_page.dart';
 import 'login/firebase_provider.dart';
 
 List<CameraDescription> cameras;
