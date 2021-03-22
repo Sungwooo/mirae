@@ -52,7 +52,7 @@ class LevelRankWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Day ${DateTime.now().difference(currentUser.metadata.creationTime).inDays + 1}",
+                      "Day ${DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).difference(currentUser.metadata.creationTime).inDays + 1}",
                       style: TextStyle(
                           color: Colors.white,
                           fontFamily: "GoogleSans",
