@@ -377,16 +377,19 @@ class _CameraPageState extends State<CameraPage> {
                 current['confidenceInClass'] > next['confidenceInClass']
                     ? current
                     : next)["detectedClass"];
-    return Padding(
-      padding: EdgeInsets.only(bottom: 12),
-      child: FlatButton(
-        color: Color.fromRGBO(54, 174, 87, 0.8),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Text("Trash Type: $objectName",
-            style: TextStyle(color: Colors.white)),
-        onPressed: () => {},
-      ),
-    );
+    return objectName != 'unknown'
+        ? Padding(
+            padding: EdgeInsets.only(bottom: 12),
+            child: FlatButton(
+              color: Color.fromRGBO(54, 174, 87, 0.8),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              child: Text("Trash Type: $objectName",
+                  style: TextStyle(color: Colors.white)),
+              onPressed: () => {},
+            ),
+          )
+        : Container();
   }
 
   Widget _renderTopContainer(BuildContext context) {
