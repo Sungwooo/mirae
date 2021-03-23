@@ -23,7 +23,6 @@ class AuthPageState extends State<AuthPage> {
     fp = Provider.of<FirebaseProvider>(context);
 
     if (fp.getUser() != null) {
-      print("${fp.getUser()}");
       return MainPage(cameras);
     } else {
       return LogIn();

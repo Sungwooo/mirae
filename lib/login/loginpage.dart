@@ -69,7 +69,6 @@ class LogInState extends State<LogIn> {
                           ),
                         ),
                         onChanged: (text) {
-                          print(text);
                         },
                       ),
                       Container(
@@ -108,7 +107,6 @@ class LogInState extends State<LogIn> {
                         ),
                         obscureText: true,
                         onChanged: (text) {
-                          print(text);
                         },
                       ),
                       Container(

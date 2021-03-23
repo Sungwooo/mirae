@@ -290,9 +290,8 @@ class _RankingPageState extends State<RankingPage> {
                       if (snapshot.hasData) {
                         rankerList.clear();
                         Map<dynamic, dynamic> values = snapshot.data.value;
-                        print(values);
+
                         values.forEach((key, values) {
-                          print(values);
                           rankerList.add(RankerType(
                               name: values["name"],
                               imageUrl: values["ImageUrl"],
@@ -304,7 +303,6 @@ class _RankingPageState extends State<RankingPage> {
                         Comparator<RankerType> pointComparator =
                             (a, b) => b.points.compareTo(a.points);
                         rankerList.sort(pointComparator);
-                        print(rankerList.length);
                         return new ListView.builder(
                             physics: BouncingScrollPhysics(),
                             scrollDirection: Axis.vertical,

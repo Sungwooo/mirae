@@ -10,7 +10,6 @@ import '../../login/firebase_provider.dart';
 Future<String> downloadURL(String uid) async {
   StorageReference ref = FirebaseStorage.instance.ref().child("profile/$uid");
   String url = (await ref.getDownloadURL()).toString();
-  print(url);
 
   return url;
 }
@@ -37,7 +36,6 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
     return FutureBuilder(
         future: downloadURL(_user.uid),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          print(snapshot);
           if (snapshot.hasData == false) {
             return Center(
               child: Container(
@@ -92,7 +90,5 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
     String downloadURL = storageReference.getDownloadURL().toString();
 
     fp.changePhotoUrl(downloadURL);
-
-    print(fp.getUser().photoUrl);
   }
 }

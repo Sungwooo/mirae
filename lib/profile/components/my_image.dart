@@ -6,7 +6,6 @@ import 'package:mirae/login/firebase_provider.dart';
 Future<String> downloadURL(String uid) async {
   StorageReference ref = FirebaseStorage.instance.ref().child("profile/$uid");
   String url = (await ref.getDownloadURL()).toString();
-  print(url);
 
   return url;
 }
@@ -26,7 +25,6 @@ class MyImageWidget extends StatelessWidget {
     return FutureBuilder(
         future: downloadURL(currentUser.uid),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          print(snapshot);
           if (snapshot.hasData == false) {
             return Center(
               child: Container(
@@ -47,7 +45,6 @@ class MyImageWidget extends StatelessWidget {
             );
           } else {
             String url = snapshot.data;
-            print(url);
             return CircleAvatar(
               radius: width * 0.12,
               backgroundColor: Colors.white,

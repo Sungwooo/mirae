@@ -12,7 +12,6 @@ import 'package:mirae/camera/trash_info_plastic.dart';
 import 'package:mirae/map/map_splash.dart';
 import 'package:tflite/tflite.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../map/map.dart';
 import 'bounding_box.dart';
 
 class TrashType {
@@ -32,7 +31,7 @@ class CameraPage extends StatefulWidget {
 
 class _CameraPageState extends State<CameraPage> {
   int selectedTypeIndex = 0;
-  List<TrashType> typeList = new List();
+  List<TrashType> typeList = [];
   CameraController _controller;
   Future<void> _initializeControllerFuture;
   bool isDetecting = false;
@@ -194,7 +193,6 @@ class _CameraPageState extends State<CameraPage> {
 
       _handleAutoRouting(image.path);
     } on CameraException catch (e) {
-      print(e.toString());
     }
   }
 

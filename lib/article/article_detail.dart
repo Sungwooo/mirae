@@ -53,12 +53,10 @@ class ArticleDetailPage extends StatelessWidget {
   Future<List> initChaptersTitleScrap() async {
     List resultList = [];
     final rawUrl = arguments.url;
-    print(arguments.url);
     final webScraper = WebScraper('https://news.un.org/');
     if (await webScraper.loadWebPage(rawUrl)) {
       List<Map<String, dynamic>> articles =
           webScraper.getElement('div.field-item.even > p, h3', []);
-      print(articles);
       articles.forEach((article) {
         int i = articles.indexOf(article);
         resultList.add(articles[i]['title']);
