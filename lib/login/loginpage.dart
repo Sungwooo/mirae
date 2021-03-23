@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loading/indicator/ball_beat_indicator.dart';
+
+import 'package:loading/loading.dart';
 import 'package:mirae/login/sign_up.dart';
 import 'package:mirae/mainPage/mainPage.dart';
 import 'package:provider/provider.dart';
@@ -68,8 +71,7 @@ class LogInState extends State<LogIn> {
                             left: 0.008 * width,
                           ),
                         ),
-                        onChanged: (text) {
-                        },
+                        onChanged: (text) {},
                       ),
                       Container(
                         transform: Matrix4.translationValues(0.0, -10.0, 0.0),
@@ -106,8 +108,7 @@ class LogInState extends State<LogIn> {
                           ),
                         ),
                         obscureText: true,
-                        onChanged: (text) {
-                        },
+                        onChanged: (text) {},
                       ),
                       Container(
                         transform: Matrix4.translationValues(0.0, -10.0, 0.0),
@@ -156,11 +157,14 @@ class LogInState extends State<LogIn> {
                         try {
                           _signIn().then((result) {
                             if (result) {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                return MainPage(cameras);
-                                },
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return MainPage(cameras);
+                                  },
                                 ),
-                                );}
+                              );
+                            }
                           });
                         } catch (error) {
                           print("error");
@@ -212,7 +216,6 @@ class LogInState extends State<LogIn> {
   }
 
   Future<bool> _signIn() async {
-
     _scaffoldKey.currentState
       // ignore: deprecated_member_use
       ..hideCurrentSnackBar()
@@ -221,7 +224,7 @@ class LogInState extends State<LogIn> {
         duration: Duration(seconds: 10),
         content: Row(
           children: <Widget>[
-            CircularProgressIndicator(),
+            Loading(indicator: BallBeatIndicator(), color: Color(0xff36A257)),
             Text("   Signing-In...")
           ],
         ),
@@ -255,9 +258,9 @@ class LogInState extends State<LogIn> {
 
   showNotMatchPassword() {
     _scaffoldKey.currentState
-    // ignore: deprecated_member_use
+      // ignore: deprecated_member_use
       ..hideCurrentSnackBar()
-    // ignore: deprecated_member_use
+      // ignore: deprecated_member_use
       ..showSnackBar(SnackBar(
         backgroundColor: Colors.red[400],
         duration: Duration(seconds: 10),

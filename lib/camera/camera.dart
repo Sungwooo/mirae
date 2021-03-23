@@ -5,6 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:loading/indicator/ball_beat_indicator.dart';
+
+import 'package:loading/loading.dart';
 import 'package:mirae/camera/trash_info_can.dart';
 import 'package:mirae/camera/trash_info_glass.dart';
 import 'package:mirae/camera/trash_info_paper.dart';
@@ -192,8 +195,7 @@ class _CameraPageState extends State<CameraPage> {
       }
 
       _handleAutoRouting(image.path);
-    } on CameraException catch (e) {
-    }
+    } on CameraException catch (e) {}
   }
 
   void _onPingPress() {
@@ -502,7 +504,9 @@ class _CameraPageState extends State<CameraPage> {
           if (snapshot.connectionState == ConnectionState.done) {
             return _renderCameraView(context);
           } else {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+                child: Loading(
+                    indicator: BallBeatIndicator(), color: Color(0xff36A257)));
           }
         },
       ),

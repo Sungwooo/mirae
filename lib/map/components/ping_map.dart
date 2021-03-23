@@ -7,6 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:loading/indicator/ball_beat_indicator.dart';
+
+import 'package:loading/loading.dart';
 
 import 'package:location/location.dart';
 import 'package:mirae/map/components/google_maps_service.dart';
@@ -87,7 +90,7 @@ class PingMapState extends State<PingMap> {
 
   String navigateMsg = "";
 
-  LatLng destination = LatLng(37.3746, -122.0733);
+  LatLng destination = LatLng(37.3264, -122.0197);
 
 /* ------------------------------------ */
   final Set<Polyline> _polyLines = {};
@@ -348,23 +351,6 @@ class PingMapState extends State<PingMap> {
                               icon: pinLocationIcon));
                         });
                       });
-                      loadTrashs().then((trashlist) {
-                        var distance =
-                            (location.latitude - destination.latitude).abs() +
-                                (location.longitude - destination.longitude)
-                                    .abs();
-                        for (Trash trash in trashlist) {
-                          var newDistance =
-                              (location.latitude - trash.latitude).abs() +
-                                  (location.longitude - trash.longitude).abs();
-                          if (distance > newDistance) {
-                            setState(() {
-                              destination =
-                                  LatLng(trash.latitude, trash.longitude);
-                            });
-                          }
-                        }
-                      });
 
                       /* _markers.add(Marker(
                             markerId: MarkerId('<MARKER_1>'),
@@ -397,10 +383,10 @@ class PingMapState extends State<PingMap> {
                   child: Container(
                       width: width * 0.2,
                       height: width * 0.2,
-                      child: CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Color(0xff36A257)),
-                      )),
+                      child: Loading(
+                          indicator: BallBeatIndicator(),
+                          size: 0.27 * width,
+                          color: Color(0xff36A257))),
                 ),
               ),
         floatingActionButton: FloatingActionButton(
@@ -419,6 +405,21 @@ class PingMapState extends State<PingMap> {
             backgroundColor: Colors.white.withOpacity(0.7),
             onPressed: () {
               getCurrentLocation();
+              loadTrashs().then((trashlist) {
+                var distance =
+                    (location.latitude - destination.latitude).abs() +
+                        (location.longitude - destination.longitude).abs();
+                for (Trash trash in trashlist) {
+                  var newDistance = (location.latitude - trash.latitude).abs() +
+                      (location.longitude - trash.longitude).abs();
+                  if (distance > newDistance) {
+                    setState(() {
+                      destination = LatLng(trash.latitude, trash.longitude);
+                    });
+                  }
+                }
+                print("${destination.latitude}, ${destination.longitude}");
+              });
 
               toggleBtn = !toggleBtn;
             }),
@@ -477,6 +478,13 @@ class PingMapState extends State<PingMap> {
                         newLocalData.latitude - 0.0005, newLocalData.longitude),
                     tilt: 0,
                     zoom: 18.00)));
+            if ((newLocalData.latitude - destination.latitude).abs() +
+                    (newLocalData.longitude - destination.longitude).abs() <
+                0.005) {
+              setState(() {
+                isArrived = true;
+              });
+            }
             updateMarkerAndCircle(newLocalData, imageData);
             sendAutoRequest(newLocalData);
           }

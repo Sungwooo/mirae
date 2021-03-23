@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MyPingButtonWidget extends StatelessWidget {
+  String numberWithComma(int param) {
+    return new NumberFormat('###,###,###,###')
+        .format(param)
+        .replaceAll(' ', '');
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -51,7 +58,7 @@ class MyPingButtonWidget extends StatelessWidget {
                   width: 0.04 * width,
                 ),
                 Text(
-                  "124",
+                  "${numberWithComma(1142)}",
                   style: TextStyle(
                       color: Colors.black,
                       fontFamily: "GoogleSans",
@@ -86,7 +93,7 @@ class MyPingButtonWidget extends StatelessWidget {
                   width: 0.04 * width,
                 ),
                 Text(
-                  "378",
+                  "${numberWithComma(512)}",
                   style: TextStyle(
                       color: Colors.black,
                       fontFamily: "GoogleSans",

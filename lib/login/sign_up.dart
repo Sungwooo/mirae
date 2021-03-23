@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:loading/indicator/ball_beat_indicator.dart';
+
+import 'package:loading/loading.dart';
 import 'package:mirae/login/firebase_provider.dart';
 import 'package:mirae/mainPage/mainPage.dart';
 import 'package:provider/provider.dart';
@@ -326,7 +329,10 @@ class SignUpPageState extends State<SignUpPage> {
         duration: Duration(seconds: 10),
         content: Row(
           children: <Widget>[
-            CircularProgressIndicator(),
+            Loading(
+                indicator: BallBeatIndicator(),
+                size: 100,
+                color: Color(0xff36A257)),
             Text("   Signing-Up...")
           ],
         ),

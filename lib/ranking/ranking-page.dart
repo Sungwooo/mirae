@@ -2,6 +2,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:loading/indicator/ball_beat_indicator.dart';
+import 'package:loading/indicator/ball_pulse_indicator.dart';
+import 'package:loading/loading.dart';
 import 'package:mirae/map/world_map.dart';
 import 'package:country_picker/country_picker.dart';
 
@@ -47,7 +51,6 @@ class RankingPage extends StatefulWidget {
 }
 
 class _RankingPageState extends State<RankingPage> {
-
   List<RankerType> rankerList = [];
   final dbRef = FirebaseDatabase.instance.reference();
   Country selectedCountry;
@@ -57,54 +60,66 @@ class _RankingPageState extends State<RankingPage> {
     super.initState();
   }
 
+  String numberWithComma(int param) {
+    return new NumberFormat('###,###,###,###')
+        .format(param)
+        .replaceAll(' ', '');
+  }
+
   Widget _renderProfile(BuildContext context, index) {
     double width = MediaQuery.of(context).size.width;
     //double height = MediaQuery.of(context).size.height;
     return Row(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 0.032 * width),
+          padding: EdgeInsets.symmetric(horizontal: 0.026 * width),
           child: Container(
-            width: 0.16 * width,
-            height: 0.16 * width,
+            width: 0.145 * width,
+            height: 0.145 * width,
             child: CircleAvatar(
-              radius: 50,
+              radius: 0.13 * width,
               backgroundImage: NetworkImage(rankerList[index].imageUrl),
             ),
             decoration: new BoxDecoration(
               shape: BoxShape.circle,
               border: new Border.all(
                 color: Color.fromRGBO(66, 178, 97, 1),
-                width: 2.0,
+                width: 0.005 * width,
               ),
             ),
           ),
         ),
         Container(
-          width: 0.243 * width,
+          width: 0.27 * width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(rankerList[index].name,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 0.053 * width,
-                      fontFamily: 'GoogleSans',
-                      fontWeight: FontWeight.w700)),
               Row(
                 children: [
                   Text(
-                    countryCodeToEmoji(rankerList[index].flag),
-                    style: TextStyle(fontSize: 0.037 * width),
-                  ),
-                  Text("  ${rankerList[index].points} pts",
+                      rankerList[index].name.length > 7
+                          ? rankerList[index].name.substring(0, 6) + "..."
+                          : rankerList[index].name,
                       style: TextStyle(
-                          color: Color.fromRGBO(66, 178, 97, 1),
-                          fontSize: 0.037 * width,
+                          color: Colors.black,
+                          fontSize: 0.048 * width,
                           fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w400)),
+                          fontWeight: FontWeight.w700)),
+                  SizedBox(
+                    width: 0.005 * width,
+                  ),
+                  Text(
+                    countryCodeToEmoji(rankerList[index].flag),
+                    style: TextStyle(fontSize: 0.05 * width),
+                  ),
                 ],
               ),
+              Text("${numberWithComma(rankerList[index].points)} pts",
+                  style: TextStyle(
+                      color: Color.fromRGBO(66, 178, 97, 1),
+                      fontSize: 0.037 * width,
+                      fontFamily: 'GoogleSans',
+                      fontWeight: FontWeight.w500)),
             ],
           ),
         ),
@@ -115,45 +130,88 @@ class _RankingPageState extends State<RankingPage> {
   Widget _renderTypeItem(BuildContext context, index) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    var children2 = [
+      Padding(
+        padding: EdgeInsets.only(left: 0.027 * width),
+        child: Container(
+          width: 0.04 * width,
+          child: Column(
+            children: [
+              index <= 2
+                  ? new Image.asset(
+                      'assets/crown.png',
+                      width: 0.053 * width,
+                    )
+                  : Container(),
+              Text("${index + 1}",
+                  style: TextStyle(
+                      color: index == 0
+                          ? Color(0xff42B261)
+                          : index == 1
+                              ? Color(0xff39C2ED)
+                              : index == 2
+                                  ? Color(0xffFF9568)
+                                  : Colors.black,
+                      fontSize: 0.064 * width,
+                      fontFamily: 'GoogleSans',
+                      fontWeight: FontWeight.w700)),
+            ],
+          ),
+        ),
+      ),
+      _renderProfile(context, index),
+      Container(
+        width: 0.18 * width,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset('assets/ic_rank_ping.png', width: 0.07 * width),
+            SizedBox(
+              width: 0.013 * width,
+            ),
+            Container(
+              width: 0.09 * width,
+              child: Text('${numberWithComma(rankerList[index].discardCount)}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Color.fromRGBO(66, 178, 97, 1),
+                      fontSize: 0.037 * width,
+                      fontFamily: 'GoogleSans',
+                      fontWeight: FontWeight.w700)),
+            ),
+          ],
+        ),
+      ),
+      Container(
+        width: 0.18 * width,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset('assets/ic_rank_discard.png', width: 0.07 * width),
+            SizedBox(
+              width: 0.013 * width,
+            ),
+            Container(
+              width: 0.09 * width,
+              child: Text('${numberWithComma(rankerList[index].pingCount)}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Color.fromRGBO(244, 198, 35, 1),
+                      fontSize: 0.037 * width,
+                      fontFamily: 'GoogleSans',
+                      fontWeight: FontWeight.w700)),
+            ),
+          ],
+        ),
+      ),
+    ];
     return Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: 0.03 * width, vertical: 0.007 * height),
+        padding: EdgeInsets.symmetric(vertical: 0.007 * height),
         child: GestureDetector(
             onTap: () => {},
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    index <= 2
-                        ? new Image.asset(
-                      'assets/crown.png',
-                      width: 0.053 * width,)
-                        : Container(),
-                    Text("${index + 1}",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 0.053 * width,
-                            fontFamily: 'GoogleSans',
-                            fontWeight: FontWeight.w700)),
-                  ],
-                ),
-                _renderProfile(context, index),
-                Image.asset('assets/ic_loc_discard.png', width: 0.14 * width),
-                Text('${rankerList[index].discardCount}',
-                    style: TextStyle(
-                        color: Color.fromRGBO(66, 178, 97, 1),
-                        fontSize: 0.042 * width,
-                        fontFamily: 'GoogleSans',
-                        fontWeight: FontWeight.w700)),
-                Image.asset('assets/ic_loc_ping.png', width: 0.14 * width),
-                Text('${rankerList[index].pingCount}',
-                    style: TextStyle(
-                        color: Color.fromRGBO(244, 198, 35, 1),
-                        fontSize: 0.042 * width,
-                        fontFamily: 'GoogleSans',
-                        fontWeight: FontWeight.w700)),
-              ],
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: children2,
             )));
   }
 
@@ -161,7 +219,7 @@ class _RankingPageState extends State<RankingPage> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     int pingCnt = 0;
-    int discardCnt=0;
+    int discardCnt = 0;
     return FutureBuilder(
         future: dbRef.child("user").once(),
         builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
@@ -169,8 +227,8 @@ class _RankingPageState extends State<RankingPage> {
             Map<dynamic, dynamic> values = snapshot.data.value;
 
             values.forEach((key, values) {
-                  discardCnt+= values["discard"];
-                  pingCnt+= values["ping"];
+              discardCnt += values["discard"];
+              pingCnt += values["ping"];
             });
             return new Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -190,7 +248,8 @@ class _RankingPageState extends State<RankingPage> {
                       padding: EdgeInsets.only(left: 0.016 * width),
                       child: Row(
                         children: [
-                          Image.asset('assets/ic_loc_discard.png', width: 0.16 * width),
+                          Image.asset('assets/ic_loc_discard.png',
+                              width: 0.16 * width),
                           Text('$discardCnt',
                               style: TextStyle(
                                   color: Color.fromRGBO(66, 178, 97, 1),
@@ -206,8 +265,8 @@ class _RankingPageState extends State<RankingPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                        padding:
-                        EdgeInsets.only(top: 0.014 * height, left: 0.016 * width),
+                        padding: EdgeInsets.only(
+                            top: 0.014 * height, left: 0.016 * width),
                         child: Text('PING',
                             style: TextStyle(
                                 color: Colors.white,
@@ -216,7 +275,8 @@ class _RankingPageState extends State<RankingPage> {
                                 fontWeight: FontWeight.w600))),
                     Row(
                       children: [
-                        Image.asset('assets/ic_loc_ping.png', width: 0.16 * width),
+                        Image.asset('assets/ic_loc_ping.png',
+                            width: 0.16 * width),
                         Text('$pingCnt',
                             style: TextStyle(
                                 color: Color.fromRGBO(244, 198, 35, 1),
@@ -262,7 +322,7 @@ class _RankingPageState extends State<RankingPage> {
 
   @override
   Widget build(BuildContext context) {
-    //double width = MediaQuery.of(context).size.width;
+    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: CupertinoNavigationBar(
@@ -328,8 +388,22 @@ class _RankingPageState extends State<RankingPage> {
                                   ? _renderHandlinedTitle()
                                   : _renderTypeItem(context, index - 1);
                             });
+                      } else if (snapshot.hasError) {
+                        Text("Error!");
+                      } else {
+                        return Container(
+                          height: height * 0.4,
+                          child: Center(
+                            child: Container(
+                                width: width * 0.2,
+                                height: width * 0.2,
+                                child: Loading(
+                                    indicator: BallBeatIndicator(),
+                                    size: 0.27 * width,
+                                    color: Color(0xff36A257))),
+                          ),
+                        );
                       }
-                      return CircularProgressIndicator();
                     }),
               ]),
             ),

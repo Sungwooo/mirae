@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loading/indicator/ball_beat_indicator.dart';
+
+import 'package:loading/loading.dart';
 import 'package:web_scraper/web_scraper.dart';
 
 import 'argument.dart';
@@ -206,7 +209,8 @@ class ArticleDetailPage extends StatelessWidget {
               future: initChaptersTitleScrap(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData == false) {
-                  return CircularProgressIndicator();
+                  return Loading(
+                      indicator: BallBeatIndicator(), color: Color(0xff36A257));
                 } else if (snapshot.hasError) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),

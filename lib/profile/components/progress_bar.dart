@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProgressBarWidget extends StatefulWidget {
   @override
@@ -6,7 +7,13 @@ class ProgressBarWidget extends StatefulWidget {
 }
 
 class _ProgressBarWidgetState extends State<ProgressBarWidget> {
-  int points = 10030;
+  int points = 54400;
+
+  String numberWithComma(int param) {
+    return new NumberFormat('###,###,###,###')
+        .format(param)
+        .replaceAll(' ', '');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +36,7 @@ class _ProgressBarWidgetState extends State<ProgressBarWidget> {
                 height: 0.15 * height,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
                         width: 83,
@@ -64,7 +71,7 @@ class _ProgressBarWidgetState extends State<ProgressBarWidget> {
               Padding(
                 padding: EdgeInsets.only(left: width * 0.4 * 0.65, bottom: 4),
                 child: Text(
-                  "$points pts",
+                  "${numberWithComma(points)} pts",
                   style: TextStyle(
                       fontFamily: "GoogleSans",
                       fontSize: 0.032 * width,
@@ -80,7 +87,11 @@ class _ProgressBarWidgetState extends State<ProgressBarWidget> {
                     backgroundColor: Color(0xffD3D3D3),
                     valueColor:
                         AlwaysStoppedAnimation<Color>(Color(0xff31AC53)),
-                    value: 0.65,
+                    value: points > 20000
+                        ? (points - 20000) / 50000
+                        : points > 5000
+                            ? (points - 5000) / 20000
+                            : points / 5000,
                   ),
                 ),
               ),

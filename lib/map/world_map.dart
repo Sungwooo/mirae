@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:loading/indicator/ball_beat_indicator.dart';
+
+import 'package:loading/loading.dart';
 import 'package:location/location.dart';
 
 class Trash {
@@ -172,10 +175,10 @@ class WorldMapState extends State<WorldMap> {
                 child: Container(
                     width: width * 0.2,
                     height: width * 0.2,
-                    child: CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Color(0xff36A257)),
-                    )),
+                    child: Loading(
+                        indicator: BallBeatIndicator(),
+                        size: 0.27 * width,
+                        color: Color(0xff36A257))),
               ),
             ),
     );
