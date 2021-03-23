@@ -160,63 +160,78 @@ class _RankingPageState extends State<RankingPage> {
   Widget _renderHeaderContent() {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-                padding: EdgeInsets.only(top: 0.014 * height),
-                child: Text('DISCARD',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 0.053 * width,
-                        fontFamily: 'GoogleSans',
-                        fontWeight: FontWeight.w700))),
-            Padding(
-              padding: EdgeInsets.only(left: 0.016 * width),
-              child: Row(
-                children: [
-                  Image.asset('assets/ic_loc_discard.png', width: 0.16 * width),
-                  Text('3050',
-                      style: TextStyle(
-                          color: Color.fromRGBO(66, 178, 97, 1),
-                          fontSize: 0.074 * width,
-                          fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.w700))
-                ],
-              ),
-            ),
-          ],
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-                padding:
-                    EdgeInsets.only(top: 0.014 * height, left: 0.016 * width),
-                child: Text('PING',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 0.053 * width,
-                        fontFamily: 'GoogleSans',
-                        fontWeight: FontWeight.w600))),
-            Row(
+    int pingCnt = 0;
+    int discardCnt=0;
+    return FutureBuilder(
+        future: dbRef.child("user").once(),
+        builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+          if (snapshot.hasData) {
+            Map<dynamic, dynamic> values = snapshot.data.value;
+
+            values.forEach((key, values) {
+                  discardCnt+= values["discard"];
+                  pingCnt+= values["ping"];
+            });
+            return new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Image.asset('assets/ic_loc_ping.png', width: 0.16 * width),
-                Text('10208',
-                    style: TextStyle(
-                        color: Color.fromRGBO(244, 198, 35, 1),
-                        fontSize: 0.074 * width,
-                        fontFamily: 'GoogleSans',
-                        fontWeight: FontWeight.w600))
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.only(top: 0.014 * height),
+                        child: Text('DISCARD',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 0.053 * width,
+                                fontFamily: 'GoogleSans',
+                                fontWeight: FontWeight.w700))),
+                    Padding(
+                      padding: EdgeInsets.only(left: 0.016 * width),
+                      child: Row(
+                        children: [
+                          Image.asset('assets/ic_loc_discard.png', width: 0.16 * width),
+                          Text('$discardCnt',
+                              style: TextStyle(
+                                  color: Color.fromRGBO(66, 178, 97, 1),
+                                  fontSize: 0.074 * width,
+                                  fontFamily: 'GoogleSans',
+                                  fontWeight: FontWeight.w700))
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding:
+                        EdgeInsets.only(top: 0.014 * height, left: 0.016 * width),
+                        child: Text('PING',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 0.053 * width,
+                                fontFamily: 'GoogleSans',
+                                fontWeight: FontWeight.w600))),
+                    Row(
+                      children: [
+                        Image.asset('assets/ic_loc_ping.png', width: 0.16 * width),
+                        Text('$pingCnt',
+                            style: TextStyle(
+                                color: Color.fromRGBO(244, 198, 35, 1),
+                                fontSize: 0.074 * width,
+                                fontFamily: 'GoogleSans',
+                                fontWeight: FontWeight.w600))
+                      ],
+                    ),
+                  ],
+                ),
               ],
-            ),
-          ],
-        ),
-      ],
-    );
+            );
+          }
+          return Container();
+        });
   }
 
   Widget _renderHandlinedTitle() {
