@@ -47,6 +47,7 @@ class RankingPage extends StatefulWidget {
 }
 
 class _RankingPageState extends State<RankingPage> {
+
   List<RankerType> rankerList = [];
   final dbRef = FirebaseDatabase.instance.reference();
   Country selectedCountry;
@@ -80,7 +81,7 @@ class _RankingPageState extends State<RankingPage> {
           ),
         ),
         Container(
-          width: 0.245 * width,
+          width: 0.243 * width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -122,12 +123,21 @@ class _RankingPageState extends State<RankingPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text("${index + 1}",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 0.053 * width,
-                        fontFamily: 'GoogleSans',
-                        fontWeight: FontWeight.w700)),
+                Column(
+                  children: [
+                    index <= 2
+                        ? new Image.asset(
+                      'assets/crown.png',
+                      width: 0.053 * width,)
+                        : Container(),
+                    Text("${index + 1}",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 0.053 * width,
+                            fontFamily: 'GoogleSans',
+                            fontWeight: FontWeight.w700)),
+                  ],
+                ),
                 _renderProfile(context, index),
                 Image.asset('assets/ic_loc_discard.png', width: 0.14 * width),
                 Text('${rankerList[index].discardCount}',
