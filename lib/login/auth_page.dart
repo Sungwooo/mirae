@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mirae/global.dart';
 import 'package:provider/provider.dart';
 import '../main.dart';
 import '../mainPage/mainPage.dart';
@@ -23,6 +24,7 @@ class AuthPageState extends State<AuthPage> {
     fp = Provider.of<FirebaseProvider>(context);
 
     if (fp.getUser() != null) {
+      Globals.changeUid(fp.getUser().uid);
       return MainPage(cameras);
     } else {
       return LogIn();

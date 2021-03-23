@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:mirae/login/firebase_provider.dart';
 import 'package:intl/intl.dart';
 
+import '../../global.dart';
+
 var now = DateFormat('y.MM.dd').format(DateTime.now());
 
 class LevelRankWidget extends StatelessWidget {
@@ -106,7 +108,7 @@ class LevelRankWidget extends StatelessWidget {
                     ),
                     SizedBox(width: 0.02 * width),
                     Text(
-                      "1",
+                      '${Globals.rank}',
                       style: TextStyle(
                           color: Color(0xffFCE596),
                           fontFamily: "GoogleSans",

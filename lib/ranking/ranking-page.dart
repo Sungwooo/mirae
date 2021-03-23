@@ -1,13 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:loading/indicator/ball_beat_indicator.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
 import 'package:loading/loading.dart';
+import 'package:mirae/login/firebase_provider.dart';
 import 'package:mirae/map/world_map.dart';
 import 'package:country_picker/country_picker.dart';
+
+import '../global.dart';
 
 class RankerType {
   String name;
@@ -16,6 +19,7 @@ class RankerType {
   int points;
   int discardCount;
   int pingCount;
+  String uid;
 
   RankerType(
       {this.name,
@@ -23,7 +27,8 @@ class RankerType {
       this.flag,
       this.points,
       this.discardCount,
-      this.pingCount});
+      this.pingCount,
+      this.uid});
 
   RankerType.fromSnapshot(DataSnapshot snapshot)
       : name = snapshot.value["name"],
@@ -31,7 +36,8 @@ class RankerType {
         flag = snapshot.value["country"],
         points = snapshot.value["point"],
         discardCount = snapshot.value["discard"],
-        pingCount = snapshot.value["ping"];
+        pingCount = snapshot.value["ping"],
+        uid=snapshot.key;
 
   toJson() {
     return {
@@ -54,6 +60,8 @@ class _RankingPageState extends State<RankingPage> {
   List<RankerType> rankerList = [];
   final dbRef = FirebaseDatabase.instance.reference();
   Country selectedCountry;
+  FirebaseProvider fp;
+  FirebaseUser currentUser;
 
   @override
   void initState() {
@@ -110,7 +118,7 @@ class _RankingPageState extends State<RankingPage> {
                   ),
                   Text(
                     countryCodeToEmoji(rankerList[index].flag),
-                    style: TextStyle(fontSize: 0.05 * width),
+                    style: TextStyle(fontSize: 0.04 * width),
                   ),
                 ],
               ),
@@ -130,6 +138,9 @@ class _RankingPageState extends State<RankingPage> {
   Widget _renderTypeItem(BuildContext context, index) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    if(rankerList[index].uid == Globals.uid) {
+      Globals.changeRank(index+1);
+    }
     var children2 = [
       Padding(
         padding: EdgeInsets.only(left: 0.027 * width),
@@ -225,7 +236,6 @@ class _RankingPageState extends State<RankingPage> {
         builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
           if (snapshot.hasData) {
             Map<dynamic, dynamic> values = snapshot.data.value;
-
             values.forEach((key, values) {
               discardCnt += values["discard"];
               pingCnt += values["ping"];
@@ -360,21 +370,24 @@ class _RankingPageState extends State<RankingPage> {
             Expanded(
               child: ListView(children: [
                 FutureBuilder(
-                    future: dbRef.child("user").orderByChild("point").once(),
+                    future: dbRef.child("user").once(),
+                    // ignore: missing_return
                     builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
                       if (snapshot.hasData) {
                         rankerList.clear();
                         Map<dynamic, dynamic> values = snapshot.data.value;
-
                         values.forEach((key, values) {
+                          print(key);
                           rankerList.add(RankerType(
                               name: values["name"],
                               imageUrl: values["ImageUrl"],
                               flag: values["country"],
                               discardCount: values["discard"],
                               pingCount: values["ping"],
-                              points: values["point"]));
-                        });
+                              points: values["point"],
+                              uid: key));
+                        },
+                        );
                         Comparator<RankerType> pointComparator =
                             (a, b) => b.points.compareTo(a.points);
                         rankerList.sort(pointComparator);
