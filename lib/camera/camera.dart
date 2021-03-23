@@ -394,8 +394,9 @@ class _CameraPageState extends State<CameraPage> {
     double height = MediaQuery.of(context).size.height;
     return Container(
         width: double.infinity,
-        height: 80.0,
-        padding: EdgeInsets.all(20.0),
+        height: 110.0,
+        padding:
+            EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0, bottom: 20.0),
         color: Color.fromRGBO(0, 0, 0, 0.5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -435,6 +436,7 @@ class _CameraPageState extends State<CameraPage> {
   Widget _renderCameraView(BuildContext context) {
     final Size screen = MediaQuery.of(context).size;
     final deviceRatio = screen.width / screen.height;
+
     return Container(
       child: Stack(
         children: <Widget>[
@@ -481,23 +483,6 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CupertinoNavigationBar(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.white,
-            width: 0.0, // One physical pixel.
-            style: BorderStyle.none,
-          ),
-        ),
-        middle: Text(
-          "CAMERA",
-          style: TextStyle(
-              color: Color(0xff31AC53),
-              fontWeight: FontWeight.w700,
-              fontFamily: 'GoogleSans'),
-        ),
-        padding: EdgeInsetsDirectional.only(),
-      ),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
