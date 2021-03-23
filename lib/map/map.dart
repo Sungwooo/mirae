@@ -11,7 +11,6 @@ class MapPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(getPoints);
     return Scaffold(
       appBar: CupertinoNavigationBar(
         middle: Text(
@@ -31,6 +30,7 @@ class MapPage extends StatelessWidget {
       ),
       body: PingMap(
         isPingWidget: true,
+        getPoints: getPoints,
       ),
     );
   }

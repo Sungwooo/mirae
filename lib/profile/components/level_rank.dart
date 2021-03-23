@@ -106,7 +106,7 @@ class LevelRankWidget extends StatelessWidget {
                     ),
                     SizedBox(width: 0.02 * width),
                     Text(
-                      "146",
+                      "1",
                       style: TextStyle(
                           color: Color(0xffFCE596),
                           fontFamily: "GoogleSans",

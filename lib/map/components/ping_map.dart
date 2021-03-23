@@ -59,8 +59,9 @@ Future loadTrashs() async {
 
 class PingMap extends StatefulWidget {
   final bool isPingWidget;
+  final bool getPoints;
 
-  const PingMap({this.isPingWidget, Key key}) : super(key: key);
+  const PingMap({this.isPingWidget, this.getPoints, key}) : super(key: key);
   @override
   PingMapState createState() => PingMapState();
 }
@@ -314,6 +315,7 @@ class PingMapState extends State<PingMap> {
   @override
   Widget build(BuildContext context) {
     isPingWidget = widget.isPingWidget;
+    getPoints = widget.getPoints;
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -351,6 +353,12 @@ class PingMapState extends State<PingMap> {
                               icon: pinLocationIcon));
                         });
                       });
+                      if (getPoints == true) {
+                        _markers.add(Marker(
+                            markerId: MarkerId('<MARKER_1>'),
+                            position: myPosition,
+                            icon: pinLocationIcon));
+                      }
 
                       /* _markers.add(Marker(
                             markerId: MarkerId('<MARKER_1>'),
@@ -480,7 +488,7 @@ class PingMapState extends State<PingMap> {
                     zoom: 18.00)));
             if ((newLocalData.latitude - destination.latitude).abs() +
                     (newLocalData.longitude - destination.longitude).abs() <
-                0.003) {
+                0.0015) {
               setState(() {
                 isArrived = true;
               });

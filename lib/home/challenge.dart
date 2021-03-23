@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:mirae/home/components/before_chall_widget.dart';
 import 'package:mirae/home/components/today_chall_widget.dart';
 import 'package:mirae/home/components/expand_section.dart';
-import 'package:mirae/home/home_page.dart';
+
 import 'package:mirae/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -209,7 +209,8 @@ class ChallengeState extends State<Challenge> {
                         Container(
                             width: 0.94 * width,
                             child: Column(
-                              children: List.generate(day ~/ 5, (line) {
+                              children:
+                                  List.generate((day + 4) ~/ 5 - 1, (line) {
                                 return Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: List.generate(5, (indexb) {
@@ -313,15 +314,19 @@ class ChallengeState extends State<Challenge> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: List.generate(fourList.length,
                                         (index) {
-                                      return index < day % 5 - 1
+                                      return index < day % 5 - 1 || day % 5 == 0
                                           ? InkWell(
                                               onTap: () => setState(() {
                                                 isTodayExpanded = false;
                                                 selectedDay ==
-                                                        day ~/ 5 * 5 + index + 1
+                                                        ((day + 4) ~/ 5 - 1) *
+                                                                5 +
+                                                            index +
+                                                            1
                                                     ? selectedDay = 0
                                                     : selectedDay =
-                                                        day ~/ 5 * 5 +
+                                                        ((day + 4) ~/ 5 - 1) *
+                                                                5 +
                                                             index +
                                                             1;
                                                 selectedDay == 0
@@ -329,7 +334,9 @@ class ChallengeState extends State<Challenge> {
                                                     : isBeforeExpanded = true;
                                               }),
                                               child: (selectedDay !=
-                                                      day ~/ 5 * 5 + index + 1
+                                                      ((day + 4) ~/ 5 - 1) * 5 +
+                                                          index +
+                                                          1
                                                   ? Container(
                                                       width: 0.187 * width,
                                                       height: 0.187 * width,
@@ -339,7 +346,7 @@ class ChallengeState extends State<Challenge> {
                                                                 .center,
                                                         children: [
                                                           Text(
-                                                              "Day ${day ~/ 5 * 5 + index + 1}",
+                                                              "Day ${((day + 4) ~/ 5 - 1) * 5 + index + 1}",
                                                               style: TextStyle(
                                                                   color: Color(
                                                                       0xff000000),
@@ -404,7 +411,7 @@ class ChallengeState extends State<Challenge> {
                                                                 .center,
                                                           ),
                                                           Text(
-                                                            "${day ~/ 5 * 5 + index + 1}",
+                                                            "${((day + 4) ~/ 5 - 1) * 5 + index + 1}",
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .white,
@@ -526,7 +533,8 @@ class ChallengeState extends State<Challenge> {
                                                 ))),
                                     ] +
                                     List.generate(fourList.length, (index) {
-                                      return index >= day % 5 - 1
+                                      return index >= day % 5 - 1 &&
+                                              day % 5 != 0
                                           ? Container(
                                               width: 0.187 * width,
                                               height: 0.187 * width,

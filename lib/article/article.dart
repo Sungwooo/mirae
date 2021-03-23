@@ -476,7 +476,7 @@ class _ArticleState extends State<ArticlePage> {
                           height: width * 0.2,
                           child: Loading(
                               indicator: BallBeatIndicator(),
-                              size: 0.27 * width,
+                              size: 0.15 * width,
                               color: Color(0xff36A257))),
                     ),
                   ),

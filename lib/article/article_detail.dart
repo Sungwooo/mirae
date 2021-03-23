@@ -209,8 +209,18 @@ class ArticleDetailPage extends StatelessWidget {
               future: initChaptersTitleScrap(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData == false) {
-                  return Loading(
-                      indicator: BallBeatIndicator(), color: Color(0xff36A257));
+                  return Container(
+                    height: height * 0.4,
+                    child: Center(
+                      child: Container(
+                          width: width * 0.2,
+                          height: width * 0.2,
+                          child: Loading(
+                              indicator: BallBeatIndicator(),
+                              size: 0.27 * width,
+                              color: Color(0xff36A257))),
+                    ),
+                  );
                 } else if (snapshot.hasError) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
