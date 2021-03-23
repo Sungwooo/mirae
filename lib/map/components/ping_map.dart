@@ -480,7 +480,7 @@ class PingMapState extends State<PingMap> {
                     zoom: 18.00)));
             if ((newLocalData.latitude - destination.latitude).abs() +
                     (newLocalData.longitude - destination.longitude).abs() <
-                0.005) {
+                0.003) {
               setState(() {
                 isArrived = true;
               });
