@@ -121,10 +121,13 @@ class ArticleDetailPage extends StatelessWidget {
                               color: Color(0xffF4BB27),
                             ),
                           ),
-                          Text(arguments.category,
+                          Text(
+                              arguments.category != ""
+                                  ? arguments.category
+                                  : "Climate and Environment",
                               textAlign: TextAlign.left,
                               style: TextStyle(
-                                  color: Colors.lightBlueAccent,
+                                  color: Color(0xff239EDD),
                                   fontSize: 0.032 * width,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'GoogleSans')),
@@ -154,7 +157,7 @@ class ArticleDetailPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 2),
+                padding: EdgeInsets.only(top: 0.01 * height),
                 child: Container(
                   width: 0.934 * width,
                   height: 0.195 * height,

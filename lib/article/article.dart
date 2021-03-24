@@ -107,7 +107,7 @@ class ResultItem extends StatelessWidget {
                               Text(category != '' ? category : 'Video',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      color: Colors.lightBlueAccent,
+                                      color: Color(0xff239EDD),
                                       fontSize: 0.032 * width,
                                       fontWeight: FontWeight.w700,
                                       fontFamily: 'GoogleSans')),
@@ -417,7 +417,7 @@ class _ArticleState extends State<ArticlePage> {
                                 ),
                                 BackdropFilter(
                                   filter:
-                                      ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                                      ImageFilter.blur(sigmaX: 1, sigmaY: 1),
                                   child: Container(
                                     width: 0.934 * width,
                                     height: 0.295 * height,

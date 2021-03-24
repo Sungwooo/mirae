@@ -22,7 +22,9 @@ class _EditUserInfoState extends State<EditUserInfo> {
         fp.getUser().metadata.creationTime.toString().substring(0, 10);
     userEmail = "${fp.getUser().email}";
     challengeDay =
-        DateTime.now().difference(fp.getUser().metadata.creationTime).inDays +
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
+                .difference(fp.getUser().metadata.creationTime)
+                .inDays +
             1;
 
     double width = MediaQuery.of(context).size.width;
@@ -112,7 +114,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                   height: 0.01 * height,
                 ),
                 Text(
-                  "Day $challengeDay / 32 challenges",
+                  "Day $challengeDay / ${(challengeDay - 1) * 3} challenges",
                   style: TextStyle(
                       color: Color(0xff42B261),
                       fontFamily: "GoogleSans",

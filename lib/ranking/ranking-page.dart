@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:loading/indicator/ball_beat_indicator.dart';
@@ -37,7 +38,7 @@ class RankerType {
         points = snapshot.value["point"],
         discardCount = snapshot.value["discard"],
         pingCount = snapshot.value["ping"],
-        uid=snapshot.key;
+        uid = snapshot.key;
 
   toJson() {
     return {
@@ -63,9 +64,40 @@ class _RankingPageState extends State<RankingPage> {
   FirebaseProvider fp;
   FirebaseUser currentUser;
 
+  ScrollController _scrollViewController;
+  bool _showAppbar = true;
+  bool isScrollingDown = false;
+
   @override
   void initState() {
     super.initState();
+    _scrollViewController = new ScrollController();
+    _scrollViewController.addListener(() {
+      if (_scrollViewController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        if (!isScrollingDown) {
+          isScrollingDown = true;
+          _showAppbar = false;
+          setState(() {});
+        }
+      }
+
+      if (_scrollViewController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        if (isScrollingDown) {
+          isScrollingDown = false;
+          _showAppbar = true;
+          setState(() {});
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollViewController?.dispose();
+    _scrollViewController?.removeListener(() {});
+    super.dispose();
   }
 
   String numberWithComma(int param) {
@@ -138,8 +170,8 @@ class _RankingPageState extends State<RankingPage> {
   Widget _renderTypeItem(BuildContext context, index) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    if(rankerList[index].uid == Globals.uid) {
-      Globals.changeRank(index+1);
+    if (rankerList[index].uid == Globals.uid) {
+      Globals.changeRank(index + 1);
     }
     var children2 = [
       Padding(
@@ -229,13 +261,15 @@ class _RankingPageState extends State<RankingPage> {
   Widget _renderHeaderContent() {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    int pingCnt = 0;
-    int discardCnt = 0;
+    int pingCnt;
+    int discardCnt;
     return FutureBuilder(
         future: dbRef.child("user").once(),
         builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
           if (snapshot.hasData) {
             Map<dynamic, dynamic> values = snapshot.data.value;
+            pingCnt = 0;
+            discardCnt = 0;
             values.forEach((key, values) {
               discardCnt += values["discard"];
               pingCnt += values["ping"];
@@ -308,7 +342,7 @@ class _RankingPageState extends State<RankingPage> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 0.03 * height),
+      padding: EdgeInsets.symmetric(vertical: 0.02 * height),
       width: 0.67 * width,
       child: Column(
         children: [
@@ -367,8 +401,13 @@ class _RankingPageState extends State<RankingPage> {
                 child: _renderHeaderContent(),
               ),
             ),
+            AnimatedContainer(
+              height: _showAppbar ? width * 0.205 : 0.0,
+              duration: Duration(milliseconds: 400),
+              child: _renderHandlinedTitle(),
+            ),
             Expanded(
-              child: ListView(children: [
+              child: ListView(controller: _scrollViewController, children: [
                 FutureBuilder(
                     future: dbRef.child("user").once(),
                     // ignore: missing_return
@@ -376,17 +415,17 @@ class _RankingPageState extends State<RankingPage> {
                       if (snapshot.hasData) {
                         rankerList.clear();
                         Map<dynamic, dynamic> values = snapshot.data.value;
-                        values.forEach((key, values) {
-                          print(key);
-                          rankerList.add(RankerType(
-                              name: values["name"],
-                              imageUrl: values["ImageUrl"],
-                              flag: values["country"],
-                              discardCount: values["discard"],
-                              pingCount: values["ping"],
-                              points: values["point"],
-                              uid: key));
-                        },
+                        values.forEach(
+                          (key, values) {
+                            rankerList.add(RankerType(
+                                name: values["name"],
+                                imageUrl: values["ImageUrl"],
+                                flag: values["country"],
+                                discardCount: values["discard"],
+                                pingCount: values["ping"],
+                                points: values["point"],
+                                uid: key));
+                          },
                         );
                         Comparator<RankerType> pointComparator =
                             (a, b) => b.points.compareTo(a.points);
@@ -395,17 +434,15 @@ class _RankingPageState extends State<RankingPage> {
                             physics: BouncingScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemCount: rankerList.length + 1,
+                            itemCount: rankerList.length,
                             itemBuilder: (BuildContext context, index) {
-                              return index == 0
-                                  ? _renderHandlinedTitle()
-                                  : _renderTypeItem(context, index - 1);
+                              return _renderTypeItem(context, index);
                             });
                       } else if (snapshot.hasError) {
                         Text("Error!");
                       } else {
                         return Container(
-                          height: height * 0.4,
+                          height: height * 0.3,
                           child: Center(
                             child: Container(
                                 width: width * 0.2,

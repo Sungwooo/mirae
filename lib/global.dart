@@ -1,6 +1,6 @@
 class Globals {
   static var rank = 0;
-  static String uid ="";
+  static String uid = "";
 
   static changeRank(int a) {
     rank = a; // this can be replaced with any static method
