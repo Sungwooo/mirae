@@ -27,9 +27,7 @@ class AuthPageState extends State<AuthPage> {
 
     if (fp.getUser() != null) {
       Globals.changeUid(fp.getUser().uid);
-      if(searchData() == null){
-        createData();
-      }
+      searchData();
       return MainPage(cameras);
     } else {
       return LogIn();
@@ -41,10 +39,11 @@ class AuthPageState extends State<AuthPage> {
     try {
       fp = Provider.of<FirebaseProvider>(context);
       databaseReference.child(fp.getUser().uid).once().then((DataSnapshot snapshot) {
-        return true;
+        if(snapshot.value==null){
+          createData();
+        }
       });
     } on Exception catch (e) {
-
     }
   }
 
