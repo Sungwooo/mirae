@@ -27,7 +27,7 @@ class AuthPageState extends State<AuthPage> {
 
     if (fp.getUser() != null) {
       Globals.changeUid(fp.getUser().uid);
-      if(searchData() == null){
+      if (searchData() == null) {
         createData();
       }
       return MainPage(cameras);
@@ -40,23 +40,25 @@ class AuthPageState extends State<AuthPage> {
   Future<bool> searchData() async {
     try {
       fp = Provider.of<FirebaseProvider>(context);
-      databaseReference.child(fp.getUser().uid).once().then((DataSnapshot snapshot) {
+      databaseReference
+          .child(fp.getUser().uid)
+          .once()
+          .then((DataSnapshot snapshot) {
         return true;
       });
-    } on Exception catch (e) {
-
-    }
+    } on Exception catch (e) {}
   }
 
-  void createData() {
-    databaseReference.child(fp.getUser().uid).set({
+  void createData() async {
+    await databaseReference.child(fp.getUser().uid).set({
       'name': fp.getUser().displayName,
       'country': 'US',
       'discard': 0,
       'point': 0,
       'ping': 0,
-      'ImageUrl': 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAzMDdfMTQ2%2FMDAxNjE1MDk3MjM1MDY4.8Vv_CZkS8JeQmLyZ9hZ-v1Xl_g34aOftc-Ig0hKMuuog.OPqz0oZcuR_5oekb2Dgw0s3Yt2rtdS4zvPtP2E_4WsQg.JPEG.eeeuz%2F%25B9%25AB%25BE%25DF%25C8%25A3%25C2%25A93.jpg&type=sc960_832'
+      'ImageUrl': fp.getUser().photoUrl != null
+          ? fp.getUser().photoUrl
+          : 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAzMDdfMTQ2%2FMDAxNjE1MDk3MjM1MDY4.8Vv_CZkS8JeQmLyZ9hZ-v1Xl_g34aOftc-Ig0hKMuuog.OPqz0oZcuR_5oekb2Dgw0s3Yt2rtdS4zvPtP2E_4WsQg.JPEG.eeeuz%2F%25B9%25AB%25BE%25DF%25C8%25A3%25C2%25A93.jpg&type=sc960_832'
     });
   }
 }
-
