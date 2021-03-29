@@ -7,21 +7,37 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading/indicator/ball_beat_indicator.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:loading/loading.dart';
 import 'package:location/location.dart';
 
 class Trash {
-  double latitude;
-  double longitude;
+  final double latitude;
+  final double longitude;
+  final String uid;
 
-  Trash({this.latitude, this.longitude});
+  Trash({this.latitude, this.longitude, this.uid});
 
-  factory Trash.fromJson(Map<String, dynamic> parsedJson) {
+  factory Trash.fromJson(Map<String, dynamic> json) {
     return Trash(
-      latitude: parsedJson['latitude'],
-      longitude: parsedJson['longitude'],
+      latitude: json['latitude'],
+      longitude: json['longitude'],
+      uid: json['uid'],
     );
+  }
+}
+
+Future<TrashsList> fetchPost() async {
+  final response = await http
+      .get('https://mirae-caa74-default-rtdb.firebaseio.com/ping.json');
+
+  if (response.statusCode == 200) {
+    // 만약 서버로의 요청이 성공하면, JSON을 파싱합니다.
+    return TrashsList.fromJson(json.decode(response.body));
+  } else {
+    // 만약 요청이 실패하면, 에러를 던집니다.
+    throw Exception('Failed to load post');
   }
 }
 
@@ -40,6 +56,8 @@ class TrashsList {
     );
   }
 }
+
+Future<TrashsList> trashsList;
 
 Future<String> _loadTrashAsset() async {
   return await rootBundle.loadString('assets/data/trash_list.json');
@@ -60,6 +78,7 @@ class WorldMap extends StatefulWidget {
 class WorldMapState extends State<WorldMap> {
   LocationData location;
   bool loading;
+  Future<List> trashList;
 
   StreamSubscription _locationSubscription;
   Location _locationTracker = Location();
@@ -91,6 +110,7 @@ class WorldMapState extends State<WorldMap> {
   @override
   void initState() {
     super.initState();
+    trashsList = fetchPost();
     loading = true;
     setCustomMapPin();
     getCurrentLocation();
@@ -102,13 +122,10 @@ class WorldMapState extends State<WorldMap> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    LatLng pinPosition = LatLng(35.149310, 129.063990);
     LatLng myPosition = location != null
         ? LatLng(location.latitude, location.longitude)
         : LatLng(35.149310, 129.063990);
 
-/*     var threshold = 100;
- */
     return Scaffold(
       appBar: CupertinoNavigationBar(
         middle: Text(
@@ -126,8 +143,11 @@ class WorldMapState extends State<WorldMap> {
           },
         ),
       ),
-      body: loading == false
-          ? Stack(children: <Widget>[
+      body: FutureBuilder<TrashsList>(
+        future: trashsList,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Stack(children: <Widget>[
               Container(
                 width: width,
                 height: height,
@@ -143,44 +163,33 @@ class WorldMapState extends State<WorldMap> {
                       : _markers,
                   onMapCreated: (GoogleMapController controller) {
                     _controller = controller;
-                    loadTrashs().then((trashlist) {
-                      trashlist.asMap().forEach((index, Trash trash) {
-                        _markers.add(Marker(
-                            markerId: MarkerId('<MARKER_$index>'),
-                            position: LatLng(trash.latitude, trash.longitude),
-                            icon: pinLocationIcon));
-                      });
-                    });
-                    setState(() {
+                    snapshot.data.trashs.asMap().forEach((index, Trash trash) {
                       _markers.add(Marker(
-                          markerId: MarkerId('<MARKER_1>'),
-                          position: pinPosition,
-                          icon: pinLocationIcon));
-                      _markers.add(Marker(
-                          markerId: MarkerId('<MARKER_2>'),
-                          position: LatLng(37.33166, -122.03015),
-                          icon: pinLocationIcon));
-                      _markers.add(Marker(
-                          markerId: MarkerId('<MARKER_3>'),
-                          position: LatLng(37.33186, -122.03045),
+                          markerId: MarkerId('<MARKER_$index>'),
+                          position: LatLng(trash.latitude, trash.longitude),
                           icon: pinLocationIcon));
                     });
                   },
                 ),
               ),
-            ])
-          : Container(
-              height: height * 0.6,
-              child: Center(
-                child: Container(
-                    width: width * 0.2,
-                    height: width * 0.2,
-                    child: Loading(
-                        indicator: BallBeatIndicator(),
-                        size: 0.27 * width,
-                        color: Color(0xff36A257))),
-              ),
+            ]);
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+          return Container(
+            height: height * 0.6,
+            child: Center(
+              child: Container(
+                  width: width * 0.2,
+                  height: width * 0.2,
+                  child: Loading(
+                      indicator: BallBeatIndicator(),
+                      size: 0.27 * width,
+                      color: Color(0xff36A257))),
             ),
+          );
+        },
+      ),
     );
   }
 

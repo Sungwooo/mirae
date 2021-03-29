@@ -8,6 +8,7 @@ import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading/indicator/ball_beat_indicator.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:loading/loading.dart';
 
@@ -17,16 +18,31 @@ import 'package:mirae/map/components/menu_widget.dart';
 import 'lets_go_widget.dart';
 
 class Trash {
-  double latitude;
-  double longitude;
+  final double latitude;
+  final double longitude;
+  final String uid;
 
-  Trash({this.latitude, this.longitude});
+  Trash({this.latitude, this.longitude, this.uid});
 
-  factory Trash.fromJson(Map<String, dynamic> parsedJson) {
+  factory Trash.fromJson(Map<String, dynamic> json) {
     return Trash(
-      latitude: parsedJson['latitude'],
-      longitude: parsedJson['longitude'],
+      latitude: json['latitude'],
+      longitude: json['longitude'],
+      uid: json['uid'],
     );
+  }
+}
+
+Future<TrashsList> fetchPost() async {
+  final response = await http
+      .get('https://mirae-caa74-default-rtdb.firebaseio.com/ping.json');
+
+  if (response.statusCode == 200) {
+    // 만약 서버로의 요청이 성공하면, JSON을 파싱합니다.
+    return TrashsList.fromJson(json.decode(response.body));
+  } else {
+    // 만약 요청이 실패하면, 에러를 던집니다.
+    throw Exception('Failed to load post');
   }
 }
 
@@ -46,16 +62,7 @@ class TrashsList {
   }
 }
 
-Future<String> _loadTrashAsset() async {
-  return await rootBundle.loadString('assets/data/trash_list.json');
-}
-
-Future loadTrashs() async {
-  String jsonString = await _loadTrashAsset();
-  final jsonResponse = json.decode(jsonString);
-  TrashsList trashs = new TrashsList.fromJson(jsonResponse);
-  return trashs.trashs;
-}
+Future<TrashsList> trashsList;
 
 class PingMap extends StatefulWidget {
   final bool isPingWidget;
@@ -302,6 +309,7 @@ class PingMapState extends State<PingMap> {
   @override
   void initState() {
     super.initState();
+    trashsList = fetchPost();
     loading = true;
     toggleBtn = true;
     isArrived = false;
@@ -324,11 +332,23 @@ class PingMapState extends State<PingMap> {
         ? LatLng(location.latitude, location.longitude)
         : LatLng(35.149310, 129.063990);
 
-    LatLng pinPosition = LatLng(35.149310, 129.063990);
-
     return Scaffold(
-        body: loading == false
-            ? Stack(children: <Widget>[
+        body: FutureBuilder<TrashsList>(
+          future: trashsList,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var distance = (location.latitude - destination.latitude).abs() +
+                  (location.longitude - destination.longitude).abs();
+              for (Trash trash in snapshot.data.trashs) {
+                var newDistance = (location.latitude - trash.latitude).abs() +
+                    (location.longitude - trash.longitude).abs();
+                if (distance > newDistance) {
+                  setState(() {
+                    destination = LatLng(trash.latitude, trash.longitude);
+                  });
+                }
+              }
+              return Stack(children: <Widget>[
                 Container(
                   width: width,
                   height: height,
@@ -345,13 +365,14 @@ class PingMapState extends State<PingMap> {
                         : _markers,
                     onMapCreated: (GoogleMapController controller) {
                       _controller = controller;
-                      loadTrashs().then((trashlist) {
-                        trashlist.asMap().forEach((index, Trash trash) {
-                          _markers.add(Marker(
-                              markerId: MarkerId('<MARKER_$index>'),
-                              position: LatLng(trash.latitude, trash.longitude),
-                              icon: pinLocationIcon));
-                        });
+
+                      snapshot.data.trashs
+                          .asMap()
+                          .forEach((index, Trash trash) {
+                        _markers.add(Marker(
+                            markerId: MarkerId('<MARKER_$index>'),
+                            position: LatLng(trash.latitude, trash.longitude),
+                            icon: pinLocationIcon));
                       });
                       if (getPoints == true) {
                         _markers.add(Marker(
@@ -359,19 +380,6 @@ class PingMapState extends State<PingMap> {
                             position: myPosition,
                             icon: pinLocationIcon));
                       }
-
-                      /* _markers.add(Marker(
-                            markerId: MarkerId('<MARKER_1>'),
-                            position: pinPosition,
-                            icon: pinLocationIcon));
-                        _markers.add(Marker(
-                            markerId: MarkerId('<MARKER_2>'),
-                            position: LatLng(37.33166, -122.03015),
-                            icon: pinLocationIcon));
-                        _markers.add(Marker(
-                            markerId: MarkerId('<MARKER_3>'),
-                            position: LatLng(37.33186, -122.03045),
-                            icon: pinLocationIcon)); */
                     },
                   ),
                 ),
@@ -384,19 +392,24 @@ class PingMapState extends State<PingMap> {
                   fallbackBuilder: (BuildContext context) =>
                       LetsGoWidget(pingMapState: this),
                 ),
-              ])
-            : Container(
-                height: height * 0.6,
-                child: Center(
-                  child: Container(
-                      width: width * 0.2,
-                      height: width * 0.2,
-                      child: Loading(
-                          indicator: BallBeatIndicator(),
-                          size: 0.27 * width,
-                          color: Color(0xff36A257))),
-                ),
+              ]);
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+            return Container(
+              height: height * 0.6,
+              child: Center(
+                child: Container(
+                    width: width * 0.2,
+                    height: width * 0.2,
+                    child: Loading(
+                        indicator: BallBeatIndicator(),
+                        size: 0.27 * width,
+                        color: Color(0xff36A257))),
               ),
+            );
+          },
+        ),
         floatingActionButton: FloatingActionButton(
             heroTag: 'one',
             mini: true,
@@ -413,22 +426,6 @@ class PingMapState extends State<PingMap> {
             backgroundColor: Colors.white.withOpacity(0.7),
             onPressed: () {
               getCurrentLocation();
-              loadTrashs().then((trashlist) {
-                var distance =
-                    (location.latitude - destination.latitude).abs() +
-                        (location.longitude - destination.longitude).abs();
-                for (Trash trash in trashlist) {
-                  var newDistance = (location.latitude - trash.latitude).abs() +
-                      (location.longitude - trash.longitude).abs();
-                  if (distance > newDistance) {
-                    setState(() {
-                      destination = LatLng(trash.latitude, trash.longitude);
-                    });
-                  }
-                }
-                print("${destination.latitude}, ${destination.longitude}");
-              });
-
               toggleBtn = !toggleBtn;
             }),
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop);

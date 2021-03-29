@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:mirae/login/firebase_provider.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ class EditUserName extends StatefulWidget {
 class _EditUserNameState extends State<EditUserName> {
   FirebaseProvider fp;
   FirebaseUser currentUser;
+  final databaseReference = FirebaseDatabase.instance.reference().child('user');
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +48,7 @@ class _EditUserNameState extends State<EditUserName> {
               print(text);
             },
             onSubmitted: (text) async {
-              setState(() {
-                fp.changeDisplayName(text);
-              });
+              changeNickName(text);
             },
           ),
         ),
@@ -64,5 +64,12 @@ class _EditUserNameState extends State<EditUserName> {
         ),
       ],
     );
+  }
+
+  void changeNickName(String text) async {
+    await fp.changeDisplayName(text);
+    await databaseReference
+        .child(fp.getUser().uid)
+        .update({'name': text != '' ? text : fp.getUser().displayName});
   }
 }

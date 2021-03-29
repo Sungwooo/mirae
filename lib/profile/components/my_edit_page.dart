@@ -48,8 +48,8 @@ class _MyEditPageState extends State<MyEditPage> {
             height: 0.05 * height,
           ),
           TextButton(
-              onPressed: () {
-                fp.signOut();
+              onPressed: () async {
+                await fp.signOut();
                 Get.offAll(AuthPage());
               },
               child: Text("LOG OUT",

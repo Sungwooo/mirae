@@ -83,6 +83,34 @@ class HomePageState extends State<HomePage> {
   FirebaseProvider fp;
   int challengeDay = 1;
 
+  List challengeList = [
+    [
+      "Unplug unused products",
+      "Reduce using hot water",
+      "Don't use disposables"
+    ],
+    [
+      "Don’t use a dryer",
+      "Trade used without buying",
+      "Taking a walk(no cars)",
+    ],
+    [
+      "Seperate collection",
+      "Collecting the laundry",
+      "Finding the origin of food",
+    ],
+    [
+      "Don\'t get delivered",
+      "Growing plants",
+      "Shower in 5 minutes",
+    ],
+    [
+      "Using a tumbler",
+      "Donate items you don\'t use",
+      'Using public transportation',
+    ]
+  ];
+
   final List<Color> _colors = [
     Color(0xffF4C623).withOpacity(0.8),
     Color(0xffF4C623).withOpacity(0.712),
@@ -229,7 +257,8 @@ class HomePageState extends State<HomePage> {
                                         Container(
                                             width: 0.65 * width,
                                             child: TextUnderline(
-                                              message: "Using a tumbler",
+                                              message:
+                                                  "${challengeList[challengeDay % 5][0]}",
                                             )),
                                         Column(children: [
                                           InkWell(
@@ -301,7 +330,7 @@ class HomePageState extends State<HomePage> {
                                             width: 0.65 * width,
                                             child: TextUnderline(
                                               message:
-                                                  "Donate items you don\'t use",
+                                                  "${challengeList[challengeDay % 5][1]}",
                                             )),
                                         Column(children: [
                                           InkWell(
@@ -373,7 +402,7 @@ class HomePageState extends State<HomePage> {
                                           width: 0.65 * width,
                                           child: TextUnderline(
                                               message:
-                                                  'Using public transportation'),
+                                                  '${challengeList[challengeDay % 5][2]}'),
                                         ),
                                         Column(children: [
                                           InkWell(
@@ -469,7 +498,7 @@ class HomePageState extends State<HomePage> {
                                     padding:
                                         EdgeInsets.only(left: 0.043 * width),
                                     child: Text(
-                                      'There are 5 pings nearby',
+                                      'There are 0 pings nearby',
                                       style: TextStyle(
                                           color: Color(0xff343434),
                                           fontSize: 0.054 * width,
@@ -514,7 +543,7 @@ class HomePageState extends State<HomePage> {
                                 width: 0.14 * width,
                               ),
                             ),
-                            Text('5',
+                            Text('0',
                                 style: TextStyle(
                                     color: Color(0xff000000),
                                     fontSize: 0.053 * width,

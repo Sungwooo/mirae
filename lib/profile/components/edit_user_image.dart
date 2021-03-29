@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,6 +10,7 @@ import '../../login/firebase_provider.dart';
 
 Future<String> downloadURL(String uid) async {
   StorageReference ref = FirebaseStorage.instance.ref().child("profile/$uid");
+
   String url = (await ref.getDownloadURL()).toString();
 
   return url;
@@ -22,6 +24,7 @@ class EditImageNameWidget extends StatefulWidget {
 class _EditImageNameWidgetState extends State<EditImageNameWidget> {
   FirebaseProvider fp;
   FirebaseUser _user;
+  final databaseReference = FirebaseDatabase.instance.reference().child('user');
 
   FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
@@ -90,5 +93,9 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
     String downloadURL = storageReference.getDownloadURL().toString();
 
     fp.changePhotoUrl(downloadURL);
+    databaseReference.child(fp.getUser().uid).update({
+      'ImageUrl':
+          fp.getUser().photoUrl != null ? fp.getUser().photoUrl : '$downloadURL'
+    });
   }
 }

@@ -17,7 +17,7 @@ dependencies:
     path: ^1.7.0
     path_provider: ^1.6.27
     flutter_svg:
-    http:
+    http: ^0.12.0+1
     get:
     flutter_conditional_rendering:
     latlong:
@@ -50,7 +50,6 @@ flutter:
         - assets/icon/
         - assets/icon/bottomNavigation/
         - assets/icon/map/
-        - assets/data/
         - assets/models/ssd_mobilenet.tflite
         - assets/models/labels.txt
 

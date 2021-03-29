@@ -53,7 +53,7 @@ class FirebaseProvider with ChangeNotifier {
     try {
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleAuth =
-      await googleUser.authentication;
+          await googleUser.authentication;
       final AuthCredential credential = GoogleAuthProvider.getCredential(
           accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
       final FirebaseUser user =
@@ -73,6 +73,7 @@ class FirebaseProvider with ChangeNotifier {
       return null;
     }
   }
+
   // ignore: missing_return, non_constant_identifier_names
   Future<bool> signUpWithEmail(
       String email, String password, String name) async {
@@ -83,11 +84,8 @@ class FirebaseProvider with ChangeNotifier {
 
       UserUpdateInfo updateInfo = new UserUpdateInfo();
       updateInfo.displayName = name;
+      updateInfo.photoUrl = 'https://source.unsplash.com/Yui5vfKHuzs/640x404';
       await user.updateProfile(updateInfo);
-
-      UserUpdateInfo newPhotoUrl = new UserUpdateInfo();
-      newPhotoUrl.photoUrl = 'https://source.unsplash.com/Yui5vfKHuzs/640x404';
-      await user.updateProfile(newPhotoUrl);
 
       if (result.user != null) {
         signOut();
@@ -102,7 +100,7 @@ class FirebaseProvider with ChangeNotifier {
 
   Future<bool> signInWithEmail(String email, String password) async {
     try {
-            var result = await fAuth.signInWithEmailAndPassword(
+      var result = await fAuth.signInWithEmailAndPassword(
           email: email, password: password);
       if (result != null) {
         setUser(result.user);

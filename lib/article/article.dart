@@ -250,7 +250,8 @@ class _ArticleState extends State<ArticlePage> {
             padding: EdgeInsets.symmetric(
                 horizontal: 0.034 * width, vertical: 0.02 * height),
             child: InkWell(
-              onTap: () => Get.to(() => Challenge()),
+              onTap: () =>
+                  Get.to(() => Challenge()).then((value) => setState(() {})),
               child: Container(
                   height: 0.08 * height,
                   decoration: BoxDecoration(
