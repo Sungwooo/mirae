@@ -31,8 +31,13 @@ class _MenuWidgetState extends State<MenuWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     getTrashDistance();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return AnimatedPositioned(
