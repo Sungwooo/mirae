@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mirae/global.dart';
 import 'package:mirae/map/map.dart';
 
 class MapSplash extends StatefulWidget {
@@ -9,6 +11,36 @@ class MapSplash extends StatefulWidget {
 }
 
 class _MapSplashState extends State<MapSplash> {
+  final databaseReference = FirebaseDatabase.instance.reference().child('user');
+  int userPoint;
+
+  Future<void> getUserPoint() async {
+    await databaseReference
+        .child(Globals.uid)
+        .once()
+        .then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> values = snapshot.value;
+      if (values.isNotEmpty) {
+        {
+          values.forEach((key, values) {
+            if (key == "point") {
+              userPoint = int.parse(values.toString());
+            }
+          });
+        }
+      }
+    });
+  }
+
+  void updateUserPoint() async {
+    await getUserPoint();
+    if (userPoint != null) {
+      await databaseReference
+          .child(Globals.uid)
+          .update({'point': userPoint + 20});
+    }
+  }
+
   startTime() async {
     var _duration = new Duration(milliseconds: 1500);
     return new Timer(_duration,
@@ -18,6 +50,7 @@ class _MapSplashState extends State<MapSplash> {
   @override
   void initState() {
     super.initState();
+    updateUserPoint();
     startTime();
   }
 

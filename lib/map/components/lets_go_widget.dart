@@ -1,10 +1,13 @@
 import 'dart:ui';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
 import 'package:get/get.dart';
+import 'package:latlong/latlong.dart';
 import 'package:mirae/camera/camera.dart';
+import 'package:mirae/global.dart';
 import 'package:mirae/login/auth_page.dart';
 import 'package:mirae/main.dart';
 import 'package:mirae/map/components/ping_map.dart';
@@ -18,10 +21,56 @@ class LetsGoWidget extends StatefulWidget {
 }
 
 class _LetsGoWidgetState extends State<LetsGoWidget> {
+  final databaseReference = FirebaseDatabase.instance.reference().child('user');
+
   bool showBottomMenu = true;
   int markerNum = 3;
   int trashNum = 5;
   String turnIcon = "";
+  int userDistance = 0;
+  int userPoint = 0;
+  int distance = 100;
+
+  final Distance calDistance = Distance();
+
+  Future<void> getUserDistance() async {
+    await databaseReference
+        .child(Globals.uid)
+        .once()
+        .then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> values = snapshot.value;
+      if (values.isNotEmpty) {
+        {
+          values.forEach((key, values) {
+            if (key == "distance") {
+              userDistance = int.parse(values.toString());
+            }
+            if (key == "point") {
+              userPoint = int.parse(values.toString());
+            }
+          });
+        }
+      }
+    });
+  }
+
+  getMoveDistance() {
+    double meter = calDistance(
+        LatLng(widget.pingMapState.location.latitude,
+            widget.pingMapState.location.longitude),
+        LatLng(widget.pingMapState.destination.latitude,
+            widget.pingMapState.destination.longitude));
+
+    distance = meter.floor();
+  }
+
+  void updateUserDistance(int distance) async {
+    await getUserDistance();
+    print("${userDistance + distance}");
+    await databaseReference
+        .child(Globals.uid)
+        .update({'distance': userDistance + distance, 'point': userPoint + 40});
+  }
 
   void setDirectionIcon() {
     if (widget.pingMapState.navigateMsg != null) {
@@ -45,6 +94,8 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
   @override
   Widget build(BuildContext context) {
     setDirectionIcon();
+    getMoveDistance();
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return AnimatedPositioned(
@@ -216,7 +267,7 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                       getEffect(
                           Color(0xffFFDF6D).withOpacity(0.7),
                           "assets/icon/map/runIcon.png",
-                          '-30kcal',
+                          '-${distance ~/ 45}kcal',
                           Color(0xffFF8A00)),
                       getEffect(
                           Color(0xff96F2FF).withOpacity(0.7),
@@ -255,8 +306,12 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 0.03 * height),
                                 child: TextButton(
-                                  onPressed: () =>
-                                      Get.to(() => CameraPage(cameras)),
+                                  onPressed: () {
+                                    getMoveDistance();
+                                    print("${distance ~/ 45}");
+                                    updateUserDistance(distance);
+                                    Get.to(() => CameraPage(cameras));
+                                  },
                                   child: Image.asset(
                                     "assets/icon/map/arrivedCamera.png",
                                     width: 0.27 * width,

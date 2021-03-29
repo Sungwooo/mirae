@@ -113,7 +113,7 @@ class MyScoreBoxWidget extends StatelessWidget {
                                   ),
                                   SizedBox(width: 0.01 * width),
                                   Text(
-                                    "4050",
+                                    "${int.parse(values["distance"].toString()) ~/ 45}",
                                     style: TextStyle(
                                         fontFamily: "GoogleSans",
                                         fontSize: 0.09 * width,

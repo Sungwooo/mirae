@@ -54,6 +54,7 @@ class AuthPageState extends State<AuthPage> {
       'name': fp.getUser().displayName,
       'country': 'US',
       'discard': 0,
+      'distance': 0,
       'point': 0,
       'ping': 0,
       'ImageUrl': fp.getUser().photoUrl != null

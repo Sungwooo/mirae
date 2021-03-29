@@ -98,7 +98,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                       getEffect(
                           Color(0xffFFDF6D).withOpacity(0.7),
                           "assets/icon/map/runIcon.png",
-                          '-30kcal',
+                          '-${distance ~/ 45}kcal',
                           Color(0xffFF8A00)),
                       getEffect(
                           Color(0xff96F2FF).withOpacity(0.7),

@@ -99,6 +99,7 @@ class PingMapState extends State<PingMap> {
   String navigateMsg = "";
 
   LatLng destination = LatLng(37.3264, -122.0197);
+  LatLng myPosition;
 
 /* ------------------------------------ */
   final Set<Polyline> _polyLines = {};
@@ -328,7 +329,7 @@ class PingMapState extends State<PingMap> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    LatLng myPosition = location != null
+    myPosition = location != null
         ? LatLng(location.latitude, location.longitude)
         : LatLng(35.149310, 129.063990);
 
@@ -356,7 +357,7 @@ class PingMapState extends State<PingMap> {
                     polylines: polyLines,
                     initialCameraPosition: CameraPosition(
                       target: myPosition,
-                      zoom: 14,
+                      zoom: 16,
                     ),
                     compassEnabled: false,
                     myLocationButtonEnabled: false,
