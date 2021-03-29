@@ -163,11 +163,15 @@ class WorldMapState extends State<WorldMap> {
                       : _markers,
                   onMapCreated: (GoogleMapController controller) {
                     _controller = controller;
-                    snapshot.data.trashs.asMap().forEach((index, Trash trash) {
-                      _markers.add(Marker(
-                          markerId: MarkerId('<MARKER_$index>'),
-                          position: LatLng(trash.latitude, trash.longitude),
-                          icon: pinLocationIcon));
+                    setState(() {
+                      snapshot.data.trashs
+                          .asMap()
+                          .forEach((index, Trash trash) {
+                        _markers.add(Marker(
+                            markerId: MarkerId('<MARKER_$index>'),
+                            position: LatLng(trash.latitude, trash.longitude),
+                            icon: pinLocationIcon));
+                      });
                     });
                   },
                 ),
