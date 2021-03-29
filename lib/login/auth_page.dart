@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mirae/global.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import '../main.dart';
 import '../mainPage/mainPage.dart';
@@ -19,6 +24,7 @@ class AuthPage extends StatefulWidget {
 
 class AuthPageState extends State<AuthPage> {
   final databaseReference = FirebaseDatabase.instance.reference().child('user');
+
   FirebaseProvider fp;
 
   @override
@@ -49,7 +55,22 @@ class AuthPageState extends State<AuthPage> {
     } on Exception catch (e) {}
   }
 
+  Future<File> getImageFileFromAssets(String path) async {
+    final byteData = await rootBundle.load('assets/$path');
+    final file = File('${(await getTemporaryDirectory()).path}/$path');
+    await file.writeAsBytes(byteData.buffer
+        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+    return file;
+  }
+
   void createData() async {
+    StorageReference storageReference =
+        FirebaseStorage.instance.ref().child("profile/${fp.getUser().uid}");
+    File image = await getImageFileFromAssets('profileImage.png');
+
+    StorageUploadTask storageUploadTask = storageReference.putFile(image);
+
+    await storageUploadTask.onComplete;
     await databaseReference.child(fp.getUser().uid).set({
       'name': fp.getUser().displayName,
       'country': 'US',
@@ -59,7 +80,7 @@ class AuthPageState extends State<AuthPage> {
       'ping': 0,
       'ImageUrl': fp.getUser().photoUrl != null
           ? fp.getUser().photoUrl
-          : 'https://source.unsplash.com/Yui5vfKHuzs/640x404'
+          : '${(await storageReference.getDownloadURL()).toString()}'
     });
   }
 }

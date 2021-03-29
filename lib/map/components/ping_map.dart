@@ -344,9 +344,7 @@ class PingMapState extends State<PingMap> {
                 var newDistance = (location.latitude - trash.latitude).abs() +
                     (location.longitude - trash.longitude).abs();
                 if (distance > newDistance) {
-                  setState(() {
-                    destination = LatLng(trash.latitude, trash.longitude);
-                  });
+                  destination = LatLng(trash.latitude, trash.longitude);
                 }
               }
               return Stack(children: <Widget>[

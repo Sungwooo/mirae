@@ -26,14 +26,13 @@ class MyImageWidget extends StatelessWidget {
         future: downloadURL(currentUser.uid),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData == false) {
-            return Center(
-              child: Container(
-                  width: width * 0.2,
-                  height: width * 0.2,
-                  child: CircularProgressIndicator(
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(Color(0xff36A257)),
-                  )),
+            return CircleAvatar(
+              radius: width * 0.12,
+              backgroundColor: Colors.white,
+              child: CircleAvatar(
+                radius: (width * 0.12) - 2,
+                backgroundImage: AssetImage('assets/profileImage.png'),
+              ),
             );
           } else if (snapshot.hasError) {
             return Padding(
@@ -52,7 +51,9 @@ class MyImageWidget extends StatelessWidget {
                 radius: (width * 0.12) - 2,
                 backgroundImage: url != null
                     ? NetworkImage('$url', scale: 2)
-                    : AssetImage('assets/profileImage.png'),
+                    : fp.getUser().photoUrl != null
+                        ? NetworkImage(fp.getUser().photoUrl)
+                        : AssetImage('assets/profileImage.png'),
               ),
             );
           }
