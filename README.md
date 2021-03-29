@@ -1,4 +1,4 @@
-![Readme%2040dcee5e30ad443aa99821926f7b844e/Group_109.png](Readme%2040dcee5e30ad443aa99821926f7b844e/Group_109.png)
+![mirae logo](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/3e576466-bf8e-46ba-87fa-02ef48a05d44/Group_109.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210329%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210329T100949Z&X-Amz-Expires=86400&X-Amz-Signature=79990f495501bb90eec2dcdced259fcabdec2da9b5949901e3644e80a967a419&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Group_109.png%22)
 
 # Project mirae
 
