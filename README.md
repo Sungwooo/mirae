@@ -6,7 +6,7 @@
 
 ### 🌱 Project mirae is an app that motivates and helps users to protect the Earth.
 
-[![youtube link](<img width="1282" alt="스크린샷 2021-03-30 오후 11 55 51" src="https://user-images.githubusercontent.com/59304802/113010094-861aaa00-91b3-11eb-9806-337dab9b8002.png">)](https://www.youtube.com/watch?v=nx7B3li-cfs)
+[![youtube link](<https://github.com/Sungwooo/mirae/blob/main/readme%20image/스크린샷%202021-03-30%20오후%2011.55.51.png?raw=true)](https://www.youtube.com/watch?v=nx7B3li-cfs)
 
 # Main features
 
