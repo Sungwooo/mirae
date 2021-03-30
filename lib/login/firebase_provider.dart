@@ -84,7 +84,7 @@ class FirebaseProvider with ChangeNotifier {
 
       UserUpdateInfo updateInfo = new UserUpdateInfo();
       updateInfo.displayName = name;
-      updateInfo.photoUrl = 'https://source.unsplash.com/Yui5vfKHuzs/640x404';
+      // updateInfo.photoUrl = 'https://source.unsplash.com/Yui5vfKHuzs/640x404';
       await user.updateProfile(updateInfo);
 
       if (result.user != null) {

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "487448226641",
+    "firebase_url": "https://mirae-caa74-default-rtdb.firebaseio.com",
     "project_id": "mirae-caa74",
     "storage_bucket": "mirae-caa74.appspot.com"
   },
@@ -19,6 +20,14 @@
           "android_info": {
             "package_name": "com.miraeApp.flutter_app",
             "certificate_hash": "e1aea323fef80902e88d83a0e00c296d2bfb3692"
+          }
+        },
+        {
+          "client_id": "487448226641-h0nimafk34901hj2odmfdt3plodjd7g3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.miraeApp.flutter_app",
+            "certificate_hash": "4acb03e87c9bf595529c862f1335ee853187ccd9"
           }
         },
         {

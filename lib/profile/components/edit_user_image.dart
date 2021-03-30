@@ -90,7 +90,8 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
     StorageUploadTask storageUploadTask = storageReference.putFile(image);
 
     await storageUploadTask.onComplete;
-    String downloadURL = storageReference.getDownloadURL().toString();
+
+    String downloadURL = (await storageReference.getDownloadURL()).toString();
 
     fp.changePhotoUrl(downloadURL);
     databaseReference.child(fp.getUser().uid).update({

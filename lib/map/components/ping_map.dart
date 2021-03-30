@@ -338,17 +338,22 @@ class PingMapState extends State<PingMap> {
           future: trashsList,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              var distance = (location.latitude - destination.latitude).abs() +
-                  (location.longitude - destination.longitude).abs();
-              for (Trash trash in snapshot.data.trashs) {
-                var newDistance = (location.latitude - trash.latitude).abs() +
-                    (location.longitude - trash.longitude).abs();
-                if (distance > newDistance) {
-                  setState(() {
-                    destination = LatLng(trash.latitude, trash.longitude);
-                  });
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                // Add Your Code here.
+
+                var distance =
+                    (location.latitude - destination.latitude).abs() +
+                        (location.longitude - destination.longitude).abs();
+                for (Trash trash in snapshot.data.trashs) {
+                  var newDistance = (location.latitude - trash.latitude).abs() +
+                      (location.longitude - trash.longitude).abs();
+                  if (distance > newDistance) {
+                    setState(() {
+                      destination = LatLng(trash.latitude, trash.longitude);
+                    });
+                  }
                 }
-              }
+              });
               return Stack(children: <Widget>[
                 Container(
                   width: width,
@@ -427,6 +432,7 @@ class PingMapState extends State<PingMap> {
             backgroundColor: Colors.white.withOpacity(0.7),
             onPressed: () {
               getCurrentLocation();
+              print("$destination, $location");
               toggleBtn = !toggleBtn;
             }),
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop);
