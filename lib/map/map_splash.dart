@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart';
 import 'package:mirae/global.dart';
+
 import 'package:mirae/map/map.dart';
 
 class MapSplash extends StatefulWidget {
@@ -11,11 +13,23 @@ class MapSplash extends StatefulWidget {
 }
 
 class _MapSplashState extends State<MapSplash> {
-  final databaseReference = FirebaseDatabase.instance.reference().child('user');
+  final databaseReference = FirebaseDatabase.instance.reference();
   int userPoint;
+  Location _locationTracker = Location();
+  LocationData location;
+
+  makeNewPing() async {
+    location = await _locationTracker.getLocation();
+    await databaseReference.child("ping").push().set({
+      'latitude': location.latitude,
+      'longitude': location.longitude,
+      'uid': Globals.uid,
+    });
+  }
 
   Future<void> getUserPoint() async {
     await databaseReference
+        .child('user')
         .child(Globals.uid)
         .once()
         .then((DataSnapshot snapshot) {
@@ -32,10 +46,11 @@ class _MapSplashState extends State<MapSplash> {
     });
   }
 
-  void updateUserPoint() async {
+  updateUserPoint() async {
     await getUserPoint();
     if (userPoint != null) {
       await databaseReference
+          .child('user')
           .child(Globals.uid)
           .update({'point': userPoint + 20});
     }
@@ -43,14 +58,16 @@ class _MapSplashState extends State<MapSplash> {
 
   startTime() async {
     var _duration = new Duration(milliseconds: 1500);
-    return new Timer(_duration,
-        () => Get.offAll(() => MapPage(true), transition: Transition.fade));
+    return new Timer(_duration, () {
+      updateUserPoint();
+      makeNewPing();
+      Get.offAll(() => MapPage(true), transition: Transition.fade);
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    updateUserPoint();
     startTime();
   }
 

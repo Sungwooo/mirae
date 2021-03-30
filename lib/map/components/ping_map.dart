@@ -52,9 +52,11 @@ class TrashsList {
   TrashsList({
     this.trashs,
   });
-  factory TrashsList.fromJson(List<dynamic> parsedJson) {
+  factory TrashsList.fromJson(Map parsedJson) {
     List<Trash> trashs = new List<Trash>();
-    trashs = parsedJson.map((i) => Trash.fromJson(i)).toList();
+    for (var k in parsedJson.keys) {
+      trashs.add(Trash.fromJson(parsedJson[k]));
+    }
 
     return new TrashsList(
       trashs: trashs,
