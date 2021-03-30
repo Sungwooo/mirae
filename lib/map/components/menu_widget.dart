@@ -20,26 +20,30 @@ class _MenuWidgetState extends State<MenuWidget> {
 
   final Distance calDistance = Distance();
 
-  getTrashDistance() {
+  getTrashDistance(LatLng destination) {
     double meter = calDistance(
         LatLng(widget.pingMapState.location.latitude,
             widget.pingMapState.location.longitude),
-        LatLng(widget.pingMapState.destination.latitude,
-            widget.pingMapState.destination.longitude));
+        destination);
 
-    distance = meter.floor();
+    setState(() {
+      distance = meter.floor();
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    getTrashDistance();
   }
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getTrashDistance(LatLng(widget.pingMapState.destination.latitude,
+          widget.pingMapState.destination.longitude));
+    });
     return AnimatedPositioned(
       curve: Curves.easeInOut,
       duration: Duration(milliseconds: 200),
