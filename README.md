@@ -5,7 +5,7 @@
 
 **📺 Youtube introduce ⬇️Click⬇️**
 [![youtube link](https://github.com/Sungwooo/mirae/blob/main/readme%20image/youtube%20thumbnail.png?raw=true)](https://www.youtube.com/watch?v=nx7B3li-cfs)
-<br/>
+<br/><br/>
 Project mirae is designed to help users preserve the environment. 
 When users find trash, it provides information about the trash and allows them to directly mark the trash location. As data accumulates, we can see where the trash is in the world and help us clear it up. Users can read UN news and perform environmental challenges. 
 Project mirae will continue to develop into services that help users work to save the planet. 
@@ -96,14 +96,14 @@ Trash ai camera is designed using mobilenet-ssd with `tenserflow lite` for objec
 ## How to start
 
 
-### `Android` - ⬇️Download APK file⬇️
+#### `Android` - ⬇️⬇️ Download APK file
 #### [APK file](https://raw.githubusercontent.com/Sungwooo/mirae/main/release/mirae(1.0.0).apk) --- version 1.0.0
 
 
 ----
 
 
-### `iOS`  - Debug
+#### `iOS`  - Debug
 
 #### **Client**
 
