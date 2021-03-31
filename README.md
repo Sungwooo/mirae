@@ -22,7 +22,7 @@
 
 ## AI camera
 
-![AI camera](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/528f016c-a29f-44a2-beb2-af220b447317/IMG_5234.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210331%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210331T140639Z&X-Amz-Expires=86400&X-Amz-Signature=f991a294fed2dde24ac2b9100d3cf83cef764c9515f713d814657eb76869492e&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22IMG_5234.png%22)
+![AI camera](https://github.com/Sungwooo/mirae/blob/main/readme%20image/ai%20camera%20readme.png?raw=true)
 
 - When users run the AI trash camera, it categorizes the trash type. Users can choose whether DISCARD or PING(saving trash location) on the map.
 
@@ -88,13 +88,13 @@ Trash ai camera is designed using mobilenet-ssd with `tenserflow` lite for objec
 
 ---
 
-### ⬇️ Download APK file
+### ⬇️ Download APK file (Android)
 
 ### [APK file](https://raw.githubusercontent.com/Sungwooo/mirae/main/release/mirae(1.0.0).apk) (1.0.0)
 
 ---
 
-### Or If you want debug
+### Or If you want debug (iOS)
 
 ### **Client**
 
