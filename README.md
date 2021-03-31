@@ -1,7 +1,7 @@
 # ![mirae logo](https://github.com/Sungwooo/mirae/blob/main/readme%20image/mirae%20readme%20logo.png?raw=true)    Project mirae
 
 
-#### 🌱 Project mirae is an app that motivates and helps users to protect the Earth. <br/>
+### 🌱 Project mirae is an app that motivates and helps users to protect the Earth. <br/>
 
 **📺 Youtube introduce ⬇️Click⬇️**
 [![youtube link](https://github.com/Sungwooo/mirae/blob/main/readme%20image/youtube%20thumbnail.png?raw=true)](https://www.youtube.com/watch?v=nx7B3li-cfs)
@@ -96,9 +96,8 @@ Trash ai camera is designed using mobilenet-ssd with `tenserflow lite` for objec
 ## How to start
 
 
-### `Android` - download APK file
-
-### [APK file](https://raw.githubusercontent.com/Sungwooo/mirae/main/release/mirae(1.0.0).apk) (version 1.0.0)
+### `Android` - ⬇️Download APK file⬇️
+#### [APK file](https://raw.githubusercontent.com/Sungwooo/mirae/main/release/mirae(1.0.0).apk) --- version 1.0.0
 
 
 ----
