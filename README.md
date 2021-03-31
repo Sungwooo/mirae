@@ -4,7 +4,7 @@
 #### 🌱 Project mirae is an app that motivates and helps users to protect the Earth. <br/>
 Project mirae is designed to help users preserve the environment. 
 When users find trash, it provides information about the trash and allows them to directly mark the trash location. As data accumulates, we can see where the trash is in the world and help us clear it up. Users can read UN news and perform environmental challenges. 
-Project mirae will continue to develop into services that help users work to save the planet.
+Project mirae will continue to develop into services that help users work to save the planet. <br/>
 [![youtube link](https://github.com/Sungwooo/mirae/blob/main/readme%20image/스크린샷%202021-03-30%20오후%2011.55.51.png?raw=true)](https://www.youtube.com/watch?v=nx7B3li-cfs)
 
 
@@ -14,18 +14,18 @@ Project mirae will continue to develop into services that help users work to sav
 
 # Contents
 
-- [Main features]()
-- [Project Structure]()
-- [How to start]()
-- [External resources]()
-- [Team]()
+- [Main features](main-features)
+- [Project Structure](project-Structure)
+- [How to start](how-to-start)
+- [External resources](external-resources)
+- [Team](team)
 
 
 <br/><br/>
 
-# Main features
+## Main features
 
-## AI camera
+### AI camera
 
 ![AI camera](https://github.com/Sungwooo/mirae/blob/main/readme%20image/ai%20camera%20readme.png?raw=true)
 
@@ -33,7 +33,7 @@ Project mirae will continue to develop into services that help users work to sav
 
 <br/><br/>
 
-## Trash information
+### Trash information
 
 ![trash](https://github.com/Sungwooo/mirae/blob/main/readme%20image/trash%20readme.png?raw=true)
 
@@ -42,7 +42,7 @@ Project mirae will continue to develop into services that help users work to sav
 
 <br/><br/>
 
-## World trash map
+### World trash map
 
 ![worldtrashmap](https://github.com/Sungwooo/mirae/blob/main/readme%20image/map%20info%20readme.png?raw=true)
 
@@ -50,7 +50,7 @@ Project mirae will continue to develop into services that help users work to sav
 
 <br/><br/>
 
-## Ranking
+### Ranking
 
 ![ranking](https://github.com/Sungwooo/mirae/blob/main/readme%20image/worldmap%20readme.png?raw=true)
 
@@ -58,7 +58,7 @@ Project mirae will continue to develop into services that help users work to sav
 
 <br/><br/>
 
-## E - Challenges
+### E - Challenges
 
 ![challenge](https://github.com/Sungwooo/mirae/blob/main/readme%20image/challenge%20readme.png?raw=true)
 
@@ -66,7 +66,7 @@ Project mirae will continue to develop into services that help users work to sav
 
 <br/><br/>
 
-## UN environment news
+### UN environment news
 
 ![UNnews](https://github.com/Sungwooo/mirae/blob/main/readme%20image/news%20readme.png?raw=true)
 
@@ -74,15 +74,15 @@ Project mirae will continue to develop into services that help users work to sav
 
 <br/><br/>
 
-## Profile
+### Profile
 
-![profile](Rhttps://github.com/Sungwooo/mirae/blob/main/readme%20image/my%20readme.png?raw=true)
+![profile](https://github.com/Sungwooo/mirae/blob/main/readme%20image/my%20readme.png?raw=true)
 
 - In My tab, users can see your activities while using the app. Every time you get points, the tree grows and users can level up. Users can customize the profile and see more information in Edit profile.
 
 <br/><br/><br/>
 
-# Project Structure
+## Project Structure
 
 
 Project mirae is developed as a hybrid app using `flutter` to support Android and iOS.
@@ -92,18 +92,21 @@ Trash ai camera is designed using mobilenet-ssd with `tenserflow lite` for objec
 
 <br/><br/><br/>
 
-# How to start
+## How to start
 
 
-### (Android) Download APK file
+### `Android` Download APK file
 
-### [APK file](https://raw.githubusercontent.com/Sungwooo/mirae/main/release/mirae(1.0.0).apk) (1.0.0)
+```
+### [APK file](https://raw.githubusercontent.com/Sungwooo/mirae/main/release/mirae(1.0.0).apk) 1.0.0
+```
+<br/>
+
+----
 
 <br/>
-***
-<br/>
 
-### (iOS) Debug
+### `iOS` Debug
 
 ### **Client**
 
@@ -127,7 +130,7 @@ $ flutter version 2.0.2
 
 <br/><br/><br/>
 
-# External resources
+## External resources
 
 
 [UN evironment news](https://news.un.org/en/news/topic/climate-change)<br/>
@@ -135,10 +138,10 @@ $ flutter version 2.0.2
 
 <br/><br/><br/>
 
-# Team
+## Team
 
 
-**Product manager / UI.UX :** [Sungwoo Cho](https://github.com/Sungwooo)<br/>
-**Front / Back** **Developer  :** [Sihyeong Lee](https://github.com/mukjo96)<br/>
+**Product manager / UI.UX **:** [Sungwoo Cho](https://github.com/Sungwooo)<br/>
+**Front / Back** **Developer  **:** [Sihyeong Lee](https://github.com/mukjo96)<br/>
 **Front / Back** **Developer**  **:** [Jaewang Lee](https://github.com/JaeWangL)<br/>
 **Front / Back** **Developer**  **:** [Dukhyeon Kim](https://github.com/Kim-deokhyeon)
