@@ -97,9 +97,9 @@ Trash ai camera is designed using mobilenet-ssd with `tenserflow lite` for objec
 
 ### `Android` Download APK file
 
-```
+
 ### [APK file](https://raw.githubusercontent.com/Sungwooo/mirae/main/release/mirae(1.0.0).apk) 1.0.0
-```
+
 <br/>
 
 ----
