@@ -28,7 +28,7 @@
 
 ## Trash information
 
-![Readme%2040dcee5e30ad443aa99821926f7b844e/IMG_5235.png](Readme%2040dcee5e30ad443aa99821926f7b844e/IMG_5235.png)
+![trash 1](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/9d91ea4c-1427-4e19-9a7e-12e747383b53/IMG_5235.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210331%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210331T140931Z&X-Amz-Expires=86400&X-Amz-Signature=59a01e55f636b7a34c2ecb185d6d91c38f5a724c38ec3ac1380eaa2b1d3fe4c0&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22IMG_5235.png%22)
 
 ![Readme%2040dcee5e30ad443aa99821926f7b844e/IMG_5236.png](Readme%2040dcee5e30ad443aa99821926f7b844e/IMG_5236.png)
 
