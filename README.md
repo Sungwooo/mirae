@@ -2,12 +2,13 @@
 
 
 #### 🌱 Project mirae is an app that motivates and helps users to protect the Earth. <br/>
+
+**📺 Youtube introduce ⬇️⬇️**
+[![youtube link](https://github.com/Sungwooo/mirae/blob/main/readme%20image/스크린샷%202021-03-30%20오후%2011.55.51.png?raw=true)](https://www.youtube.com/watch?v=nx7B3li-cfs)
+<br/>
 Project mirae is designed to help users preserve the environment. 
 When users find trash, it provides information about the trash and allows them to directly mark the trash location. As data accumulates, we can see where the trash is in the world and help us clear it up. Users can read UN news and perform environmental challenges. 
-Project mirae will continue to develop into services that help users work to save the planet. <br/>
-[![youtube link](https://github.com/Sungwooo/mirae/blob/main/readme%20image/스크린샷%202021-03-30%20오후%2011.55.51.png?raw=true)](https://www.youtube.com/watch?v=nx7B3li-cfs)
-
-
+Project mirae will continue to develop into services that help users work to save the planet. 
 <br/><br/><br/>
 
 
@@ -95,15 +96,16 @@ Trash ai camera is designed using mobilenet-ssd with `tenserflow lite` for objec
 ## How to start
 
 
-### `Android - download APK file`
+### `Android` - download APK file
 
-### [APK file](https://raw.githubusercontent.com/Sungwooo/mirae/main/release/mirae(1.0.0).apk) 1.0.0
+### [APK file](https://raw.githubusercontent.com/Sungwooo/mirae/main/release/mirae(1.0.0).apk)
+1.0.0
 
 
 ----
 
 
-### `iOS  - Debug`
+### `iOS`  - Debug
 
 ### **Client**
 
@@ -138,7 +140,7 @@ $ flutter version 2.0.2
 ## Team
 
 
-**Product manager / UI.UX **:** [Sungwoo Cho](https://github.com/Sungwooo)<br/>
-**Front / Back** **Developer  **:** [Sihyeong Lee](https://github.com/mukjo96)<br/>
-**Front / Back** **Developer**  **:** [Jaewang Lee](https://github.com/JaeWangL)<br/>
-**Front / Back** **Developer**  **:** [Dukhyeon Kim](https://github.com/Kim-deokhyeon)
+**Product manager / UI.UX : [Sungwoo Cho](https://github.com/Sungwooo)**<br/>
+**Front / Back Developer : [Sihyeong Lee](https://github.com/mukjo96)**<br/>
+**Front / Back Developer : [Jaewang Lee](https://github.com/JaeWangL)**<br/>
+**Front / Back Developer : [Dukhyeon Kim](https://github.com/Kim-deokhyeon)**
