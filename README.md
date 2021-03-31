@@ -3,7 +3,7 @@
 
 ### 🌱 Project mirae is an app that motivates and helps users to protect the Earth. <br/>
 
-**📺 Youtube introduce ⬇️Click⬇️**
+**📺 Youtube introduce ⬇️Click⬇️** <br/>
 [![youtube link](https://github.com/Sungwooo/mirae/blob/main/readme%20image/youtube%20thumbnail.png?raw=true)](https://www.youtube.com/watch?v=nx7B3li-cfs)
 <br/><br/>
 Project mirae is designed to help users preserve the environment. 
@@ -88,8 +88,8 @@ Project mirae will continue to develop into services that help users work to sav
 
 Project mirae is developed as a hybrid app using `flutter` to support Android and iOS. <br/>
 Trash ai camera is designed using mobilenet-ssd with `tenserflow lite` for object detection. <br/>
-`Firebase` was used to store the location data of the found trash. In addition, google map api was used to provide route of trash location.<br/>
-`Google cloud platform` was used to member management to check users' own profiles and view rankings.<br/>
+`Firebase` was used to store the location data of the trash and to implement member management that allows users to view and rank their profiles using the data (discard, ping, points, challenges) that helped protect the environment. <br/>
+`Google map api` was also used to provide route guidance services for registered trash.
 
 <br/><br/><br/>
 
