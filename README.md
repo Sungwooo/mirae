@@ -14,11 +14,11 @@ Project mirae will continue to develop into services that help users work to sav
 
 # Contents
 
-- [Main features](main-features)
-- [Project Structure](project-Structure)
-- [How to start](how-to-start)
-- [External resources](external-resources)
-- [Team](team)
+- [Main features](#main-features)
+- [Project Structure](#project-Structure)
+- [How to start](#how-to-start)
+- [External resources](#external-resources)
+- [Team](#team)
 
 
 <br/><br/>
@@ -85,28 +85,25 @@ Project mirae will continue to develop into services that help users work to sav
 ## Project Structure
 
 
-Project mirae is developed as a hybrid app using `flutter` to support Android and iOS.
-Trash ai camera is designed using mobilenet-ssd with `tenserflow lite` for object detection. 
-`Firebase` was used to store the location data of the found trash. In addition, google map api was used to provide route of trash location.
-`Google cloud platform` was used to member management to check users' own profiles and view rankings.
+Project mirae is developed as a hybrid app using `flutter` to support Android and iOS. <br/>
+Trash ai camera is designed using mobilenet-ssd with `tenserflow lite` for object detection. <br/>
+`Firebase` was used to store the location data of the found trash. In addition, google map api was used to provide route of trash location.<br/>
+`Google cloud platform` was used to member management to check users' own profiles and view rankings.<br/>
 
 <br/><br/><br/>
 
 ## How to start
 
 
-### `Android` Download APK file
-
+### `Android - download APK file`
 
 ### [APK file](https://raw.githubusercontent.com/Sungwooo/mirae/main/release/mirae(1.0.0).apk) 1.0.0
 
-<br/>
 
 ----
 
-<br/>
 
-### `iOS` Debug
+### `iOS  - Debug`
 
 ### **Client**
 
