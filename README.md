@@ -10,19 +10,20 @@ Project mirae will continue to develop into services that help users work to sav
 
 <br/><br/><br/>
 
-# Main features
 
 
+# Contents
 
-- [AI camera]()
-- [Trash information]()
-- [World trash map]()
-- [Ranking]()
-- [E - challenges]()
-- [UN environment news]()
-- [Profile]()
+- [Main features]()
+- [Project Structure]()
+- [How to start]()
+- [External resources]()
+- [Team]()
+
 
 <br/><br/>
+
+# Main features
 
 ## AI camera
 
@@ -59,9 +60,7 @@ Project mirae will continue to develop into services that help users work to sav
 
 ## E - Challenges
 
-![Readme%2040dcee5e30ad443aa99821926f7b844e/Simulator_Screen_Shot_-_iPhone_11_Pro_-_2021-03-29_at_17.59.49.png](Readme%2040dcee5e30ad443aa99821926f7b844e/Simulator_Screen_Shot_-_iPhone_11_Pro_-_2021-03-29_at_17.59.49.png)
-
-![Readme%2040dcee5e30ad443aa99821926f7b844e/Simulator_Screen_Shot_-_iPhone_11_Pro_-_2021-03-29_at_18.00.38.png](Readme%2040dcee5e30ad443aa99821926f7b844e/Simulator_Screen_Shot_-_iPhone_11_Pro_-_2021-03-29_at_18.00.38.png)
+![challenge](https://github.com/Sungwooo/mirae/blob/main/readme%20image/challenge%20readme.png?raw=true)
 
 - It provides users with 3 challenges they can do for the environment each day. Points will be given when the challenge is completed. In the challenges tab, you can see the challenges you have performed.
 
@@ -69,9 +68,7 @@ Project mirae will continue to develop into services that help users work to sav
 
 ## UN environment news
 
-![Readme%2040dcee5e30ad443aa99821926f7b844e/Simulator_Screen_Shot_-_iPhone_11_Pro_-_2021-03-29_at_18.02.24.png](Readme%2040dcee5e30ad443aa99821926f7b844e/Simulator_Screen_Shot_-_iPhone_11_Pro_-_2021-03-29_at_18.02.24.png)
-
-![Readme%2040dcee5e30ad443aa99821926f7b844e/Simulator_Screen_Shot_-_iPhone_11_Pro_-_2021-03-29_at_18.02.29.png](Readme%2040dcee5e30ad443aa99821926f7b844e/Simulator_Screen_Shot_-_iPhone_11_Pro_-_2021-03-29_at_18.02.29.png)
+![UNnews](https://github.com/Sungwooo/mirae/blob/main/readme%20image/news%20readme.png?raw=true)
 
 - In the News tab, users can receive daily environmental news from the UN.
 
@@ -79,9 +76,7 @@ Project mirae will continue to develop into services that help users work to sav
 
 ## Profile
 
-![Readme%2040dcee5e30ad443aa99821926f7b844e/Simulator_Screen_Shot_-_iPhone_11_Pro_-_2021-03-29_at_18.02.11.png](Readme%2040dcee5e30ad443aa99821926f7b844e/Simulator_Screen_Shot_-_iPhone_11_Pro_-_2021-03-29_at_18.02.11.png)
-
-![Readme%2040dcee5e30ad443aa99821926f7b844e/Simulator_Screen_Shot_-_iPhone_11_Pro_-_2021-03-29_at_18.03.13.png](Readme%2040dcee5e30ad443aa99821926f7b844e/Simulator_Screen_Shot_-_iPhone_11_Pro_-_2021-03-29_at_18.03.13.png)
+![profile](Rhttps://github.com/Sungwooo/mirae/blob/main/readme%20image/my%20readme.png?raw=true)
 
 - In My tab, users can see your activities while using the app. Every time you get points, the tree grows and users can level up. Users can customize the profile and see more information in Edit profile.
 
@@ -104,8 +99,9 @@ Trash ai camera is designed using mobilenet-ssd with `tenserflow lite` for objec
 
 ### [APK file](https://raw.githubusercontent.com/Sungwooo/mirae/main/release/mirae(1.0.0).apk) (1.0.0)
 
-<br/><br/>
-
+<br/>
+***
+<br/>
 
 ### (iOS) Debug
 
@@ -134,7 +130,7 @@ $ flutter version 2.0.2
 # External resources
 
 
-[UN evironment news](https://news.un.org/en/news/topic/climate-change)
+[UN evironment news](https://news.un.org/en/news/topic/climate-change)<br/>
 [Recycle information](https://www.recyclenow.com)
 
 <br/><br/><br/>
@@ -142,7 +138,7 @@ $ flutter version 2.0.2
 # Team
 
 
-**Product manager / UI.UX :** [Sungwoo Cho](https://github.com/Sungwooo)
-**Front / Back** **Developer  :** [Sihyeong Lee](https://github.com/mukjo96)
-**Front / Back** **Developer**  **:** [Jaewang Lee](https://github.com/JaeWangL)
+**Product manager / UI.UX :** [Sungwoo Cho](https://github.com/Sungwooo)<br/>
+**Front / Back** **Developer  :** [Sihyeong Lee](https://github.com/mukjo96)<br/>
+**Front / Back** **Developer**  **:** [Jaewang Lee](https://github.com/JaeWangL)<br/>
 **Front / Back** **Developer**  **:** [Dukhyeon Kim](https://github.com/Kim-deokhyeon)
