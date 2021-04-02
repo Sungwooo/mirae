@@ -95,8 +95,7 @@ class _EditImageNameWidgetState extends State<EditImageNameWidget> {
 
     fp.changePhotoUrl(downloadURL);
     databaseReference.child(fp.getUser().uid).update({
-      'ImageUrl':
-          fp.getUser().photoUrl != null ? fp.getUser().photoUrl : '$downloadURL'
+      'ImageUrl': downloadURL != null ? '$downloadURL' : fp.getUser().photoUrl
     });
   }
 }

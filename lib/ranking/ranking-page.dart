@@ -177,7 +177,7 @@ class _RankingPageState extends State<RankingPage> {
       Padding(
         padding: EdgeInsets.only(left: 0.027 * width),
         child: Container(
-          width: 0.04 * width,
+          width: 0.06 * width,
           child: Column(
             children: [
               index <= 2
@@ -195,7 +195,7 @@ class _RankingPageState extends State<RankingPage> {
                               : index == 2
                                   ? Color(0xffFF9568)
                                   : Colors.black,
-                      fontSize: 0.064 * width,
+                      fontSize: 0.052 * width,
                       fontFamily: 'GoogleSans',
                       fontWeight: FontWeight.w700)),
             ],

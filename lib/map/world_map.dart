@@ -42,14 +42,16 @@ Future<TrashsList> fetchPost() async {
 }
 
 class TrashsList {
-  final List<Trash> trashs;
+  final Map<dynamic, Trash> trashs;
 
   TrashsList({
     this.trashs,
   });
-  factory TrashsList.fromJson(List<dynamic> parsedJson) {
-    List<Trash> trashs = new List<Trash>();
-    trashs = parsedJson.map((i) => Trash.fromJson(i)).toList();
+  factory TrashsList.fromJson(Map parsedJson) {
+    Map<dynamic, Trash> trashs = new Map<dynamic, Trash>();
+    for (var k in parsedJson.keys) {
+      trashs[k.toString()] = (Trash.fromJson(parsedJson[k]));
+    }
 
     return new TrashsList(
       trashs: trashs,
@@ -58,17 +60,6 @@ class TrashsList {
 }
 
 Future<TrashsList> trashsList;
-
-Future<String> _loadTrashAsset() async {
-  return await rootBundle.loadString('assets/data/trash_list.json');
-}
-
-Future loadTrashs() async {
-  String jsonString = await _loadTrashAsset();
-  final jsonResponse = json.decode(jsonString);
-  TrashsList trashs = new TrashsList.fromJson(jsonResponse);
-  return trashs.trashs;
-}
 
 class WorldMap extends StatefulWidget {
   @override
@@ -113,7 +104,9 @@ class WorldMapState extends State<WorldMap> {
     trashsList = fetchPost();
     loading = true;
     setCustomMapPin();
-    getCurrentLocation();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getCurrentLocation();
+    });
     _markers = Set.from([]);
   }
 
@@ -164,9 +157,7 @@ class WorldMapState extends State<WorldMap> {
                   onMapCreated: (GoogleMapController controller) {
                     _controller = controller;
                     setState(() {
-                      snapshot.data.trashs
-                          .asMap()
-                          .forEach((index, Trash trash) {
+                      snapshot.data.trashs.forEach((index, Trash trash) {
                         _markers.add(Marker(
                             markerId: MarkerId('<MARKER_$index>'),
                             position: LatLng(trash.latitude, trash.longitude),
