@@ -13,8 +13,9 @@ class DiscardSplash extends StatefulWidget {
 class _DiscardSplashState extends State<DiscardSplash> {
   final databaseReference = FirebaseDatabase.instance.reference().child('user');
   int userPoint;
+  int userDiscard;
 
-  Future<void> getUserPoint() async {
+  Future<void> getUserData() async {
     await databaseReference
         .child(Globals.uid)
         .once()
@@ -26,18 +27,21 @@ class _DiscardSplashState extends State<DiscardSplash> {
             if (key == "point") {
               userPoint = int.parse(values.toString());
             }
+            if (key == "discard") {
+              userDiscard = int.parse(values.toString());
+            }
           });
         }
       }
     });
   }
 
-  void updateUserPoint() async {
-    await getUserPoint();
-    if (userPoint != null) {
+  void updateUserData() async {
+    await getUserData();
+    if (userPoint != null && userDiscard != null) {
       await databaseReference
           .child(Globals.uid)
-          .update({'point': userPoint + 40});
+          .update({'point': userPoint + 40, 'discard': userDiscard + 1});
     }
   }
 
@@ -50,7 +54,7 @@ class _DiscardSplashState extends State<DiscardSplash> {
   @override
   void initState() {
     super.initState();
-    updateUserPoint();
+    updateUserData();
     startTime();
   }
 

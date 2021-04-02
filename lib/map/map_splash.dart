@@ -15,6 +15,7 @@ class MapSplash extends StatefulWidget {
 class _MapSplashState extends State<MapSplash> {
   final databaseReference = FirebaseDatabase.instance.reference();
   int userPoint;
+  int userPing;
   Location _locationTracker = Location();
   LocationData location;
 
@@ -27,7 +28,7 @@ class _MapSplashState extends State<MapSplash> {
     });
   }
 
-  Future<void> getUserPoint() async {
+  Future<void> getUserData() async {
     await databaseReference
         .child('user')
         .child(Globals.uid)
@@ -40,26 +41,29 @@ class _MapSplashState extends State<MapSplash> {
             if (key == "point") {
               userPoint = int.parse(values.toString());
             }
+            if (key == "ping") {
+              userPing = int.parse(values.toString());
+            }
           });
         }
       }
     });
   }
 
-  updateUserPoint() async {
-    await getUserPoint();
-    if (userPoint != null) {
+  updateUserData() async {
+    await getUserData();
+    if (userPoint != null && userPing != null) {
       await databaseReference
           .child('user')
           .child(Globals.uid)
-          .update({'point': userPoint + 20});
+          .update({'point': userPoint + 20, 'ping': userPing + 1});
     }
   }
 
   startTime() async {
     var _duration = new Duration(milliseconds: 1500);
     return new Timer(_duration, () {
-      updateUserPoint();
+      updateUserData();
       makeNewPing();
       Get.offAll(() => MapPage(true), transition: Transition.fade);
     });

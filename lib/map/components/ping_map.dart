@@ -39,6 +39,7 @@ Future<TrashsList> fetchPost() async {
 
   if (response.statusCode == 200) {
     // 만약 서버로의 요청이 성공하면, JSON을 파싱합니다.
+    // var jsonResponse = json.decode(response.body).map();
     return TrashsList.fromJson(json.decode(response.body));
   } else {
     // 만약 요청이 실패하면, 에러를 던집니다.
@@ -47,15 +48,15 @@ Future<TrashsList> fetchPost() async {
 }
 
 class TrashsList {
-  final List<Trash> trashs;
+  final Map<dynamic, Trash> trashs;
 
   TrashsList({
     this.trashs,
   });
   factory TrashsList.fromJson(Map parsedJson) {
-    List<Trash> trashs = new List<Trash>();
+    Map<dynamic, Trash> trashs = new Map<dynamic, Trash>();
     for (var k in parsedJson.keys) {
-      trashs.add(Trash.fromJson(parsedJson[k]));
+      trashs[k.toString()] = (Trash.fromJson(parsedJson[k]));
     }
 
     return new TrashsList(
@@ -86,7 +87,7 @@ class PingMapState extends State<PingMap> {
   bool isArrived;
   bool getPoints;
 
-  Future<List> trashList;
+  Future<Map> trashList;
 
   StreamSubscription _locationSubscription;
   Location _locationTracker = Location();
@@ -101,6 +102,7 @@ class PingMapState extends State<PingMap> {
   String navigateMsg = "";
 
   LatLng destination = LatLng(37.3264, -122.0197);
+  String destinationKey;
   LatLng myPosition;
 
 /* ------------------------------------ */
@@ -199,101 +201,6 @@ class PingMapState extends State<PingMap> {
     return lList;
   }
 
-/* ------------------------------------ */
-
-/* ------------------------------------ */
-
-  /* _showToast() {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    Widget toast = Container(
-      child: Column(
-        children: [
-          Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 13.0, vertical: 4.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30.0),
-                color: Color(0xff48A7FF).withOpacity(0.7),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.25),
-                    spreadRadius: 1,
-                    blurRadius: 1,
-                    offset: Offset(0, 1),
-                  ),
-                ]),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "+ 20 points",
-                  style: TextStyle(
-                      fontFamily: "GoogleSans",
-                      fontSize: 0.027 * width,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Color(0xff36AC56).withOpacity(0.7),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.25),
-                    spreadRadius: 1,
-                    blurRadius: 1,
-                    offset: Offset(0, 1),
-                  ),
-                ]),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.asset(
-                  "assets/icon/map/checkIcon.png",
-                  width: 26,
-                  height: 26,
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                  "PING added",
-                  style: TextStyle(
-                      fontFamily: "GoogleSans",
-                      fontSize: 0.037 * width,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-
-
-
-    fToast.showToast(
-        child: toast,
-        toastDuration: Duration(seconds: 2),
-        positionedToastBuilder: (context, child) {
-          return Align(
-            alignment: Alignment.center,
-            child: Container(margin: EdgeInsets.only(top: 400), child: child),
-          );
-        });
-  } */
-/* ------------------------------------ */
-
   @override
   void setState(fn) {
     if (mounted) {
@@ -342,19 +249,19 @@ class PingMapState extends State<PingMap> {
             if (snapshot.hasData) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 // Add Your Code here.
-
                 var distance =
                     (location.latitude - destination.latitude).abs() +
                         (location.longitude - destination.longitude).abs();
-                for (Trash trash in snapshot.data.trashs) {
-                  var newDistance = (location.latitude - trash.latitude).abs() +
-                      (location.longitude - trash.longitude).abs();
+                snapshot.data.trashs.forEach((key, value) {
+                  var newDistance = (location.latitude - value.latitude).abs() +
+                      (location.longitude - value.longitude).abs();
                   if (distance > newDistance) {
                     setState(() {
-                      destination = LatLng(trash.latitude, trash.longitude);
+                      destination = LatLng(value.latitude, value.longitude);
+                      destinationKey = key.toString();
                     });
                   }
-                }
+                });
               });
               return Stack(children: <Widget>[
                 Container(
@@ -374,9 +281,7 @@ class PingMapState extends State<PingMap> {
                     onMapCreated: (GoogleMapController controller) {
                       _controller = controller;
 
-                      snapshot.data.trashs
-                          .asMap()
-                          .forEach((index, Trash trash) {
+                      snapshot.data.trashs.forEach((index, Trash trash) {
                         _markers.add(Marker(
                             markerId: MarkerId('<MARKER_$index>'),
                             position: LatLng(trash.latitude, trash.longitude),
@@ -384,7 +289,7 @@ class PingMapState extends State<PingMap> {
                       });
                       if (getPoints == true) {
                         _markers.add(Marker(
-                            markerId: MarkerId('<MARKER_1>'),
+                            markerId: MarkerId('<MARKER_myPosition>'),
                             position: myPosition,
                             icon: pinLocationIcon));
                       }
@@ -434,7 +339,7 @@ class PingMapState extends State<PingMap> {
             backgroundColor: Colors.white.withOpacity(0.7),
             onPressed: () {
               getCurrentLocation();
-              print("$destination, $location");
+              print("$destination, $location, $destinationKey");
               toggleBtn = !toggleBtn;
             }),
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop);

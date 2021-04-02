@@ -21,7 +21,7 @@ class LetsGoWidget extends StatefulWidget {
 }
 
 class _LetsGoWidgetState extends State<LetsGoWidget> {
-  final databaseReference = FirebaseDatabase.instance.reference().child('user');
+  final databaseReference = FirebaseDatabase.instance.reference();
 
   bool showBottomMenu = true;
   int markerNum = 3;
@@ -35,6 +35,7 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
 
   Future<void> getUserDistance() async {
     await databaseReference
+        .child('user')
         .child(Globals.uid)
         .once()
         .then((DataSnapshot snapshot) {
@@ -66,10 +67,19 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
 
   void updateUserDistance(int distance) async {
     await getUserDistance();
-    print("${userDistance + distance}");
+    print("${userDistance + distance}, ${widget.pingMapState.destinationKey}");
     await databaseReference
+        .child('user')
         .child(Globals.uid)
         .update({'distance': userDistance + distance, 'point': userPoint + 40});
+  }
+
+  void deleteDestinationPing(String desKey) async {
+    await databaseReference
+        .child("ping")
+        .child(desKey)
+        .remove()
+        .then((value) => print("deleted"));
   }
 
   void setDirectionIcon() {
@@ -92,9 +102,16 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getMoveDistance();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     setDirectionIcon();
-    getMoveDistance();
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -310,6 +327,8 @@ class _LetsGoWidgetState extends State<LetsGoWidget> {
                                     getMoveDistance();
                                     print("${distance ~/ 45}");
                                     updateUserDistance(distance);
+                                    deleteDestinationPing(
+                                        widget.pingMapState.destinationKey);
                                     Get.to(() => CameraPage(cameras));
                                   },
                                   child: Image.asset(
