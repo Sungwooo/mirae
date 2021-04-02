@@ -1,26 +1,22 @@
-# ![mirae logo](https://github.com/Sungwooo/mirae/blob/main/readme%20image/mirae%20readme%20logo.png?raw=true)    Project mirae
-
+# ![mirae logo](https://github.com/Sungwooo/mirae/blob/main/readme%20image/mirae%20readme%20logo.png?raw=true) Project mirae
 
 ### 🌱 Project mirae is an app that motivates and helps users to protect the Earth. <br/>
 
 **📺 Youtube introduce ⬇️Click⬇️** <br/>
 [![youtube link](https://github.com/Sungwooo/mirae/blob/main/readme%20image/youtube%20thumbnail.png?raw=true)](https://www.youtube.com/watch?v=nx7B3li-cfs)
 <br/><br/>
-Project mirae is designed to help users preserve the environment. 
-When users find trash, it provides information about the trash and allows them to directly mark the trash location. As data accumulates, we can see where the trash is in the world and help us clear it up. Users can read UN news and perform environmental challenges. 
-Project mirae will continue to develop into services that help users work to save the planet. 
+Project mirae is designed to help users preserve the environment.
+When users find trash, it provides information about the trash and allows them to directly mark the trash location. As data accumulates, we can see where the trash is in the world and help us clear it up. Users can read UN news and perform environmental challenges.
+Project mirae will continue to develop into services that help users work to save the planet.
 <br/><br/><br/>
-
-
 
 # Contents
 
-- [Main features](#main-features)
-- [Project Structure](#project-Structure)
-- [How to start](#how-to-start)
-- [External resources](#external-resources)
-- [Team](#team)
-
+-   [Main features](#main-features)
+-   [Project Structure](#project-Structure)
+-   [How to start](#how-to-start)
+-   [External resources](#external-resources)
+-   [Team](#team)
 
 <br/><br/>
 
@@ -30,7 +26,7 @@ Project mirae will continue to develop into services that help users work to sav
 
 ![AI camera](https://github.com/Sungwooo/mirae/blob/main/readme%20image/ai%20camera%20readme.png?raw=true)
 
-- When users run the AI trash camera, it categorizes the trash type. Users can choose whether DISCARD or PING(saving trash location) on the map.
+-   When users run the AI trash camera, it categorizes the trash type. Users can choose whether DISCARD or PING(saving trash location) on the map.
 
 <br/><br/>
 
@@ -38,8 +34,7 @@ Project mirae will continue to develop into services that help users work to sav
 
 ![trash](https://github.com/Sungwooo/mirae/blob/main/readme%20image/trash%20readme.png?raw=true)
 
-
-- It categorizes trash types and provides information. It shows how it is recycled, effect of recycling and tips.
+-   It categorizes trash types and provides information. It shows how it is recycled, effect of recycling and tips.
 
 <br/><br/>
 
@@ -47,7 +42,7 @@ Project mirae will continue to develop into services that help users work to sav
 
 ![worldtrashmap](https://github.com/Sungwooo/mirae/blob/main/readme%20image/map%20info%20readme.png?raw=true)
 
-- Users can view the location of trash on the map. Users can see where there is a lot of trash in the world, and it can be guided to the trash around them.
+-   Users can view the location of trash on the map. Users can see where there is a lot of trash in the world, and it can be guided to the trash around them.
 
 <br/><br/>
 
@@ -55,7 +50,7 @@ Project mirae will continue to develop into services that help users work to sav
 
 ![ranking](https://github.com/Sungwooo/mirae/blob/main/readme%20image/worldmap%20readme.png?raw=true)
 
-- Users can get points while using the app and check your ranking based on the points.
+-   Users can get points while using the app and check your ranking based on the points.
 
 <br/><br/>
 
@@ -63,7 +58,7 @@ Project mirae will continue to develop into services that help users work to sav
 
 ![challenge](https://github.com/Sungwooo/mirae/blob/main/readme%20image/challenge%20readme.png?raw=true)
 
-- It provides users with 3 challenges they can do for the environment each day. Points will be given when the challenge is completed. In the challenges tab, you can see the challenges you have performed.
+-   It provides users with 3 challenges they can do for the environment each day. Points will be given when the challenge is completed. In the challenges tab, you can see the challenges you have performed.
 
 <br/><br/>
 
@@ -71,7 +66,7 @@ Project mirae will continue to develop into services that help users work to sav
 
 ![UNnews](https://github.com/Sungwooo/mirae/blob/main/readme%20image/news%20readme.png?raw=true)
 
-- In the News tab, users can receive daily environmental news from the UN.
+-   In the News tab, users can receive daily environmental news from the UN.
 
 <br/><br/>
 
@@ -79,12 +74,11 @@ Project mirae will continue to develop into services that help users work to sav
 
 ![profile](https://github.com/Sungwooo/mirae/blob/main/readme%20image/my%20readme.png?raw=true)
 
-- In My tab, users can see your activities while using the app. Every time you get points, the tree grows and users can level up. Users can customize the profile and see more information in Edit profile.
+-   In My tab, users can see your activities while using the app. Every time you get points, the tree grows and users can level up. Users can customize the profile and see more information in Edit profile.
 
 <br/><br/><br/>
 
 ## Project Structure
-
 
 Project mirae is developed as a hybrid app using `flutter` to support Android and iOS. <br/>
 Trash ai camera is designed using mobilenet-ssd with `tenserflow lite` for object detection. <br/>
@@ -95,22 +89,22 @@ Trash ai camera is designed using mobilenet-ssd with `tenserflow lite` for objec
 
 ## How to start
 
-
 #### `Android` - ⬇️⬇️ Download APK file
-#### [APK file](https://raw.githubusercontent.com/Sungwooo/mirae/main/release/mirae(1.0.1).apk) --- version 1.0.1
-Fixed : 
-- It is now possible to add and delete pings.
-- Scores for discarding or pinging have been corrected.
-- Bug fixes.
-<br/>
 
-#### [APK file](https://raw.githubusercontent.com/Sungwooo/mirae/main/release/mirae(1.0.0).apk) --- version 1.0.0
+#### [APK file](https://github.com/Sungwooo/mirae/releases/download/v1.0.1/mirae.1.0.1.apk) --- version 1.0.1
 
+Fixed :
 
-----
+-   It is now possible to add and delete pings.
+-   Scores for discarding or pinging have been corrected.
+-   Bug fixes.
+    <br/>
 
+#### [APK file](https://github.com/Sungwooo/mirae/releases/download/v1.0.0/mirae.1.0.0.apk) --- version 1.0.0
 
-#### `iOS`  - Debug
+---
+
+#### `iOS` - Debug
 
 #### **Client**
 
@@ -136,14 +130,12 @@ $ flutter version 2.0.2
 
 ## External resources
 
-
 [UN evironment news](https://news.un.org/en/news/topic/climate-change)<br/>
 [Recycle information](https://www.recyclenow.com)
 
 <br/><br/><br/>
 
 ## Team
-
 
 **Product manager / UI.UX : [Sungwoo Cho](https://github.com/Sungwooo)**<br/>
 **Front / Back Developer : [Sihyeong Lee](https://github.com/mukjo96)**<br/>
