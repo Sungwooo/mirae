@@ -5,6 +5,7 @@ class Globals {
   static var rank = 0;
   static String uid = "";
   static List<RankerType> rankerList = [];
+  static int today = 0;
   final dbRef = FirebaseDatabase.instance.reference();
 
   static changeRank(int a) {
@@ -13,6 +14,10 @@ class Globals {
 
   static changeUid(String a) {
     uid = a; // this can be replaced with any static method
+  }
+
+  static changeToday(int a) {
+    today = a;
   }
 
   static changeRankerList(List<RankerType> li) {

@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -82,6 +83,10 @@ class HomePageState extends State<HomePage> {
   final ChallengeController challengeController =
       Get.put(ChallengeController());
   FirebaseProvider fp;
+  final databaseReference =
+      FirebaseDatabase.instance.reference().child('userChallenges');
+  List test = [];
+
   int challengeDay = 1;
 
   List challengeList = [
@@ -264,8 +269,28 @@ class HomePageState extends State<HomePage> {
                                         Column(children: [
                                           InkWell(
                                             onTap: () => setState(() {
-                                              challengeController.checkedValue =
-                                                  1;
+                                              if (challengeController
+                                                      .checkedOne ==
+                                                  false) {
+                                                challengeController
+                                                    .checkedValue = 1;
+                                                uploadCheck(
+                                                    challengeController
+                                                                .checkedOne ==
+                                                            true
+                                                        ? 1
+                                                        : 0,
+                                                    challengeController
+                                                                .checkedTwo ==
+                                                            true
+                                                        ? 1
+                                                        : 0,
+                                                    challengeController
+                                                                .checkedThree ==
+                                                            true
+                                                        ? 1
+                                                        : 0);
+                                              }
                                             }),
                                             child: challengeController
                                                         .checkedOne ==
@@ -336,8 +361,28 @@ class HomePageState extends State<HomePage> {
                                         Column(children: [
                                           InkWell(
                                             onTap: () => setState(() {
-                                              challengeController.checkedValue =
-                                                  2;
+                                              if (challengeController
+                                                      .checkedTwo ==
+                                                  false) {
+                                                challengeController
+                                                    .checkedValue = 2;
+                                                uploadCheck(
+                                                    challengeController
+                                                                .checkedOne ==
+                                                            true
+                                                        ? 1
+                                                        : 0,
+                                                    challengeController
+                                                                .checkedTwo ==
+                                                            true
+                                                        ? 1
+                                                        : 0,
+                                                    challengeController
+                                                                .checkedThree ==
+                                                            true
+                                                        ? 1
+                                                        : 0);
+                                              }
                                             }),
                                             child: challengeController
                                                         .checkedTwo ==
@@ -408,8 +453,28 @@ class HomePageState extends State<HomePage> {
                                         Column(children: [
                                           InkWell(
                                             onTap: () => setState(() {
-                                              challengeController.checkedValue =
-                                                  3;
+                                              if (challengeController
+                                                      .checkedThree ==
+                                                  false) {
+                                                challengeController
+                                                    .checkedValue = 3;
+                                                uploadCheck(
+                                                    challengeController
+                                                                .checkedOne ==
+                                                            true
+                                                        ? 1
+                                                        : 0,
+                                                    challengeController
+                                                                .checkedTwo ==
+                                                            true
+                                                        ? 1
+                                                        : 0,
+                                                    challengeController
+                                                                .checkedThree ==
+                                                            true
+                                                        ? 1
+                                                        : 0);
+                                              }
                                             }),
                                             child: challengeController
                                                         .checkedThree ==
@@ -613,5 +678,11 @@ class HomePageState extends State<HomePage> {
                   )),
             ),
           );
+  }
+
+  void uploadCheck(int one, int two, int three) async {
+    await databaseReference.child(Globals.uid).update({
+      '${Globals.today}': [one, two, three]
+    });
   }
 }

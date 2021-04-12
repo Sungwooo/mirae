@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mirae/global.dart';
 import 'package:mirae/home/components/before_chall_widget.dart';
 import 'package:mirae/home/components/today_chall_widget.dart';
 import 'package:mirae/home/components/expand_section.dart';
@@ -17,6 +19,9 @@ class Challenge extends StatefulWidget {
 
 class ChallengeState extends State<Challenge> {
   FirebaseProvider fp;
+
+  final databaseReference =
+      FirebaseDatabase.instance.reference().child('userChallenges');
 
   bool isBeforeExpanded = false;
   bool isTodayExpanded = false;
@@ -220,19 +225,18 @@ class ChallengeState extends State<Challenge> {
                                 return Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: List.generate(5, (indexb) {
+                                    var btDay = line * 5 + (indexb + 1);
                                     return InkWell(
                                       onTap: () => setState(() {
                                         isTodayExpanded = false;
-                                        selectedDay == line * 5 + (indexb + 1)
+                                        selectedDay == btDay
                                             ? selectedDay = 0
-                                            : selectedDay =
-                                                line * 5 + (indexb + 1);
+                                            : selectedDay = btDay;
                                         selectedDay == 0
                                             ? isBeforeExpanded = false
                                             : isBeforeExpanded = true;
                                       }),
-                                      child: (selectedDay !=
-                                              line * 5 + (indexb + 1)
+                                      child: (selectedDay != btDay
                                           ? Container(
                                               width: 0.187 * width,
                                               height: 0.187 * width,
@@ -240,8 +244,7 @@ class ChallengeState extends State<Challenge> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: [
-                                                  Text(
-                                                      "Day ${line * 5 + (indexb + 1)}",
+                                                  Text("Day $btDay",
                                                       style: TextStyle(
                                                           color:
                                                               Color(0xff000000),
@@ -294,7 +297,7 @@ class ChallengeState extends State<Challenge> {
                                                     textAlign: TextAlign.center,
                                                   ),
                                                   Text(
-                                                    "${line * 5 + (indexb + 1)}",
+                                                    "$btDay",
                                                     style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 0.048 * width,
@@ -320,29 +323,20 @@ class ChallengeState extends State<Challenge> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: List.generate(fourList.length,
                                         (index) {
+                                      var befDay =
+                                          ((day + 4) ~/ 5 - 1) * 5 + index + 1;
                                       return index < day % 5 - 1 || day % 5 == 0
                                           ? InkWell(
                                               onTap: () => setState(() {
                                                 isTodayExpanded = false;
-                                                selectedDay ==
-                                                        ((day + 4) ~/ 5 - 1) *
-                                                                5 +
-                                                            index +
-                                                            1
+                                                selectedDay == befDay
                                                     ? selectedDay = 0
-                                                    : selectedDay =
-                                                        ((day + 4) ~/ 5 - 1) *
-                                                                5 +
-                                                            index +
-                                                            1;
+                                                    : selectedDay = befDay;
                                                 selectedDay == 0
                                                     ? isBeforeExpanded = false
                                                     : isBeforeExpanded = true;
                                               }),
-                                              child: (selectedDay !=
-                                                      ((day + 4) ~/ 5 - 1) * 5 +
-                                                          index +
-                                                          1
+                                              child: (selectedDay != befDay
                                                   ? Container(
                                                       width: 0.187 * width,
                                                       height: 0.187 * width,
@@ -351,8 +345,7 @@ class ChallengeState extends State<Challenge> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text(
-                                                              "Day ${((day + 4) ~/ 5 - 1) * 5 + index + 1}",
+                                                          Text("Day $befDay",
                                                               style: TextStyle(
                                                                   color: Color(
                                                                       0xff000000),
@@ -417,7 +410,7 @@ class ChallengeState extends State<Challenge> {
                                                                 .center,
                                                           ),
                                                           Text(
-                                                            "${((day + 4) ~/ 5 - 1) * 5 + index + 1}",
+                                                            "$befDay",
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .white,
@@ -539,6 +532,7 @@ class ChallengeState extends State<Challenge> {
                                                 ))),
                                     ] +
                                     List.generate(fourList.length, (index) {
+                                      var overDay = day ~/ 5 * 5 + index + 2;
                                       return index >= day % 5 - 1 &&
                                               day % 5 != 0
                                           ? Container(
@@ -548,8 +542,7 @@ class ChallengeState extends State<Challenge> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: [
-                                                  Text(
-                                                      "Day ${day ~/ 5 * 5 + index + 2}",
+                                                  Text("Day $overDay",
                                                       style: TextStyle(
                                                           color:
                                                               Color(0xff000000),
@@ -646,5 +639,11 @@ class ChallengeState extends State<Challenge> {
             ),
           ],
         ));
+
+    void uploadCheck(bool one, bool two, bool three) async {
+      await databaseReference.child(Globals.uid).update({
+        '${Globals.today}': [one, two, three]
+      });
+    }
   }
 }

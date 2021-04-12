@@ -1,6 +1,8 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mirae/components/text_underline.dart';
+import 'package:mirae/global.dart';
 import 'package:mirae/home/challenge.dart';
 import 'package:mirae/home/controller/challenge_controller.dart';
 import 'package:mirae/home/home_page.dart';
@@ -15,6 +17,8 @@ class ChallengeWidget extends StatefulWidget {
 }
 
 class _ChallengeWidgetState extends State<ChallengeWidget> {
+  final databaseReference =
+      FirebaseDatabase.instance.reference().child('userChallenges');
   List challengeList = [
     [
       "Unplug unused products",
@@ -110,7 +114,19 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
                           Column(children: [
                             InkWell(
                               onTap: () => setState(() {
-                                challengeController.checkedValue = 1;
+                                if (challengeController.checkedOne == false) {
+                                  challengeController.checkedValue = 1;
+                                  uploadCheck(
+                                      challengeController.checkedOne == true
+                                          ? 1
+                                          : 0,
+                                      challengeController.checkedTwo == true
+                                          ? 1
+                                          : 0,
+                                      challengeController.checkedThree == true
+                                          ? 1
+                                          : 0);
+                                }
                               }),
                               child: challengeController.checkedOne == true
                                   ? Container(
@@ -171,7 +187,19 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
                           Column(children: [
                             InkWell(
                               onTap: () => setState(() {
-                                challengeController.checkedValue = 2;
+                                if (challengeController.checkedTwo == false) {
+                                  challengeController.checkedValue = 2;
+                                  uploadCheck(
+                                      challengeController.checkedOne == true
+                                          ? 1
+                                          : 0,
+                                      challengeController.checkedTwo == true
+                                          ? 1
+                                          : 0,
+                                      challengeController.checkedThree == true
+                                          ? 1
+                                          : 0);
+                                }
                               }),
                               child: challengeController.checkedTwo == true
                                   ? Container(
@@ -232,7 +260,19 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
                           Column(children: [
                             InkWell(
                               onTap: () => setState(() {
-                                challengeController.checkedValue = 3;
+                                if (challengeController.checkedThree == false) {
+                                  challengeController.checkedValue = 3;
+                                  uploadCheck(
+                                      challengeController.checkedOne == true
+                                          ? 1
+                                          : 0,
+                                      challengeController.checkedTwo == true
+                                          ? 1
+                                          : 0,
+                                      challengeController.checkedThree == true
+                                          ? 1
+                                          : 0);
+                                }
                               }),
                               child: challengeController.checkedThree == true
                                   ? Container(
@@ -283,5 +323,11 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
             ),
           ),
         )));
+  }
+
+  void uploadCheck(int one, int two, int three) async {
+    await databaseReference.child(Globals.uid).update({
+      '${Globals.today}': [one, two, three]
+    });
   }
 }
