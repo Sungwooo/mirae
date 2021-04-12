@@ -62,9 +62,9 @@ class _MapSplashState extends State<MapSplash> {
 
   startTime() async {
     var _duration = new Duration(milliseconds: 1500);
-    return new Timer(_duration, () {
-      updateUserData();
-      makeNewPing();
+    return new Timer(_duration, () async {
+      await updateUserData();
+      await makeNewPing();
       Get.offAll(() => MapPage(true), transition: Transition.fade);
     });
   }

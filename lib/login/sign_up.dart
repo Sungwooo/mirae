@@ -34,6 +34,7 @@ class SignUpPageState extends State<SignUpPage> {
     _mailCon.dispose();
     _nameCon.dispose();
     _pwCon.dispose();
+    _pwChkCon.dispose();
     super.dispose();
   }
 

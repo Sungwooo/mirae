@@ -413,23 +413,7 @@ class _RankingPageState extends State<RankingPage> {
                     // ignore: missing_return
                     builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
                       if (snapshot.hasData) {
-                        rankerList.clear();
-                        Map<dynamic, dynamic> values = snapshot.data.value;
-                        values.forEach(
-                          (key, values) {
-                            rankerList.add(RankerType(
-                                name: values["name"],
-                                imageUrl: values["ImageUrl"],
-                                flag: values["country"],
-                                discardCount: values["discard"],
-                                pingCount: values["ping"],
-                                points: values["point"],
-                                uid: key));
-                          },
-                        );
-                        Comparator<RankerType> pointComparator =
-                            (a, b) => b.points.compareTo(a.points);
-                        rankerList.sort(pointComparator);
+                        rankerList = Globals.rankerList;
                         return new ListView.builder(
                             physics: BouncingScrollPhysics(),
                             scrollDirection: Axis.vertical,

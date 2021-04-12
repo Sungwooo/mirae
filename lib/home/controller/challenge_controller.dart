@@ -24,8 +24,14 @@ class ChallengeController extends GetxController {
               ? 2
               : 1;
   set checkedValue(value) => value == 1
-      ? this._isChecked1.value = !this._isChecked1.value
+      ? _isChecked1 == false.obs
+          ? this._isChecked1.value = true
+          : null
       : value == 2
-          ? this._isChecked2.value = !this._isChecked2.value
-          : this._isChecked3.value = !this._isChecked3.value;
+          ? _isChecked2 == false.obs
+              ? this._isChecked2.value = true
+              : null
+          : _isChecked3 == false.obs
+              ? this._isChecked3.value = true
+              : null;
 }

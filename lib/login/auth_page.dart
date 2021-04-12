@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mirae/global.dart';
+import 'package:mirae/ranking/ranking-page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import '../main.dart';
@@ -34,6 +35,7 @@ class AuthPageState extends State<AuthPage> {
     if (fp.getUser() != null) {
       Globals.changeUid(fp.getUser().uid);
       searchData();
+      setRankData();
       return MainPage(cameras);
     } else {
       return LogIn();
@@ -82,5 +84,26 @@ class AuthPageState extends State<AuthPage> {
           ? fp.getUser().photoUrl
           : '${(await storageReference.getDownloadURL()).toString()}'
     });
+  }
+
+  void setRankData() async {
+    List<RankerType> rankerList = [];
+    await databaseReference.once().then((values) => values.value.forEach(
+          (key, values) {
+            rankerList.add(RankerType(
+                name: values["name"],
+                imageUrl: values["ImageUrl"],
+                flag: values["country"],
+                discardCount: values["discard"],
+                pingCount: values["ping"],
+                points: values["point"],
+                uid: key));
+          },
+        ));
+    await Globals.changeRankerList(rankerList);
+    await Globals.sortRankerList();
+    Globals.rankerList.asMap().forEach((index, value) => {
+          if (value.uid == Globals.uid) {Globals.changeRank(index + 1)}
+        });
   }
 }

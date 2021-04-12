@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:mirae/components/text_underline.dart';
+import 'package:mirae/global.dart';
 import 'package:mirae/home/challenge.dart';
 import 'package:mirae/home/controller/challenge_controller.dart';
 import 'package:mirae/login/firebase_provider.dart';
