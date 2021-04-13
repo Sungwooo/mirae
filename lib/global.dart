@@ -21,6 +21,7 @@ class Globals {
   }
 
   static changeRankerList(List<RankerType> li) {
+    rankerList = [];
     rankerList = li;
   }
 

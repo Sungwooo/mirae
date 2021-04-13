@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:mirae/components/text_underline.dart';
 import 'package:mirae/global.dart';
 import 'package:mirae/home/challenge.dart';
+import 'package:mirae/home/components/addPoint.dart';
 import 'package:mirae/home/controller/challenge_controller.dart';
 import 'package:mirae/login/firebase_provider.dart';
 import 'package:mirae/map/map.dart';
@@ -85,6 +86,7 @@ class HomePageState extends State<HomePage> {
   FirebaseProvider fp;
   final databaseReference =
       FirebaseDatabase.instance.reference().child('userChallenges');
+  AddPoints addPoints = AddPoints();
   List test = [];
 
   int challengeDay = 1;
@@ -684,5 +686,6 @@ class HomePageState extends State<HomePage> {
     await databaseReference.child(Globals.uid).update({
       '${Globals.today}': [one, two, three]
     });
+    addPoints.addChallengePoints();
   }
 }

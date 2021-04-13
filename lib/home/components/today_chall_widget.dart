@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mirae/components/text_underline.dart';
 import 'package:mirae/global.dart';
 import 'package:mirae/home/challenge.dart';
+import 'package:mirae/home/components/addPoint.dart';
 import 'package:mirae/home/controller/challenge_controller.dart';
 import 'package:mirae/home/home_page.dart';
 
@@ -19,6 +20,7 @@ class ChallengeWidget extends StatefulWidget {
 class _ChallengeWidgetState extends State<ChallengeWidget> {
   final databaseReference =
       FirebaseDatabase.instance.reference().child('userChallenges');
+  AddPoints addPoints = AddPoints();
   List challengeList = [
     [
       "Unplug unused products",
@@ -329,5 +331,6 @@ class _ChallengeWidgetState extends State<ChallengeWidget> {
     await databaseReference.child(Globals.uid).update({
       '${Globals.today}': [one, two, three]
     });
+    addPoints.addChallengePoints();
   }
 }

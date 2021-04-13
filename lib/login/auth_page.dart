@@ -35,21 +35,25 @@ class AuthPageState extends State<AuthPage> {
     fp = Provider.of<FirebaseProvider>(context);
 
     if (fp.getUser() != null) {
-      Globals.changeUid(fp.getUser().uid);
-      searchData();
-      setToday();
-      setTodayChallenges();
-      setRankData();
+      initFunctions();
       return MainPage(cameras);
     } else {
       return LogIn();
     }
   }
 
+  void initFunctions() async {
+    await Globals.changeUid(fp.getUser().uid);
+    await searchData();
+    await setToday();
+    await checkChallengeData();
+    await setTodayChallenges();
+    await setRankData();
+  }
+
   // ignore: missing_return
   Future<bool> searchData() async {
     try {
-      fp = Provider.of<FirebaseProvider>(context);
       databaseReference
           .child('user')
           .child(fp.getUser().uid)
@@ -91,7 +95,7 @@ class AuthPageState extends State<AuthPage> {
     });
   }
 
-  void setRankData() async {
+  Future<void> setRankData() async {
     List<RankerType> rankerList = [];
     await databaseReference
         .child('user')
@@ -115,7 +119,7 @@ class AuthPageState extends State<AuthPage> {
         });
   }
 
-  void setToday() async {
+  Future<void> setToday() async {
     int today = fp != null
         ? DateTime(DateTime.now().year, DateTime.now().month,
                     DateTime.now().day)
@@ -126,17 +130,17 @@ class AuthPageState extends State<AuthPage> {
     await Globals.changeToday(today);
   }
 
-  void setTodayChallenges() async {
+  Future<void> setTodayChallenges() async {
     var challengeList = [0, 0, 0];
     final ChallengeController challengeController =
         Get.put(ChallengeController());
+
     await databaseReference
         .child('userChallenges')
         .child(Globals.uid)
         .once()
         .then((values) => values.value.forEach(
               (key, values) {
-                print("key!");
                 if (key == Globals.today.toString()) {
                   challengeList[0] = values[0];
                   challengeList[1] = values[1];
@@ -154,5 +158,26 @@ class AuthPageState extends State<AuthPage> {
     if (challengeList[2] == 1) {
       challengeController.checkedValue = 3;
     }
+  }
+
+  Future<bool> checkChallengeData() async {
+    try {
+      await databaseReference
+          .child('userChallenges')
+          .child(Globals.uid)
+          .once()
+          .then((DataSnapshot snapshot) {
+        if (snapshot.value == null) {
+          createChallengeData();
+        }
+      });
+    } on Exception catch (e) {}
+  }
+
+  void createChallengeData() async {
+    await databaseReference.child('userChallenges').child(Globals.uid).update({
+      '${Globals.today}': [0, 0, 0],
+      '${Globals.today + 2}': [0, 0, 0]
+    });
   }
 }

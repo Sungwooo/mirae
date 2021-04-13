@@ -25,6 +25,7 @@ class ChallengeState extends State<Challenge> {
 
   bool isBeforeExpanded = false;
   bool isTodayExpanded = false;
+  List beforeChallengeList = [0, 0, 0];
   int selectedDay = 0;
   int day = 5;
   ScrollController _scrollController = ScrollController();
@@ -223,96 +224,161 @@ class ChallengeState extends State<Challenge> {
                               children:
                                   List.generate((day + 4) ~/ 5 - 1, (line) {
                                 return Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: List.generate(5, (indexb) {
-                                    var btDay = line * 5 + (indexb + 1);
-                                    return InkWell(
-                                      onTap: () => setState(() {
-                                        isTodayExpanded = false;
-                                        selectedDay == btDay
-                                            ? selectedDay = 0
-                                            : selectedDay = btDay;
-                                        selectedDay == 0
-                                            ? isBeforeExpanded = false
-                                            : isBeforeExpanded = true;
-                                      }),
-                                      child: (selectedDay != btDay
-                                          ? Container(
-                                              width: 0.187 * width,
-                                              height: 0.187 * width,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text("Day $btDay",
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xff000000),
-                                                          fontSize:
-                                                              0.037 * width,
-                                                          fontFamily:
-                                                              'GoogleSans')),
-                                                  SizedBox(
-                                                    height: 0.006 * height,
-                                                  ),
-                                                  Container(
-                                                    width: 0.07 * width,
-                                                    height: 0.07 * width,
-                                                    decoration:
-                                                        new BoxDecoration(
-                                                      image:
-                                                          new DecorationImage(
-                                                        image: new AssetImage(
-                                                            'assets/challengeCheck.png'),
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          : Container(
-                                              width: 0.187 * width,
-                                              height: 0.187 * width,
-                                              decoration: new BoxDecoration(
-                                                image: new DecorationImage(
-                                                  image: new AssetImage(
-                                                      'assets/selectedDay.png'),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "Day",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 0.037 * width,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontFamily:
-                                                            'GoogleSans'),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                  Text(
-                                                    "$btDay",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 0.048 * width,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        fontFamily:
-                                                            'GoogleSans'),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ],
-                                              ),
-                                            )),
-                                    );
-                                  }),
-                                );
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: List.generate(5, (indexb) {
+                                      var btDay = line * 5 + (indexb + 1);
+
+                                      return FutureBuilder(
+                                          future: databaseReference
+                                              .child(Globals.uid)
+                                              .once(),
+                                          builder: (context,
+                                              AsyncSnapshot<DataSnapshot>
+                                                  snapshot) {
+                                            if (snapshot.hasData) {
+                                              Map<dynamic, dynamic> values =
+                                                  snapshot.data.value;
+                                              var btDayNum = 0;
+                                              List btList = [0, 0, 0];
+                                              values.forEach((key, values) {
+                                                if (key == btDay.toString()) {
+                                                  values
+                                                      .asMap()
+                                                      .forEach((index, value) {
+                                                    if (value == 1) {
+                                                      btDayNum += 1;
+                                                      btList[index] = value;
+                                                    }
+                                                  });
+                                                }
+                                              });
+
+                                              return InkWell(
+                                                onTap: () => setState(() {
+                                                  isTodayExpanded = false;
+                                                  selectedDay == btDay
+                                                      ? selectedDay = 0
+                                                      : selectedDay = btDay;
+                                                  beforeChallengeList[0] =
+                                                      btList[0];
+                                                  beforeChallengeList[1] =
+                                                      btList[1];
+                                                  beforeChallengeList[2] =
+                                                      btList[2];
+                                                  selectedDay == 0
+                                                      ? isBeforeExpanded = false
+                                                      : isBeforeExpanded = true;
+                                                }),
+                                                child: (selectedDay != btDay
+                                                    ? Container(
+                                                        width: 0.187 * width,
+                                                        height: 0.187 * width,
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text("Day $btDay",
+                                                                style: TextStyle(
+                                                                    color: Color(
+                                                                        0xff000000),
+                                                                    fontSize:
+                                                                        0.037 *
+                                                                            width,
+                                                                    fontFamily:
+                                                                        'GoogleSans')),
+                                                            SizedBox(
+                                                              height: 0.006 *
+                                                                  height,
+                                                            ),
+                                                            Container(
+                                                              width:
+                                                                  0.07 * width,
+                                                              height:
+                                                                  0.07 * width,
+                                                              decoration:
+                                                                  new BoxDecoration(
+                                                                image:
+                                                                    new DecorationImage(
+                                                                  image: btDayNum ==
+                                                                          3
+                                                                      ? AssetImage(
+                                                                          'assets/challengeCheck.png')
+                                                                      : btDayNum ==
+                                                                              2
+                                                                          ? AssetImage(
+                                                                              'assets/challengeTwo.png')
+                                                                          : btDayNum == 1
+                                                                              ? AssetImage('assets/challengeOne.png')
+                                                                              : AssetImage('assets/challengeFailed.png'),
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    : Container(
+                                                        width: 0.187 * width,
+                                                        height: 0.187 * width,
+                                                        decoration:
+                                                            new BoxDecoration(
+                                                          image:
+                                                              new DecorationImage(
+                                                            image: new AssetImage(
+                                                                'assets/selectedDay.png'),
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              "Day",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      0.037 *
+                                                                          width,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontFamily:
+                                                                      'GoogleSans'),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            ),
+                                                            Text(
+                                                              "$btDay",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      0.048 *
+                                                                          width,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                  fontFamily:
+                                                                      'GoogleSans'),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )),
+                                              );
+                                            } else {
+                                              return Container();
+                                            }
+                                          });
+                                    }));
                               }),
                             )),
                         Container(
@@ -325,18 +391,299 @@ class ChallengeState extends State<Challenge> {
                                         (index) {
                                       var befDay =
                                           ((day + 4) ~/ 5 - 1) * 5 + index + 1;
-                                      return index < day % 5 - 1 || day % 5 == 0
-                                          ? InkWell(
-                                              onTap: () => setState(() {
-                                                isTodayExpanded = false;
-                                                selectedDay == befDay
-                                                    ? selectedDay = 0
-                                                    : selectedDay = befDay;
-                                                selectedDay == 0
-                                                    ? isBeforeExpanded = false
-                                                    : isBeforeExpanded = true;
-                                              }),
-                                              child: (selectedDay != befDay
+                                      var befList = [0, 0, 0];
+                                      return FutureBuilder(
+                                          future: databaseReference
+                                              .child(Globals.uid)
+                                              .once(),
+                                          builder: (context,
+                                              AsyncSnapshot<DataSnapshot>
+                                                  snapshot) {
+                                            if (snapshot.hasData) {
+                                              Map<dynamic, dynamic> values =
+                                                  snapshot.data.value;
+                                              var befDayNum = 0;
+                                              values.forEach((key, values) {
+                                                if (key == befDay.toString()) {
+                                                  values
+                                                      .asMap()
+                                                      .forEach((index, value) {
+                                                    if (value == 1) {
+                                                      befDayNum += 1;
+                                                      befList[index] = value;
+                                                    }
+                                                  });
+                                                }
+                                              });
+
+                                              return index < day % 5 - 1 ||
+                                                      day % 5 == 0
+                                                  ? InkWell(
+                                                      onTap: () => setState(() {
+                                                        isTodayExpanded = false;
+                                                        selectedDay == befDay
+                                                            ? selectedDay = 0
+                                                            : selectedDay =
+                                                                befDay;
+                                                        beforeChallengeList[0] =
+                                                            befList[0];
+                                                        beforeChallengeList[1] =
+                                                            befList[1];
+                                                        beforeChallengeList[2] =
+                                                            befList[2];
+                                                        selectedDay == 0
+                                                            ? isBeforeExpanded =
+                                                                false
+                                                            : isBeforeExpanded =
+                                                                true;
+                                                      }),
+                                                      child:
+                                                          (selectedDay != befDay
+                                                              ? Container(
+                                                                  width: 0.187 *
+                                                                      width,
+                                                                  height:
+                                                                      0.187 *
+                                                                          width,
+                                                                  child: Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Text(
+                                                                          "Day $befDay",
+                                                                          style: TextStyle(
+                                                                              color: Color(0xff000000),
+                                                                              fontSize: 0.037 * width,
+                                                                              fontFamily: 'GoogleSans')),
+                                                                      SizedBox(
+                                                                        height: 0.006 *
+                                                                            height,
+                                                                      ),
+                                                                      Container(
+                                                                        width: 0.07 *
+                                                                            width,
+                                                                        height: 0.07 *
+                                                                            width,
+                                                                        decoration:
+                                                                            new BoxDecoration(
+                                                                          image:
+                                                                              new DecorationImage(
+                                                                            image: befDayNum == 3
+                                                                                ? AssetImage('assets/challengeCheck.png')
+                                                                                : befDayNum == 2
+                                                                                    ? AssetImage('assets/challengeTwo.png')
+                                                                                    : befDayNum == 1
+                                                                                        ? AssetImage('assets/challengeOne.png')
+                                                                                        : AssetImage('assets/challengeFailed.png'),
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                )
+                                                              : Container(
+                                                                  width: 0.187 *
+                                                                      width,
+                                                                  height:
+                                                                      0.187 *
+                                                                          width,
+                                                                  decoration:
+                                                                      new BoxDecoration(
+                                                                    image:
+                                                                        new DecorationImage(
+                                                                      image: new AssetImage(
+                                                                          'assets/selectedDay.png'),
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
+                                                                  ),
+                                                                  child: Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Text(
+                                                                        "Day",
+                                                                        style: TextStyle(
+                                                                            color: Colors
+                                                                                .white,
+                                                                            fontSize: 0.037 *
+                                                                                width,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            fontFamily: 'GoogleSans'),
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                      ),
+                                                                      Text(
+                                                                        "$befDay",
+                                                                        style: TextStyle(
+                                                                            color: Colors
+                                                                                .white,
+                                                                            fontSize: 0.048 *
+                                                                                width,
+                                                                            fontWeight:
+                                                                                FontWeight.w700,
+                                                                            fontFamily: 'GoogleSans'),
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                )),
+                                                    )
+                                                  : Container();
+                                            } else {
+                                              return Container();
+                                            }
+                                          });
+                                    }) +
+                                    [
+                                      FutureBuilder(
+                                          future: databaseReference
+                                              .child(Globals.uid)
+                                              .once(),
+                                          builder: (context,
+                                              AsyncSnapshot<DataSnapshot>
+                                                  snapshot) {
+                                            if (snapshot.hasData) {
+                                              return InkWell(
+                                                  onTap: () => setState(() {
+                                                        isBeforeExpanded =
+                                                            false;
+                                                        selectedDay = 0;
+                                                        isTodayExpanded =
+                                                            !isTodayExpanded;
+                                                      }),
+                                                  child: (isTodayExpanded
+                                                      ? Container(
+                                                          width: 0.187 * width,
+                                                          height: 0.187 * width,
+                                                          decoration:
+                                                              new BoxDecoration(
+                                                            image:
+                                                                new DecorationImage(
+                                                              image: new AssetImage(
+                                                                  'assets/selectedDay.png'),
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Text(
+                                                                "Day",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        0.037 *
+                                                                            width,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontFamily:
+                                                                        'GoogleSans'),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              ),
+                                                              Text(
+                                                                "$day",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        0.048 *
+                                                                            width,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700,
+                                                                    fontFamily:
+                                                                        'GoogleSans'),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      : Container(
+                                                          width: 0.187 * width,
+                                                          height: 0.187 * width,
+                                                          decoration:
+                                                              new BoxDecoration(
+                                                            image:
+                                                                new DecorationImage(
+                                                              image: new AssetImage(
+                                                                  'assets/unSelectedToday.png'),
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Text(
+                                                                "Day",
+                                                                style: TextStyle(
+                                                                    color: Color(
+                                                                        0xff42B261),
+                                                                    fontSize:
+                                                                        0.037 *
+                                                                            width,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    fontFamily:
+                                                                        'GoogleSans'),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              ),
+                                                              Text(
+                                                                "$day",
+                                                                style: TextStyle(
+                                                                    color: Color(
+                                                                        0xff42B261),
+                                                                    fontSize:
+                                                                        0.048 *
+                                                                            width,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700,
+                                                                    fontFamily:
+                                                                        'GoogleSans'),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        )));
+                                            } else {
+                                              return Container();
+                                            }
+                                          }),
+                                    ] +
+                                    List.generate(fourList.length, (index) {
+                                      var overDay = day ~/ 5 * 5 + index + 2;
+                                      return FutureBuilder(
+                                          future: databaseReference
+                                              .child(Globals.uid)
+                                              .once(),
+                                          builder: (context,
+                                              AsyncSnapshot<DataSnapshot>
+                                                  snapshot) {
+                                            if (snapshot.hasData) {
+                                              return index >= day % 5 - 1 &&
+                                                      day % 5 != 0
                                                   ? Container(
                                                       width: 0.187 * width,
                                                       height: 0.187 * width,
@@ -345,7 +692,7 @@ class ChallengeState extends State<Challenge> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text("Day $befDay",
+                                                          Text("Day $overDay",
                                                               style: TextStyle(
                                                                   color: Color(
                                                                       0xff000000),
@@ -359,15 +706,15 @@ class ChallengeState extends State<Challenge> {
                                                                 0.006 * height,
                                                           ),
                                                           Container(
-                                                            width: 0.07 * width,
+                                                            width: 0.08 * width,
                                                             height:
-                                                                0.07 * width,
+                                                                0.08 * width,
                                                             decoration:
                                                                 new BoxDecoration(
                                                               image:
                                                                   new DecorationImage(
                                                                 image: new AssetImage(
-                                                                    'assets/challengeCheck.png'),
+                                                                    'assets/challengeLocked.png'),
                                                                 fit: BoxFit
                                                                     .cover,
                                                               ),
@@ -376,200 +723,11 @@ class ChallengeState extends State<Challenge> {
                                                         ],
                                                       ),
                                                     )
-                                                  : Container(
-                                                      width: 0.187 * width,
-                                                      height: 0.187 * width,
-                                                      decoration:
-                                                          new BoxDecoration(
-                                                        image:
-                                                            new DecorationImage(
-                                                          image: new AssetImage(
-                                                              'assets/selectedDay.png'),
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            "Day",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize:
-                                                                    0.037 *
-                                                                        width,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontFamily:
-                                                                    'GoogleSans'),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                          ),
-                                                          Text(
-                                                            "$befDay",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontSize:
-                                                                    0.048 *
-                                                                        width,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                fontFamily:
-                                                                    'GoogleSans'),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    )),
-                                            )
-                                          : Container();
-                                    }) +
-                                    [
-                                      InkWell(
-                                          onTap: () => setState(() {
-                                                isBeforeExpanded = false;
-                                                selectedDay = 0;
-                                                isTodayExpanded =
-                                                    !isTodayExpanded;
-                                              }),
-                                          child: (isTodayExpanded
-                                              ? Container(
-                                                  width: 0.187 * width,
-                                                  height: 0.187 * width,
-                                                  decoration: new BoxDecoration(
-                                                    image: new DecorationImage(
-                                                      image: new AssetImage(
-                                                          'assets/selectedDay.png'),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        "Day",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize:
-                                                                0.037 * width,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontFamily:
-                                                                'GoogleSans'),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                      Text(
-                                                        "$day",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize:
-                                                                0.048 * width,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            fontFamily:
-                                                                'GoogleSans'),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
-                                              : Container(
-                                                  width: 0.187 * width,
-                                                  height: 0.187 * width,
-                                                  decoration: new BoxDecoration(
-                                                    image: new DecorationImage(
-                                                      image: new AssetImage(
-                                                          'assets/unSelectedToday.png'),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        "Day",
-                                                        style: TextStyle(
-                                                            color: Color(
-                                                                0xff42B261),
-                                                            fontSize:
-                                                                0.037 * width,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontFamily:
-                                                                'GoogleSans'),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                      Text(
-                                                        "$day",
-                                                        style: TextStyle(
-                                                            color: Color(
-                                                                0xff42B261),
-                                                            fontSize:
-                                                                0.048 * width,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            fontFamily:
-                                                                'GoogleSans'),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ))),
-                                    ] +
-                                    List.generate(fourList.length, (index) {
-                                      var overDay = day ~/ 5 * 5 + index + 2;
-                                      return index >= day % 5 - 1 &&
-                                              day % 5 != 0
-                                          ? Container(
-                                              width: 0.187 * width,
-                                              height: 0.187 * width,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text("Day $overDay",
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xff000000),
-                                                          fontSize:
-                                                              0.037 * width,
-                                                          fontFamily:
-                                                              'GoogleSans')),
-                                                  SizedBox(
-                                                    height: 0.006 * height,
-                                                  ),
-                                                  Container(
-                                                    width: 0.08 * width,
-                                                    height: 0.08 * width,
-                                                    decoration:
-                                                        new BoxDecoration(
-                                                      image:
-                                                          new DecorationImage(
-                                                        image: new AssetImage(
-                                                            'assets/challengeLocked.png'),
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          : Container();
+                                                  : Container();
+                                            } else {
+                                              return Container();
+                                            }
+                                          });
                                     }),
                               ),
                             ],
@@ -639,11 +797,5 @@ class ChallengeState extends State<Challenge> {
             ),
           ],
         ));
-
-    void uploadCheck(bool one, bool two, bool three) async {
-      await databaseReference.child(Globals.uid).update({
-        '${Globals.today}': [one, two, three]
-      });
-    }
   }
 }

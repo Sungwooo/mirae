@@ -38,13 +38,19 @@ class _BeforeChallWidgetState extends State<BeforeChallWidget> {
     ]
   ];
 
-  var _isCheck1 = true;
-  var _isCheck2 = true;
-  var _isCheck3 = false;
+  var _isCheck1;
+  var _isCheck2;
+  var _isCheck3;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    _isCheck1 =
+        widget.challengeState.beforeChallengeList[0] == 1 ? true : false;
+    _isCheck2 =
+        widget.challengeState.beforeChallengeList[1] == 1 ? true : false;
+    _isCheck3 =
+        widget.challengeState.beforeChallengeList[2] == 1 ? true : false;
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: width * 0.03, vertical: 0.032 * width),

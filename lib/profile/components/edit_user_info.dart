@@ -25,12 +25,41 @@ class EditUserInfo extends StatefulWidget {
 
 class _EditUserInfoState extends State<EditUserInfo> {
   FirebaseProvider fp;
-  final databaseReference = FirebaseDatabase.instance.reference().child('user');
+  final databaseReference = FirebaseDatabase.instance.reference();
 
   String selectedCountry;
   String userEmail = "";
   String userStartDate;
   int challengeDay;
+  int challenges;
+
+  @override
+  void initState() {
+    super.initState();
+    challenges = 0;
+    getChallenges();
+  }
+
+  void getChallenges() async {
+    await databaseReference
+        .child('userChallenges')
+        .child(Globals.uid)
+        .once()
+        .then((values) => values.value.forEach(
+              (key, values) {
+                if (values[0] == 1) {
+                  challenges += 1;
+                }
+                if (values[1] == 1) {
+                  challenges += 1;
+                }
+                if (values[0] == 1) {
+                  challenges += 1;
+                }
+              },
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context, listen: true);
@@ -47,7 +76,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
     double height = MediaQuery.of(context).size.height;
 
     return FutureBuilder(
-        future: databaseReference.child(Globals.uid).once(),
+        future: databaseReference.child('user').child(Globals.uid).once(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData == false) {
             return Center();
@@ -92,6 +121,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                                 selectedCountry = country.countryCode;
                               });
                               await databaseReference
+                                  .child('user')
                                   .child(fp.getUser().uid)
                                   .update({'country': country.countryCode});
                             },
@@ -149,7 +179,7 @@ class _EditUserInfoState extends State<EditUserInfo> {
                           height: 0.01 * height,
                         ),
                         Text(
-                          "Day $challengeDay / ${(challengeDay - 1) * 3} challenges",
+                          "Day $challengeDay / $challenges challenges",
                           style: TextStyle(
                               color: Color(0xff42B261),
                               fontFamily: "GoogleSans",
