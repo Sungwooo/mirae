@@ -86,7 +86,11 @@ class LevelRankWidget extends StatelessWidget {
                     ),
                     SizedBox(width: 0.02 * width),
                     Text(
-                      "GREEN",
+                      Globals.points >= 20000
+                          ? "GREEN"
+                          : Globals.points >= 5000
+                              ? "BLUE"
+                              : "ORANGE",
                       style: TextStyle(
                           color: Colors.white,
                           fontFamily: "GoogleSans",

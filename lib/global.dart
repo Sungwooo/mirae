@@ -2,7 +2,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:mirae/ranking/ranking-page.dart';
 
 class Globals {
-  static var rank = 0;
+  static int rank = 0;
+  static int points = 0;
   static String uid = "";
   static List<RankerType> rankerList = [];
   static int today = 0;
@@ -10,6 +11,10 @@ class Globals {
 
   static changeRank(int a) {
     rank = a; // this can be replaced with any static method
+  }
+
+  static changePoints(int a) {
+    points = a;
   }
 
   static changeUid(String a) {

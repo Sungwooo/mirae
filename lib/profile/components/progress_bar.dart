@@ -42,6 +42,7 @@ class _ProgressBarWidgetState extends State<ProgressBarWidget> {
             Map<dynamic, dynamic> values = snapshot.data.value;
 
             points = values["point"];
+            Globals.changePoints(points);
             barPercent = points > 20000
                 ? (points - 20000) / 50000
                 : points > 5000
