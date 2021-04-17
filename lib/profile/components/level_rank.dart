@@ -8,12 +8,11 @@ import '../../global.dart';
 var now = DateFormat('y.MM.dd').format(DateTime.now());
 
 class LevelRankWidget extends StatelessWidget {
-  FirebaseProvider fp;
+  final FirebaseProvider fp;
   LevelRankWidget({this.fp});
-  FirebaseUser currentUser;
   @override
   Widget build(BuildContext context) {
-    currentUser = fp.getUser();
+    FirebaseUser currentUser = fp.getUser();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(

@@ -7,7 +7,7 @@ import 'package:mirae/login/firebase_provider.dart';
 import 'package:mirae/profile/edit_profile.dart';
 
 class MyNameWidget extends StatefulWidget {
-  FirebaseProvider fp;
+  final FirebaseProvider fp;
   MyNameWidget({this.fp});
 
   @override

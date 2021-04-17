@@ -6,7 +6,6 @@ import 'package:mirae/global.dart';
 import 'package:mirae/home/challenge.dart';
 import 'package:mirae/home/components/addPoint.dart';
 import 'package:mirae/home/controller/challenge_controller.dart';
-import 'package:mirae/home/home_page.dart';
 
 class ChallengeWidget extends StatefulWidget {
   ChallengeWidget({
