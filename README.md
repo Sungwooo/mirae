@@ -1,3 +1,4 @@
+
 # ![mirae logo](https://github.com/Sungwooo/mirae/blob/main/readme%20image/mirae%20readme%20logo.png?raw=true) Project mirae
 
 ### 🌱 Project mirae is an app that motivates and helps users to protect the Earth. <br/>
@@ -91,16 +92,24 @@ Trash ai camera is designed using mobilenet-ssd with `tenserflow lite` for objec
 
 #### `Android` - ⬇️⬇️ Download APK file
 
-#### [APK file](https://github.com/Sungwooo/mirae/releases/download/v1.0.1/mirae.1.0.1.apk) --- version 1.0.1
 
-Fixed :
+|Version|Download|Release Page|
+|:--:|:--:|:--:|
+|v1.0.2 **(Latest)**|[mirae(1.0.2).apk](https://github.com/Sungwooo/mirae/releases/download/v1.0.2/mirae.1.0.2.apk)|[mirae (1.0.2)](https://github.com/Sungwooo/mirae/releases/tag/v1.0.2)
+|v1.0.1|[mirae(1.0.1).apk](https://github.com/Sungwooo/mirae/releases/download/v1.0.1/mirae.1.0.1.apk)|[mirae (1.0.1)](https://github.com/Sungwooo/mirae/releases/tag/v1.0.1)
+|v1.0.0|[mirae(1.0.0).apk](https://github.com/Sungwooo/mirae/releases/download/v1.0.0/mirae.1.0.0.apk)|[mirae (1.0.0)](https://github.com/Sungwooo/mirae/releases/tag/v1.0.0)
 
--   It is now possible to add and delete pings.
--   Scores for discarding or pinging have been corrected.
+
+
+### Release note --- Latest version (v1.0.2)
+Fixed:
+-   Fixed an issue where previous challenges were not being loaded.
+-   Fixed number of user challenges on the user edit page.
+-   Fixed an issue where points were not properly added when the challenge was completed.
 -   Bug fixes.
+
     <br/>
 
-#### [APK file](https://github.com/Sungwooo/mirae/releases/download/v1.0.0/mirae.1.0.0.apk) --- version 1.0.0
 
 ---
 
@@ -108,7 +117,7 @@ Fixed :
 
 #### **Client**
 
-To build and run the mobile apps you’ll need to install [Flutter](https://flutter.dev/) and its dependencies. To verify your installation run in the project’s root directory:**‌**
+To build and run the mobile apps you’ll need to install [Flutter](https://flutter.dev/) and its dependencies. To verify your installation run in the project’s root directory:**‌**
 
 ```
 $ flutter doctor
@@ -117,14 +126,14 @@ $ flutter doctor
 
 The app is optimised for Android and iOS phones in portrait mode.
 
-**IMPORTANT:** The project only supports Flutter version 2.0.2, you will have to change your configuration to it. We cannot make sure that other Flutter versions will work.
+**IMPORTANT:** The project only supports Flutter version 2.0.2, you will have to change your configuration to it. We cannot make sure that other Flutter versions will work.
 
 ```
 $ flutter version 2.0.2
 
 ```
 
-**Note:** Additionally you’ll need to setup the backend and add the GoogleService-Info of your Firebase app to your clients.
+**Note:** Additionally you’ll need to setup the backend and add the GoogleService-Info of your Firebase app to your clients.
 
 <br/><br/><br/>
 
