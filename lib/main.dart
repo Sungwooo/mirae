@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mirae/splash_screen.dart';
 import 'package:provider/provider.dart';
-import 'constants/material_color.dart';
+
 import 'login/firebase_provider.dart';
 
 List<CameraDescription> cameras;
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           title: 'MIRAE',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primarySwatch: white,
+            primaryColor: Colors.white,
             focusColor: Colors.white.withOpacity(0),
             hoverColor: Colors.white.withOpacity(0),
             highlightColor: Colors.white.withOpacity(0),
