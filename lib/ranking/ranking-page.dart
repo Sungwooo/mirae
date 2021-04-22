@@ -204,7 +204,7 @@ class _RankingPageState extends State<RankingPage> {
       ),
       _renderProfile(context, index),
       Container(
-        width: 0.18 * width,
+        width: 0.2 * width,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -213,7 +213,7 @@ class _RankingPageState extends State<RankingPage> {
               width: 0.013 * width,
             ),
             Container(
-              width: 0.09 * width,
+              width: 0.11 * width,
               child: Text('${numberWithComma(rankerList[index].discardCount)}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -226,7 +226,7 @@ class _RankingPageState extends State<RankingPage> {
         ),
       ),
       Container(
-        width: 0.18 * width,
+        width: 0.2 * width,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -235,7 +235,7 @@ class _RankingPageState extends State<RankingPage> {
               width: 0.013 * width,
             ),
             Container(
-              width: 0.09 * width,
+              width: 0.11 * width,
               child: Text('${numberWithComma(rankerList[index].pingCount)}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
